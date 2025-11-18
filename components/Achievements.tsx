@@ -77,9 +77,9 @@ export default function Achievements() {
   const achievements = getAchievements(t);
   
   return (
-    <section id="achievements" className="py-12 relative overflow-hidden">
+    <section id="achievements" className="py-12 relative overflow-hidden z-[1]">
       <SectionPlanet planet="lava" size={480} position="right" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader 
           title={t("achievementsTitle")} 
           subtitle={t("achievementsSubtitle")}

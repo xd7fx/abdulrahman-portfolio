@@ -37,9 +37,9 @@ export default function WorkWithMe() {
   ];
 
   return (
-    <section id="work" className="py-12 relative overflow-visible">
+    <section id="work" className="py-12 relative overflow-visible z-[1]">
       <SectionPlanet planet="terran" size={450} position="right" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader 
           title={t("workWithMeTitle")} 
           subtitle={t("workWithMeSubtitle")}

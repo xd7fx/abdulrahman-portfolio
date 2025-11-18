@@ -31,9 +31,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-12 relative overflow-hidden">
+    <section id="contact" className="py-12 relative overflow-hidden z-[1]">
       <SectionPlanet planet="baren" size={420} position="right" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader 
           title={t("contactTitle")} 
           subtitle={t("contactSubtitle")}

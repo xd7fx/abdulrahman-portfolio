@@ -17,13 +17,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export default function Home() {
   const { t } = useLanguage();
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen overflow-x-hidden">
       <ParticleBackground />
       <FloatingRobots />
       <Navigation />
       <PlanetaryNavigation />
       
-      <div className="relative z-10">
+      <div className="relative z-[1]">
         <Hero />
         <About />
         <Projects />
@@ -34,7 +34,7 @@ export default function Home() {
       </div>
       
       {/* Footer */}
-      <footer className="relative z-10 py-8 text-center border-t border-space-blue/30">
+      <footer className="relative z-[1] py-8 text-center border-t border-space-blue/30">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

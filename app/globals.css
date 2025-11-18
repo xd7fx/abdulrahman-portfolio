@@ -9,6 +9,7 @@
   
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
   body {
@@ -18,6 +19,8 @@
       radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 40% 20%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
     background-attachment: fixed;
+    overflow-x: hidden;
+    width: 100%;
   }
 }
 
@@ -46,7 +49,7 @@
   }
   
   .btn-primary {
-    @apply px-6 py-3 rounded-lg font-orbitron font-semibold text-sm uppercase tracking-wider;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-orbitron font-semibold text-sm uppercase tracking-wider;
     @apply bg-gradient-to-r from-space-cyan to-space-blue;
     @apply hover:shadow-lg hover:shadow-space-cyan/50 transition-all duration-300;
     @apply hover:scale-105;
@@ -118,6 +121,11 @@
 
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
+  /* Prevent horizontal scroll */
+  * {
+    max-width: 100vw;
+  }
+  
   /* Reduce padding on mobile */
   .card-glow {
     @apply p-4;
@@ -131,6 +139,7 @@
   /* Better spacing for mobile */
   body {
     font-size: 14px;
+    position: relative;
   }
   
   /* Optimize buttons for touch */
@@ -147,5 +156,10 @@
   img {
     max-width: 100%;
     height: auto;
+  }
+  
+  /* Prevent sections from overflowing */
+  section {
+    overflow-x: hidden;
   }
 }

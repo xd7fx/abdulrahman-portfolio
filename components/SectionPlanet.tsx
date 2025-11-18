@@ -24,8 +24,8 @@ export default function SectionPlanet({
 }: SectionPlanetProps) {
   
   const positionClasses = {
-    right: "right-[-10%] md:right-[-5%]",
-    left: "left-[-10%] md:left-[-5%]",
+    right: "right-[-20%] md:right-[-5%]",
+    left: "left-[-20%] md:left-[-5%]",
     center: "left-1/2 -translate-x-1/2"
   };
 

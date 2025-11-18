@@ -61,9 +61,9 @@ export default function Certificates() {
   const { t } = useLanguage();
   
   return (
-    <section id="certificates" className="py-12 relative overflow-hidden">
+    <section id="certificates" className="py-12 relative overflow-hidden z-[1]">
       <SectionPlanet planet="ice" size={460} position="left" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader 
           title={t("certificatesTitle")} 
           subtitle={t("certificatesSubtitle")}

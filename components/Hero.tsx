@@ -8,9 +8,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export default function Hero() {
   const { t } = useLanguage();
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden z-[1]">
       <SectionPlanet planet="terran" size={500} position="left" />
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-[2]">
         <div className="max-w-5xl mx-auto text-center">
           {/* Animated Icons */}
           <div className="flex justify-center space-x-8 mb-8">
