@@ -122,6 +122,15 @@ function FloatingRobot({ robot }: { robot: typeof robots[0] }) {
 }
 
 export default function FloatingRobots() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Don't render on mobile for better performance
+  if (isMobile) return null;
+
   return (
     <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-30">
       {robots.map((robot) => (

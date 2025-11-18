@@ -24,8 +24,11 @@ export default function ParticleBackground() {
       opacity: number;
     }> = [];
 
-    // Create particles
-    for (let i = 0; i < 100; i++) {
+    // Create particles - fewer on mobile for better performance
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 30 : 100;
+    
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -59,23 +62,25 @@ export default function ParticleBackground() {
         ctx.fill();
       });
 
-      // Draw connections
-      particles.forEach((p1, i) => {
-        particles.slice(i + 1).forEach((p2) => {
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+      // Draw connections - skip on mobile for better performance
+      if (!isMobile) {
+        particles.forEach((p1, i) => {
+          particles.slice(i + 1).forEach((p2) => {
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 191, 255, ${0.2 * (1 - distance / 150)})`;
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
+            if (distance < 150) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(0, 191, 255, ${0.2 * (1 - distance / 150)})`;
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          });
         });
-      });
+      }
 
       requestAnimationFrame(animate);
     }

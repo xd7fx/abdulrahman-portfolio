@@ -242,7 +242,7 @@ export default function PlanetaryNavigation() {
       </div>
 
       {/* Mobile Navigation - Bottom Horizontal */}
-      <div className="md:hidden fixed bottom-4 left-0 right-0 z-50 px-2">
+      <div className="md:hidden fixed bottom-4 left-0 right-0 z-[90] px-2">
         <div className="bg-space-navy/90 backdrop-blur-md rounded-full p-2 border border-space-cyan/30 flex items-center justify-between gap-2 max-w-sm mx-auto">
           {/* Previous Button */}
           <motion.button
