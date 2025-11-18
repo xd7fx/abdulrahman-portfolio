@@ -11,6 +11,18 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const { t } = useLanguage();
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const navItems = [
     { name: t("home"), href: "#home" },
     { name: t("about"), href: "#about" },
@@ -128,7 +140,7 @@ export default function Navigation() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+                className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[110]"
                 onClick={() => setIsOpen(false)}
               />
               
@@ -138,7 +150,7 @@ export default function Navigation() {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="md:hidden fixed top-0 right-0 bottom-0 w-64 bg-space-dark/95 backdrop-blur-md border-l border-space-cyan/30 z-50 p-6 overflow-y-auto"
+                className="md:hidden fixed top-0 right-0 bottom-0 w-64 bg-space-dark/95 backdrop-blur-md border-l border-space-cyan/30 z-[120] p-6 overflow-y-auto"
               >
                 {/* Close Button */}
                 <button
