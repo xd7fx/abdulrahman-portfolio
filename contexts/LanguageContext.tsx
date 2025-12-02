@@ -117,6 +117,14 @@ const translations = {
     mostadaamAch3: "📱 Integrated with Nusuk app for seamless UX",
     mostadaamAch4: "🎯 Multi-interface platform (Vending, Control Room, Mobile)",
     
+    // Project 7 - SABAQ
+    sabaqTitle: "SABAQ: Proactive AI Customer Service Agent",
+    sabaqDesc: "A functional prototype of an intelligent multi-agent system designed to predict and resolve customer issues. Demonstrates a scalable Agentic AI architecture capable of serving government sectors, with a roadmap to cover 563 services and integrate via REST APIs.",
+    sabaqAch1: "🥉 3rd Place - AgentX Hackathon (Team Leader)",
+    sabaqAch2: "🤖 Functional Multi-Agent AI Prototype",
+    sabaqAch3: "� Scalable architecture designed for 563+ services",
+    sabaqAch4: "🔌 API-first design for future government integration",
+    
     // Achievements
     achievementsTitle: "Achievements & Recognition",
     achievementsSubtitle: "Lava Planet - Hall of Fame",
@@ -155,6 +163,11 @@ const translations = {
     ach7Title: "Smart Methods Hackathon",
     ach7Subtitle: "2nd Place — 4-Hour Challenge (Nov 2024)",
     ach7Desc: "Secured 2nd Place in intense 4-hour hackathon at THE SHOP FLOOR opening with Minister of Industry. Built solution using S-to-T, T-to-S, 3D Face, and OpenCV technologies.",
+    
+    // Achievement 8
+    ach8Title: "AgentX Hackathon Winner",
+    ach8Subtitle: "3rd Place — Team Leader (2025)",
+    ach8Desc: "Led team to 3rd place at AgentX Hackathon with SABAQ project - a functional AI prototype demonstrating scalable Multi-Agent Architecture designed for future integration with government services.",
     
     // Certificates
     certificatesTitle: "Certificates & Training",
@@ -336,6 +349,14 @@ const translations = {
     mostadaamAch3: "📱 متكامل مع تطبيق نسك لتجربة سلسة",
     mostadaamAch4: "🎯 منصة متعددة الواجهات (آلات، غرفة تحكم، جوال)",
     
+    // Project 7 - SABAQ
+    sabaqTitle: "سَبَق: الوكيل الذكي الاستباقي لخدمة العملاء",
+    sabaqDesc: "نموذج أولي وظيفي لنظام متعدد الوكلاء الأذكياء مصمم للتنبؤ بمشاكل العملاء. يستعرض معمارية ذكاء اصطناعي توكيلي قابلة للتوسع لخدمة القطاعات الحكومية، مع خطة مستقبلية لتغطية 563 خدمة والربط عبر REST APIs.",
+    sabaqAch1: "🥉 المركز الثالث - هاكثون AgentX (قائد الفريق)",
+    sabaqAch2: "🤖 نموذج أولي لنظام Multi-Agent AI",
+    sabaqAch3: "� بنية تحتية مصممة لتغطية 563+ خدمة مستقبلاً",
+    sabaqAch4: "🔌 تصميم يعتمد على APIs لتسهيل التكامل الحكومي",
+    
     // Achievements
     achievementsTitle: "الإنجازات والتقدير",
     achievementsSubtitle: "كوكب الحمم - قاعة المجد",
@@ -374,6 +395,11 @@ const translations = {
     ach7Title: "هاكثون Smart Methods",
     ach7Subtitle: "المركز الثاني — تحدي 4 ساعات (نوفمبر 2024)",
     ach7Desc: "حصلت على المركز الثاني في هاكثون مكثف لمدة 4 ساعات في افتتاح THE SHOP FLOOR بحضور وزير الصناعة. بنيت حل باستخدام S-to-T، T-to-S، 3D Face، وOpenCV.",
+    
+    // Achievement 8
+    ach8Title: "فائز هاكثون AgentX",
+    ach8Subtitle: "المركز الثالث — قائد الفريق (2025)",
+    ach8Desc: "قدت الفريق للمركز الثالث في هاكثون AgentX بمشروع سَبَق - نموذج أولي للذكاء الاصطناعي يستعرض معمارية متعددة الوكلاء قابلة للتوسع ومصممة للتكامل المستقبلي مع الخدمات الحكومية.",
     
     // Certificates
     certificatesTitle: "الشهادات والتدريب",
