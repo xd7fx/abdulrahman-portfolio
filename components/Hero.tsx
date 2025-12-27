@@ -113,8 +113,8 @@ export default function Hero() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
           >
             {[
-              { label: t("projectsCount"), value: "6" },
-              { label: t("awardsCount"), value: "7" },
+              { label: t("projectsCount"), value: "7" },
+              { label: t("awardsCount"), value: "9" },
               { label: t("certificatesCount"), value: "30+" },
               { label: t("gpaLabel"), value: "4.26/5" },
             ].map((stat, index) => (
