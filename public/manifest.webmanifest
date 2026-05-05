@@ -1,0 +1,12 @@
+{
+  "name": "Abdulrahman Alnashri | AI & Robotics Engineer",
+  "short_name": "Abdulrahman A.",
+  "description": "AI & Robotics Engineer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0F2D",
+  "theme_color": "#0A0F2D",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

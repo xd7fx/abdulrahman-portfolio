@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { X, Rocket } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Planet {
@@ -80,30 +79,22 @@ export default function PlanetaryNavigation() {
   const [currentPlanet, setCurrentPlanet] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const navigateToPlanet = (index: number) => {
+  const navigateToPlanet = useCallback((index: number) => {
     if (index === currentPlanet || isTransitioning) return;
-    
     setIsTransitioning(true);
     setCurrentPlanet(index);
-    
-    // Scroll to section
     const section = document.getElementById(planets[index].section);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-    
+    if (section) section.scrollIntoView({ behavior: "smooth" });
     setTimeout(() => setIsTransitioning(false), 1000);
-  };
+  }, [currentPlanet, isTransitioning, planets]);
 
-  const nextPlanet = () => {
-    const next = (currentPlanet + 1) % planets.length;
-    navigateToPlanet(next);
-  };
+  const nextPlanet = useCallback(() => {
+    navigateToPlanet((currentPlanet + 1) % planets.length);
+  }, [currentPlanet, navigateToPlanet, planets.length]);
 
-  const prevPlanet = () => {
-    const prev = (currentPlanet - 1 + planets.length) % planets.length;
-    navigateToPlanet(prev);
-  };
+  const prevPlanet = useCallback(() => {
+    navigateToPlanet((currentPlanet - 1 + planets.length) % planets.length);
+  }, [currentPlanet, navigateToPlanet, planets.length]);
 
   // Auto-detect current section based on scroll
   useEffect(() => {
@@ -134,7 +125,7 @@ export default function PlanetaryNavigation() {
     };
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [currentPlanet]);
+  }, [nextPlanet, prevPlanet]);
 
   return (
     <>
