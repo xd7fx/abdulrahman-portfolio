@@ -37,10 +37,10 @@ Every content section reads from a typed module under [data/](data/) — never h
 | [data/projects.ts](data/projects.ts) | `Project[]` | [components/Projects.tsx](components/Projects.tsx) | ✅ `/projects/[slug]` | `/add-project` |
 | [data/achievements.ts](data/achievements.ts) | `Achievement[]` | [components/Achievements.tsx](components/Achievements.tsx) | ✅ `/achievements/[slug]` | `/add-achievement` |
 | [data/certificates.ts](data/certificates.ts) | `Certificate[]` | [components/Certificates.tsx](components/Certificates.tsx) | ❌ grid only | `/add-certificate` |
-| [data/skills.ts](data/skills.ts) | `SkillCategory[]` | [components/About.tsx](components/About.tsx) | ❌ | manual edit (rare changes) |
 | [data/experience.ts](data/experience.ts) | `Experience[]` | [components/About.tsx](components/About.tsx) | ❌ | `/add-experience` |
-| [data/education.ts](data/education.ts) | `Education[]` | [components/About.tsx](components/About.tsx) | ❌ | manual edit (rare changes) |
-| [data/services.ts](data/services.ts) | `Service[]` | [components/WorkWithMe.tsx](components/WorkWithMe.tsx) | ❌ | manual edit (rare changes) |
+| [data/education.ts](data/education.ts) | `Education[]` | [components/About.tsx](components/About.tsx) | ❌ | `/add-education` |
+| [data/skills.ts](data/skills.ts) | `SkillCategory[]` | [components/About.tsx](components/About.tsx) | ❌ | `/add-skill-category` |
+| [data/services.ts](data/services.ts) | `Service[]` | [components/WorkWithMe.tsx](components/WorkWithMe.tsx) | ❌ | `/add-service` |
 
 **Icon convention:** data modules store an `iconName` string; the consuming component owns a small `iconRegistry: Record<IconName, LucideIcon>`. Adding a new icon means editing the type union in the data file AND the registry in the component (and in any detail-page renderer that uses it). Don't import icons directly into data modules.
 
