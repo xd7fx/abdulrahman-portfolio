@@ -180,7 +180,27 @@ const translations = {
     institutions: "Institutions",
     trainingHours: "Training Hours",
     specializations: "Specializations",
-    
+
+    // Certificate entries
+    tvtcRoboticsCertTitle: "Full Stack Robotics Engineer",
+    tvtcRoboticsCertIssuer: "TVTC",
+    tvtcRoboticsCertDesc: "Comprehensive robotics engineering program covering design, assembly, ROS, and AI integration.",
+    smartMethodsRoboticsCertTitle: "Robotics and Artificial Intelligence",
+    smartMethodsRoboticsCertIssuer: "Smart Methods",
+    smartMethodsRoboticsCertDesc: "Advanced training in robotics systems and AI implementation.",
+    tvtcDataScienceCertTitle: "Data Science and Machine Learning",
+    tvtcDataScienceCertIssuer: "TVTC",
+    tvtcDataScienceCertDesc: "Comprehensive data science and machine learning certification.",
+    mcitJrDataScientistCertTitle: "MCIT Jr Data Scientist",
+    mcitJrDataScientistCertIssuer: "INE",
+    mcitJrDataScientistCertDesc: "Ministry of Communications and IT certified data scientist program.",
+    lewagonBootcampCertTitle: "Data Science Bootcamp Diploma",
+    lewagonBootcampCertIssuer: "Le Wagon",
+    lewagonBootcampCertDesc: "Intensive data science bootcamp covering Python, ML, and data analytics.",
+    sdaQ1DataScienceCertTitle: "Data Science 2025 Q1",
+    sdaQ1DataScienceCertIssuer: "Saudi Digital Academy",
+    sdaQ1DataScienceCertDesc: "Advanced data science program with hands-on projects and industry applications.",
+
     // Contact
     contactTitle: "Get In Touch",
     contactSubtitle: "Outpost - Communication Hub",
@@ -433,16 +453,36 @@ const translations = {
     certificatesTitle: "الشهادات والتدريب",
     certificatesSubtitle: "القمر البلوري - سجلات التدريب",
     viewCertificate: "عرض الشهادة",
-    
-    // Certificate titles
+
+    // Certificate entries
+    tvtcRoboticsCertTitle: "مهندس روبوتات شامل",
+    tvtcRoboticsCertIssuer: "TVTC",
+    tvtcRoboticsCertDesc: "برنامج هندسة روبوتات شامل يغطي التصميم والتجميع وROS وتكامل الذكاء الاصطناعي.",
+    smartMethodsRoboticsCertTitle: "الروبوتات والذكاء الاصطناعي",
+    smartMethodsRoboticsCertIssuer: "Smart Methods",
+    smartMethodsRoboticsCertDesc: "تدريب متقدم في أنظمة الروبوتات وتطبيق الذكاء الاصطناعي.",
+    tvtcDataScienceCertTitle: "علم البيانات والتعلم الآلي",
+    tvtcDataScienceCertIssuer: "TVTC",
+    tvtcDataScienceCertDesc: "شهادة شاملة في علم البيانات والتعلم الآلي.",
+    mcitJrDataScientistCertTitle: "MCIT Jr Data Scientist",
+    mcitJrDataScientistCertIssuer: "INE",
+    mcitJrDataScientistCertDesc: "برنامج عالم بيانات معتمد من وزارة الاتصالات وتقنية المعلومات.",
+    lewagonBootcampCertTitle: "دبلومة معسكر علم البيانات",
+    lewagonBootcampCertIssuer: "Le Wagon",
+    lewagonBootcampCertDesc: "معسكر مكثف في علم البيانات يغطي Python والتعلم الآلي وتحليل البيانات.",
+    sdaQ1DataScienceCertTitle: "علم البيانات 2025 Q1",
+    sdaQ1DataScienceCertIssuer: "الأكاديمية السعودية الرقمية",
+    sdaQ1DataScienceCertDesc: "برنامج متقدم في علم البيانات بمشاريع عملية وتطبيقات صناعية.",
+
+    // Legacy certificate keys (unused — kept for backwards reference)
     cert1: "AI والتعلم الآلي",
     cert2: "الرؤية الحاسوبية",
     cert3: "الروبوتات والأنظمة المستقلة",
     cert4: "تطوير الويب الكامل",
     cert5: "علم البيانات والتحليلات",
     cert6: "عمليات التعلم الآلي",
-    
-    // Certificate descriptions
+
+    // Certificate descriptions (legacy)
     certDesc1: "برنامج تدريبي متقدم في AI والتعلم الآلي",
     certDesc2: "تقنيات معالجة الصور والتعرف على الأنماط",
     certDesc3: "أنظمة الروبوتات المستقلة وROS",
