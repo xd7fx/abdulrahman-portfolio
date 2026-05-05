@@ -42,3 +42,4 @@ Thumbs.db
 
 # Claude Code — personal/local settings (shared commands stay tracked)
 .claude/settings.local.json
+CLAUDE.local.md

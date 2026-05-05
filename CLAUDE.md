@@ -20,13 +20,29 @@ There is no test runner configured — `lint` + `type-check` are the only verifi
 
 ## Architecture
 
-### Single-page composition + project detail routes
+### Single-page composition + detail routes
 [app/page.tsx](app/page.tsx) is a `"use client"` component that stacks every section (`Hero`, `About`, `Projects`, `Achievements`, `Certificates`, `WorkWithMe`, `Contact`) on top of two fixed background layers (`ParticleBackground`, `FloatingRobots`) and two navigation overlays (`Navigation`, `PlanetaryNavigation`). Adding new top-level sections means editing this file.
 
-Project detail pages live at `/projects/[slug]` — see [app/projects/[slug]/page.tsx](app/projects/[slug]/page.tsx) (server: `generateStaticParams` + `generateMetadata`) and [app/projects/[slug]/ProjectDetail.tsx](app/projects/[slug]/ProjectDetail.tsx) (client renderer using `useLanguage`). They are statically generated at build time from the slugs in [data/projects.ts](data/projects.ts) and automatically picked up by [app/sitemap.ts](app/sitemap.ts).
+Two static detail-route trees exist:
+- **Projects** at `/projects/[slug]` — see [app/projects/[slug]/page.tsx](app/projects/[slug]/page.tsx) + [app/projects/[slug]/ProjectDetail.tsx](app/projects/[slug]/ProjectDetail.tsx).
+- **Achievements** at `/achievements/[slug]` — see [app/achievements/[slug]/page.tsx](app/achievements/[slug]/page.tsx) + [app/achievements/[slug]/AchievementDetail.tsx](app/achievements/[slug]/AchievementDetail.tsx). Cross-links to a related project via the `relatedProjectSlug` field.
 
-### Projects data
-All projects live in [data/projects.ts](data/projects.ts) as a typed `Project[]`. The component [components/Projects.tsx](components/Projects.tsx) renders cards from this array; the detail route consumes the same source. Fields like `titleKey`, `descriptionKey`, and `achievementKeys` reference translation keys in `LanguageContext.tsx` — never hard-code localized strings into this file. To add a new project, prefer the `/add-project` skill in [.claude/skills/add-project/SKILL.md](.claude/skills/add-project/SKILL.md) — it handles slug, translation keys, data entry, and verification in one flow.
+Both follow the same shape: a server `page.tsx` that owns `generateStaticParams` + `generateMetadata`, paired with a `"use client"` renderer that uses `useLanguage`. They are statically generated at build time from slugs in the corresponding data files and auto-included in [app/sitemap.ts](app/sitemap.ts).
+
+### Content data layer (`data/`)
+Every content section reads from a typed module under [data/](data/) — never hard-code content into the JSX. Each module exports a typed array plus optional `getXBySlug` / `getAllXSlugs` helpers.
+
+| File | Type | Component | Has detail page? | Add via skill |
+|------|------|-----------|------------------|---------------|
+| [data/projects.ts](data/projects.ts) | `Project[]` | [components/Projects.tsx](components/Projects.tsx) | ✅ `/projects/[slug]` | `/add-project` |
+| [data/achievements.ts](data/achievements.ts) | `Achievement[]` | [components/Achievements.tsx](components/Achievements.tsx) | ✅ `/achievements/[slug]` | `/add-achievement` |
+| [data/certificates.ts](data/certificates.ts) | `Certificate[]` | [components/Certificates.tsx](components/Certificates.tsx) | ❌ grid only | `/add-certificate` |
+| [data/skills.ts](data/skills.ts) | `SkillCategory[]` | [components/About.tsx](components/About.tsx) | ❌ | manual edit (rare changes) |
+| [data/experience.ts](data/experience.ts) | `Experience[]` | [components/About.tsx](components/About.tsx) | ❌ | `/add-experience` |
+| [data/education.ts](data/education.ts) | `Education[]` | [components/About.tsx](components/About.tsx) | ❌ | manual edit (rare changes) |
+| [data/services.ts](data/services.ts) | `Service[]` | [components/WorkWithMe.tsx](components/WorkWithMe.tsx) | ❌ | manual edit (rare changes) |
+
+**Icon convention:** data modules store an `iconName` string; the consuming component owns a small `iconRegistry: Record<IconName, LucideIcon>`. Adding a new icon means editing the type union in the data file AND the registry in the component (and in any detail-page renderer that uses it). Don't import icons directly into data modules.
 
 ### Bilingual / RTL system
 [contexts/LanguageContext.tsx](contexts/LanguageContext.tsx) is the single source of truth for i18n. Key things to know:
