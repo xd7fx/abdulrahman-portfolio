@@ -1,13 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 type Language = "en" | "ar";
 
 interface LanguageContextType {
   language: Language;
   toggleLanguage: () => void;
+  setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  dir: "ltr" | "rtl";
 }
 
 const translations = {
@@ -122,7 +124,7 @@ const translations = {
     sabaqDesc: "A functional prototype of an intelligent multi-agent system designed to predict and resolve customer issues. Demonstrates a scalable Agentic AI architecture capable of serving government sectors, with a roadmap to cover 563 services and integrate via REST APIs.",
     sabaqAch1: "🥉 3rd Place - AgentX Hackathon (Team Leader)",
     sabaqAch2: "🤖 Functional Multi-Agent AI Prototype",
-    sabaqAch3: "� Scalable architecture designed for 563+ services",
+    sabaqAch3: "🏗️ Scalable architecture designed for 563+ services",
     sabaqAch4: "🔌 API-first design for future government integration",
     
     // Achievements
@@ -209,7 +211,26 @@ const translations = {
     // Footer
     footerText: "© 2025 Abdulrahman Alnashri | Galactic AI Engineer",
     builtWith: "Built with",
-    
+    myCV: "My CV",
+    sending: "Sending…",
+    messageSent: "Message sent! I'll get back to you soon.",
+    messageError: "Something went wrong. Please email me directly.",
+    backHome: "Back to home",
+    pageNotFound: "Lost in space — page not found.",
+
+    // Project detail page
+    backToProjects: "Back to projects",
+    aboutProject: "About this project",
+    keyHighlights: "Key Highlights",
+    techStack: "Tech Stack",
+    role: "Role",
+    year: "Year",
+    watchVideo: "Watch Video",
+    viewOnGithub: "View on GitHub",
+    liveDemo: "Live Demo",
+    viewDetails: "View Details",
+    relatedProjects: "Other Projects",
+
     // Navigation Planets
     terranStation: "Terran Station",
     homeBase: "Home Base - Start Your Journey",
@@ -312,8 +333,8 @@ const translations = {
     // Project 2 - Heritage
     heritageTitle: "Hekaya: تطبيق التراث الثقافي بـ AI",
     heritageDesc: "تطبيق ذكي مدعوم بـ AI يتعرف على المعالم السعودية ويولد قصصاً مخصصة ومحتوى بصري. يستخدم YOLOv8 لاكتشاف النصوص اللحيانية، Google Gemini للترجمة وسرد القصص، وLangChain + Streamlit للتفاعل الفوري.",
-    heritageAch1: "� تم ترشيحه للعرض في وزارة الاتصالات وتقنية المعلومات",
-    heritageAch2: "� كشف ذكي للمعالم والنصوص التاريخية",
+    heritageAch1: "🏆 تم ترشيحه للعرض في وزارة الاتصالات وتقنية المعلومات",
+    heritageAch2: "🔍 كشف ذكي للمعالم والنصوص التاريخية",
     heritageAch3: "📖 توليد قصص ثقافية مخصصة بـ AI",
     heritageAch4: "🎨 محتوى بصري تفاعلي في الوقت الفعلي",
     
@@ -354,7 +375,7 @@ const translations = {
     sabaqDesc: "نموذج أولي وظيفي لنظام متعدد الوكلاء الأذكياء مصمم للتنبؤ بمشاكل العملاء. يستعرض معمارية ذكاء اصطناعي توكيلي قابلة للتوسع لخدمة القطاعات الحكومية، مع خطة مستقبلية لتغطية 563 خدمة والربط عبر REST APIs.",
     sabaqAch1: "🥉 المركز الثالث - هاكثون AgentX (قائد الفريق)",
     sabaqAch2: "🤖 نموذج أولي لنظام Multi-Agent AI",
-    sabaqAch3: "� بنية تحتية مصممة لتغطية 563+ خدمة مستقبلاً",
+    sabaqAch3: "🏗️ بنية تحتية مصممة لتغطية 563+ خدمة مستقبلاً",
     sabaqAch4: "🔌 تصميم يعتمد على APIs لتسهيل التكامل الحكومي",
     
     // Achievements
@@ -476,9 +497,28 @@ const translations = {
     formSend: "إرسال الرسالة",
     
     // Footer
-    footerText: "© 2025 عبد الرحمن الناشري | مهندس AI فضائي",
+    footerText: "© 2025 عبدالرحمن الناشري | مهندس AI فضائي",
     builtWith: "بُني باستخدام",
-    
+    myCV: "السيرة الذاتية",
+    sending: "جاري الإرسال…",
+    messageSent: "تم إرسال رسالتك! سأعود إليك قريباً.",
+    messageError: "حدث خطأ. الرجاء مراسلتي مباشرة.",
+    backHome: "العودة للرئيسية",
+    pageNotFound: "ضائع في الفضاء — الصفحة غير موجودة.",
+
+    // Project detail page
+    backToProjects: "العودة للمشاريع",
+    aboutProject: "عن المشروع",
+    keyHighlights: "أبرز ما يميز المشروع",
+    techStack: "التقنيات المستخدمة",
+    role: "الدور",
+    year: "السنة",
+    watchVideo: "شاهد الفيديو",
+    viewOnGithub: "عرض على GitHub",
+    liveDemo: "تجربة مباشرة",
+    viewDetails: "عرض التفاصيل",
+    relatedProjects: "مشاريع أخرى",
+
     // Navigation Planets
     terranStation: "محطة تيران",
     homeBase: "القاعدة الرئيسية - ابدأ رحلتك",
@@ -513,22 +553,47 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
+const STORAGE_KEY = "portfolio:lang";
 
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "en" ? "ar" : "en"));
-    // Update document direction
-    document.documentElement.dir = language === "en" ? "rtl" : "ltr";
-    document.documentElement.lang = language === "en" ? "ar" : "en";
-  };
+function detectInitialLanguage(): Language {
+  if (typeof window === "undefined") return "en";
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  if (stored === "en" || stored === "ar") return stored;
+  const browser = window.navigator.language?.toLowerCase() || "";
+  return browser.startsWith("ar") ? "ar" : "en";
+}
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<Language>("en");
+
+  useEffect(() => {
+    setLanguageState(detectInitialLanguage());
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = language;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, language);
+    } catch {
+      /* ignore storage errors */
+    }
+  }, [language]);
+
+  const setLanguage = (lang: Language) => setLanguageState(lang);
+  const toggleLanguage = () =>
+    setLanguageState((prev) => (prev === "en" ? "ar" : "en"));
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.en] || key;
   };
 
+  const dir: "ltr" | "rtl" = language === "ar" ? "rtl" : "ltr";
+
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
+    <LanguageContext.Provider
+      value={{ language, toggleLanguage, setLanguage, t, dir }}
+    >
       {children}
     </LanguageContext.Provider>
   );
