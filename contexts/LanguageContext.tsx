@@ -231,6 +231,13 @@ const translations = {
     viewDetails: "View Details",
     relatedProjects: "Other Projects",
 
+    // Achievement detail page
+    backToAchievements: "Back to achievements",
+    aboutAchievement: "About this achievement",
+    recognition: "Recognition",
+    relatedProject: "Related Project",
+    otherAchievements: "Other Achievements",
+
     // Navigation Planets
     terranStation: "Terran Station",
     homeBase: "Home Base - Start Your Journey",
@@ -518,6 +525,13 @@ const translations = {
     liveDemo: "تجربة مباشرة",
     viewDetails: "عرض التفاصيل",
     relatedProjects: "مشاريع أخرى",
+
+    // Achievement detail page
+    backToAchievements: "العودة للإنجازات",
+    aboutAchievement: "عن هذا الإنجاز",
+    recognition: "التقدير",
+    relatedProject: "المشروع المرتبط",
+    otherAchievements: "إنجازات أخرى",
 
     // Navigation Planets
     terranStation: "محطة تيران",

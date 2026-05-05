@@ -1,174 +1,124 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Trophy, Award, Star, Target } from "lucide-react";
+import { ArrowUpRight, Award, LucideIcon, Star, Target, Trophy } from "lucide-react";
+import Link from "next/link";
 import SectionPlanet from "./SectionPlanet";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { achievements, type AchievementIcon } from "@/data/achievements";
 
-const getAchievements = (t: (key: string) => string) => [
-  {
-    year: "2025",
-    title: t("ach8Title"),
-    subtitle: t("ach8Subtitle"),
-    description: t("ach8Desc"),
-    icon: <Trophy className="w-8 h-8" />,
-    color: "from-indigo-400 to-purple-500",
-    emoji: "🥉",
-  },
-  {
-    year: "2025",
-    title: t("ach2Title"),
-    subtitle: t("ach2Subtitle"),
-    description: t("ach2Desc"),
-    icon: <Award className="w-8 h-8" />,
-    color: "from-blue-400 to-cyan-500",
-    emoji: "🥇",
-  },
-  {
-    year: "2025",
-    title: t("ach4Title"),
-    subtitle: t("ach4Subtitle"),
-    description: t("ach4Desc"),
-    icon: <Award className="w-8 h-8" />,
-    color: "from-purple-500 to-violet-600",
-    emoji: "🏆",
-  },
-  {
-    year: "2024",
-    title: t("ach1Title"),
-    subtitle: t("ach1Subtitle"),
-    description: t("ach1Desc"),
-    icon: <Trophy className="w-8 h-8" />,
-    color: "from-yellow-400 to-orange-500",
-    emoji: "🚁",
-  },
-  {
-    year: "2024",
-    title: t("ach6Title"),
-    subtitle: t("ach6Subtitle"),
-    description: t("ach6Desc"),
-    icon: <Star className="w-8 h-8" />,
-    color: "from-teal-400 to-cyan-600",
-    emoji: "🤖",
-  },
-  {
-    year: "2024",
-    title: t("ach7Title"),
-    subtitle: t("ach7Subtitle"),
-    description: t("ach7Desc"),
-    icon: <Award className="w-8 h-8" />,
-    color: "from-orange-400 to-red-500",
-    emoji: "🥈",
-  },
-  {
-    year: "2024",
-    title: t("ach3Title"),
-    subtitle: t("ach3Subtitle"),
-    description: t("ach3Desc"),
-    icon: <Star className="w-8 h-8" />,
-    color: "from-green-500 to-emerald-600",
-    emoji: "🌟",
-  },
-  {
-    year: "2024",
-    title: t("ach5Title"),
-    subtitle: t("ach5Subtitle"),
-    description: t("ach5Desc"),
-    icon: <Target className="w-8 h-8" />,
-    color: "from-pink-400 to-rose-500",
-    emoji: "📱",
-  },
-];
+const iconRegistry: Record<AchievementIcon, LucideIcon> = {
+  Trophy,
+  Award,
+  Star,
+  Target,
+};
 
 export default function Achievements() {
-  const { t } = useLanguage();
-  const achievements = getAchievements(t);
-  
+  const { t, dir } = useLanguage();
+
+  const stats = {
+    first: achievements.filter((a) => a.rank === "1st").length,
+    second: achievements.filter((a) => a.rank === "2nd").length,
+    recognition: achievements.filter((a) => a.rank === "recognition" || a.rank === "3rd").length,
+    total: achievements.length,
+  };
+
   return (
     <section id="achievements" className="py-12 relative overflow-hidden z-[1]">
       <SectionPlanet planet="lava" size={480} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
-        <SectionHeader 
-          title={t("achievementsTitle")} 
+        <SectionHeader
+          title={t("achievementsTitle")}
           subtitle={t("achievementsSubtitle")}
         />
 
         <div className="max-w-5xl mx-auto">
-          {/* Timeline */}
           <div className="relative">
-            {/* Timeline Line */}
             <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-space-cyan via-space-blue to-space-lava" />
 
-            {/* Achievement Cards */}
             <div className="space-y-12">
-              {achievements.map((achievement, index) => (
-                <motion.div
-                  key={achievement.title}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className={`relative flex items-center ${
-                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  } flex-col`}
-                >
-                  {/* Content Card */}
-                  <div className="w-full md:w-5/12">
-                    <motion.div
-                      className="card-glow relative"
-                      whileHover={{ scale: 1.03 }}
-                    >
-                      {/* Gradient Overlay */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${achievement.color} opacity-10 rounded-lg`} />
+              {achievements.map((achievement, index) => {
+                const Icon = iconRegistry[achievement.iconName];
+                const title = t(achievement.titleKey);
+                const subtitle = t(achievement.subtitleKey);
+                const description = t(achievement.descriptionKey);
 
-                      {/* Content */}
-                      <div className="relative z-10">
-                        {/* Year Badge */}
-                        <div className="inline-block px-4 py-1 rounded-full bg-space-cyan/20 border border-space-cyan/50 text-space-cyan font-orbitron font-bold text-sm mb-4">
-                          {achievement.year}
-                        </div>
+                return (
+                  <motion.div
+                    key={achievement.slug}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className={`relative flex items-center ${
+                      index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    } flex-col`}
+                  >
+                    <div className="w-full md:w-5/12">
+                      <Link
+                        href={`/achievements/${achievement.slug}`}
+                        aria-label={`${t("viewDetails")} — ${title}`}
+                        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-2xl"
+                      >
+                        <motion.div
+                          className="card-glow relative group"
+                          whileHover={{ scale: 1.03 }}
+                        >
+                          <div className={`absolute inset-0 bg-gradient-to-br ${achievement.color} opacity-10 rounded-lg`} />
 
-                        {/* Title */}
-                        <div className="flex items-start space-x-3 mb-3">
-                          <span className="text-4xl">{achievement.emoji}</span>
-                          <div>
-                            <h3 className="text-xl font-orbitron font-bold mb-1">
-                              {achievement.title}
-                            </h3>
-                            <p className="text-space-cyan text-sm font-semibold">
-                              {achievement.subtitle}
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-4">
+                              <div className="inline-block px-4 py-1 rounded-full bg-space-cyan/20 border border-space-cyan/50 text-space-cyan font-orbitron font-bold text-sm">
+                                {achievement.year}
+                              </div>
+                              <span
+                                className="inline-flex items-center gap-1 text-xs text-space-cyan/80 group-hover:text-space-cyan transition-colors"
+                                aria-hidden
+                              >
+                                {t("viewDetails")}
+                                <ArrowUpRight size={12} className={dir === "rtl" ? "-scale-x-100" : ""} />
+                              </span>
+                            </div>
+
+                            <div className="flex items-start gap-3 mb-3">
+                              <span className="text-4xl shrink-0">{achievement.emoji}</span>
+                              <div className="min-w-0">
+                                <h3 className="text-xl font-orbitron font-bold mb-1">
+                                  {title}
+                                </h3>
+                                <p className="text-space-cyan text-sm font-semibold">
+                                  {subtitle}
+                                </p>
+                              </div>
+                            </div>
+
+                            <p className="text-space-ice/80 text-sm leading-relaxed">
+                              {description}
                             </p>
                           </div>
-                        </div>
+                        </motion.div>
+                      </Link>
+                    </div>
 
-                        {/* Description */}
-                        <p className="text-space-ice/80 text-sm leading-relaxed">
-                          {achievement.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  </div>
+                    <div className="hidden md:flex w-2/12 justify-center my-8 md:my-0">
+                      <motion.div
+                        className="w-16 h-16 rounded-full bg-space-dark border-4 border-space-cyan flex items-center justify-center relative z-10"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <Icon className="w-8 h-8 text-space-cyan" aria-hidden />
+                      </motion.div>
+                    </div>
 
-                  {/* Center Icon */}
-                  <div className="hidden md:flex w-2/12 justify-center my-8 md:my-0">
-                    <motion.div
-                      className="w-16 h-16 rounded-full bg-space-dark border-4 border-space-cyan flex items-center justify-center relative z-10"
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <div className="text-space-cyan">{achievement.icon}</div>
-                    </motion.div>
-                  </div>
-
-                  {/* Spacer */}
-                  <div className="hidden md:block w-5/12" />
-                </motion.div>
-              ))}
+                    <div className="hidden md:block w-5/12" />
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Summary Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -177,10 +127,10 @@ export default function Achievements() {
             className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
           >
             {[
-              { label: t("firstPlaceAwards"), value: "3", emoji: "🥇" },
-              { label: t("secondPlaceAwards"), value: "1", emoji: "🥈" },
-              { label: t("specialRecognition"), value: "4", emoji: "⭐" },
-              { label: t("totalAchievements"), value: "9+", emoji: "🏆" },
+              { label: t("firstPlaceAwards"), value: String(stats.first), emoji: "🥇" },
+              { label: t("secondPlaceAwards"), value: String(stats.second), emoji: "🥈" },
+              { label: t("specialRecognition"), value: String(stats.recognition), emoji: "⭐" },
+              { label: t("totalAchievements"), value: String(stats.total), emoji: "🏆" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
