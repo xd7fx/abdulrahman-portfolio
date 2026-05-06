@@ -20,6 +20,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import type { Course } from "@/data/courses";
 import LanguageToggle from "@/components/LanguageToggle";
 import ParticleBackground from "@/components/ParticleBackground";
+import { submitCourseEvent } from "@/lib/coursesWebhook";
 import {
   getProgress,
   isModuleUnlocked,
@@ -33,6 +34,15 @@ interface Props {
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
+const LEVEL_KEYS = [
+  "levelSecondary",
+  "levelDiploma",
+  "levelBachelor",
+  "levelGraduate",
+  "levelEmployee",
+  "levelOther",
+] as const;
+
 export default function CourseLanding({ course }: Props) {
   const { t, dir } = useLanguage();
   const router = useRouter();
@@ -43,56 +53,51 @@ export default function CourseLanding({ course }: Props) {
     email: "",
     university: "",
     major: "",
-    level: "Undergraduate",
-    motivation: "",
+    level: "" as (typeof LEVEL_KEYS)[number] | "",
+    agreed: false,
   });
 
   useEffect(() => {
     setProgress(getProgress(course.slug));
   }, [course.slug]);
 
-  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
   const moduleIds = course.modules.map((m) => m.id);
   const isRegistered = progress?.registered ?? false;
   const BackArrow = dir === "rtl" ? ArrowRight : ArrowLeft;
+  const canSubmit =
+    form.name.trim().length > 0 &&
+    form.email.trim().length > 0 &&
+    form.university.trim().length > 0 &&
+    form.major.trim().length > 0 &&
+    form.level !== "" &&
+    form.agreed &&
+    status !== "sending";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (status === "sending") return;
+    if (!canSubmit) return;
     setStatus("sending");
 
-    const submission = {
-      subject: `[Course Registration] ${course.titleEn} — ${form.name}`,
-      from_name: form.name,
+    const result = await submitCourseEvent({
+      type: "registration",
+      courseSlug: course.slug,
+      courseTitleEn: course.titleEn,
       email: form.email,
-      message: [
-        `Course: ${course.titleEn} (${course.slug})`,
-        `Name: ${form.name}`,
-        `Email: ${form.email}`,
-        `University: ${form.university}`,
-        `Major: ${form.major}`,
-        `Level: ${form.level}`,
-        `Motivation: ${form.motivation || "—"}`,
-      ].join("\n"),
-    };
+      name: form.name,
+      university: form.university,
+      major: form.major,
+      level: form.level || "unspecified",
+      agreed: form.agreed,
+    });
 
-    try {
-      if (accessKey) {
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ access_key: accessKey, ...submission }),
-        });
-        if (!res.ok) throw new Error("Request failed");
-      }
-      // Mark registered locally even if Web3Forms is not configured.
-      const updated = markRegistered(course.slug, form.email, course.modules[0].id);
-      setProgress(updated);
-      setStatus("success");
-      setTimeout(() => router.push(`/courses/${course.slug}/learn`), 800);
-    } catch {
-      setStatus("error");
+    // Local success even if both webhooks failed — student can still take the course.
+    const updated = markRegistered(course.slug, form.email, course.modules[0].id);
+    setProgress(updated);
+    if (!result.web3forms && !result.sheets) {
+      // Soft warning: nothing was logged remotely. Still let them in.
     }
+    setStatus("success");
+    setTimeout(() => router.push(`/courses/${course.slug}/learn`), 700);
   };
 
   return (
@@ -184,7 +189,6 @@ export default function CourseLanding({ course }: Props) {
               </div>
             )}
 
-            {/* Modules list */}
             <div className="card-glow">
               <h2 className="text-2xl font-orbitron font-bold text-space-cyan mb-4">
                 {t("courseModules")}
@@ -275,71 +279,110 @@ export default function CourseLanding({ course }: Props) {
                 </Link>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <h2 className="text-xl font-orbitron font-bold text-space-cyan mb-1">
-                  {t("registrationTitle")}
-                </h2>
-                <p className="text-space-ice/70 text-xs mb-3">{t("registrationDesc")}</p>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <h2 className="text-xl font-orbitron font-bold text-space-cyan">
+                    {t("registrationTitle")}
+                  </h2>
+                  <p className="text-space-ice/70 text-xs mt-1">{t("registrationDesc")}</p>
+                </div>
 
-                <input
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder={t("fullNamePlaceholder")}
-                  aria-label={t("fullName")}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
-                />
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="email@example.com"
-                  aria-label="Email"
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
-                />
-                <input
-                  type="text"
-                  required
-                  value={form.university}
-                  onChange={(e) => setForm({ ...form, university: e.target.value })}
-                  placeholder={t("universityPlaceholder")}
-                  aria-label={t("universityField")}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
-                />
-                <input
-                  type="text"
-                  required
-                  value={form.major}
-                  onChange={(e) => setForm({ ...form, major: e.target.value })}
-                  placeholder={t("majorPlaceholder")}
-                  aria-label={t("majorField")}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
-                />
-                <select
-                  value={form.level}
-                  onChange={(e) => setForm({ ...form, level: e.target.value })}
-                  aria-label={t("levelField")}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white"
-                >
-                  <option value="Undergraduate">{t("levelPlaceholderStudent")}</option>
-                  <option value="Graduate">{t("levelPlaceholderGraduate")}</option>
-                  <option value="Professional">{t("levelPlaceholderProfessional")}</option>
-                </select>
-                <textarea
-                  rows={3}
-                  value={form.motivation}
-                  onChange={(e) => setForm({ ...form, motivation: e.target.value })}
-                  placeholder={t("motivationPlaceholder")}
-                  aria-label={t("motivationField")}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40 resize-none"
-                />
+                <div className="space-y-3">
+                  <label className="block">
+                    <span className="text-xs text-space-ice/70">{t("fullName")}</span>
+                    <input
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      placeholder={t("fullNamePlaceholder")}
+                      className="mt-1 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-xs text-space-ice/70">Email</span>
+                    <input
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      placeholder="email@example.com"
+                      className="mt-1 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-xs text-space-ice/70">{t("universityField")}</span>
+                    <input
+                      type="text"
+                      required
+                      value={form.university}
+                      onChange={(e) => setForm({ ...form, university: e.target.value })}
+                      placeholder={t("universityPlaceholder")}
+                      className="mt-1 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-xs text-space-ice/70">{t("majorField")}</span>
+                    <input
+                      type="text"
+                      required
+                      value={form.major}
+                      onChange={(e) => setForm({ ...form, major: e.target.value })}
+                      placeholder={t("majorPlaceholder")}
+                      className="mt-1 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
+                    />
+                  </label>
+
+                  <fieldset className="block">
+                    <legend className="text-xs text-space-ice/70 mb-2">
+                      {t("levelField")}
+                    </legend>
+                    <div className="grid grid-cols-2 gap-2">
+                      {LEVEL_KEYS.map((lv) => (
+                        <label
+                          key={lv}
+                          className={`cursor-pointer rounded-lg border px-3 py-2 text-xs text-center transition-colors ${
+                            form.level === lv
+                              ? "border-space-cyan bg-space-cyan/15 text-space-cyan"
+                              : "border-space-blue/40 text-space-ice/80 hover:border-space-cyan/40"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="level"
+                            value={lv}
+                            checked={form.level === lv}
+                            onChange={() => setForm({ ...form, level: lv })}
+                            required
+                            className="sr-only"
+                          />
+                          {t(lv)}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <label className="flex items-start gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={form.agreed}
+                      onChange={(e) => setForm({ ...form, agreed: e.target.checked })}
+                      className="mt-1 accent-space-cyan w-4 h-4"
+                    />
+                    <span className="text-xs text-space-ice/80 leading-relaxed">
+                      {t("agreementText")}
+                    </span>
+                  </label>
+                </div>
 
                 <button
                   type="submit"
-                  disabled={status === "sending"}
-                  className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  disabled={!canSubmit}
+                  className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {status === "sending" ? (
                     <>
@@ -363,6 +406,51 @@ export default function CourseLanding({ course }: Props) {
             )}
           </motion.aside>
         </div>
+
+        {/* Sponsors row */}
+        {course.sponsors && course.sponsors.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto mt-16"
+          >
+            <h2 className="text-xl font-orbitron font-bold text-space-cyan text-center mb-6">
+              {t("courseSponsorsTitle")}
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {course.sponsors.map((sponsor) => {
+                const inner = (
+                  <div className="card-glow flex items-center justify-center aspect-[3/2] bg-white/5 hover:bg-white/10 transition-colors">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={sponsor.logo}
+                        alt={sponsor.name}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-contain p-4"
+                      />
+                    </div>
+                  </div>
+                );
+                return sponsor.link ? (
+                  <a
+                    key={sponsor.id}
+                    href={sponsor.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={sponsor.name}
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div key={sponsor.id}>{inner}</div>
+                );
+              })}
+            </div>
+          </motion.section>
+        )}
       </article>
     </main>
   );

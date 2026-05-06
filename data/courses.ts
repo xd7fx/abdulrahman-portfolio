@@ -2,26 +2,33 @@
  * Courses offered through the portfolio.
  *
  * Each course has a list of modules. A module is a video + a slide deck +
- * a 3-question quiz (1–5 scale per question). The student progresses
- * sequentially: module N unlocks only after module N-1's video is watched
- * AND its quiz is submitted.
+ * a short reflection quiz. The student progresses sequentially: module N
+ * unlocks only after module N-1's video is watched AND its quiz is
+ * submitted. After the LAST module's quiz, a course-level final
+ * evaluation is presented before the "course finished" screen.
  *
- * Translation keys (`titleKey`, `descriptionKey`, `aboutKey`,
- * `module.titleKey`, `module.descriptionKey`, `quiz.questionKeys`) resolve
- * through `useLanguage().t(...)` against `contexts/LanguageContext.tsx`.
- * Every key referenced here MUST exist in both `en` and `ar` blocks.
+ * Translation keys (`titleKey`, `descriptionKey`, `aboutKey`, module
+ * titles/descriptions, and quiz `questionKey`/`optionKeys`) resolve through
+ * `useLanguage().t(...)` against `contexts/LanguageContext.tsx`. Every key
+ * referenced here MUST exist in both `en` and `ar` blocks.
  *
- * Tech-noun fields (`youtubeId`, `slidesEmbedUrl`) are stable
- * identifiers, NOT translated.
+ * Tech-noun fields (`youtubeId`, `slidesEmbedUrl`, sponsor `logo` paths)
+ * are stable identifiers, NOT translated.
  *
  * To add a new course or module, prefer the `/add-course` and
  * `/add-course-module` Claude skills.
  */
+export type QuizQuestionType = "stars-1-5" | "scale-1-5" | "multiple-choice" | "free-text";
+
 export type QuizQuestion = {
   /** Translation key for the question text. */
   questionKey: string;
-  /** Optional short-text answer (no translation; the user types free text). */
-  type?: "scale-1-5" | "free-text";
+  /** How to render the input. */
+  type: QuizQuestionType;
+  /** Translation keys for choices (only when type === "multiple-choice"). */
+  optionKeys?: string[];
+  /** Whether the answer is required. Defaults to true except for free-text. */
+  optional?: boolean;
 };
 
 export type CourseModule = {
@@ -35,20 +42,25 @@ export type CourseModule = {
   youtubeId: string;
   /**
    * Optional slides embed URL — any provider whose embed URL allows iframing
-   * with `X-Frame-Options: ALLOWALL`. Verified providers:
-   *   - Google Slides:  File → Share → Publish to web → Embed → copy `src`.
-   *     Format: `https://docs.google.com/presentation/d/e/<id>/embed?...`
-   *   - Canva:  Share → More → Embed → copy `src` from the iframe snippet.
-   *     Format: `https://www.canva.com/design/<id>/view?embed`
-   *     (NOTE: short `canva.link/...` URLs are NOT embed URLs — they are
-   *     redirect links that browsers refuse to iframe.)
-   * Other providers may work as long as they expose a public embed URL.
+   * (Google Slides, Canva, etc.). Must be a true `src` from an embed snippet,
+   * NOT a share/edit URL or `canva.link/...` shortlink.
    */
   slidesEmbedUrl?: string;
   /** Approximate duration label, e.g. "12:30". Free-form. */
   duration?: string;
-  /** Exactly 3 quiz questions. Each is rated on a 1–5 scale unless otherwise typed. */
-  quiz: [QuizQuestion, QuizQuestion, QuizQuestion];
+  /** Quiz shown after the video. The first course uses 3 questions per module. */
+  quiz: QuizQuestion[];
+};
+
+export type Sponsor = {
+  /** Stable id used as React key. */
+  id: string;
+  /** Display name (used as alt text). */
+  name: string;
+  /** Logo path under /public or remote URL allow-listed in next.config.mjs. */
+  logo: string;
+  /** Optional sponsor website. */
+  link?: string;
 };
 
 export type Course = {
@@ -74,6 +86,10 @@ export type Course = {
   totalDuration?: string;
   /** Course modules in order. The first module is unlocked by default. */
   modules: CourseModule[];
+  /** Course-level final evaluation shown after the last module's quiz. */
+  finalEvaluation?: QuizQuestion[];
+  /** Optional sponsors row, rendered at the bottom of the landing page. */
+  sponsors?: Sponsor[];
 };
 
 export const courses: Course[] = [
@@ -84,8 +100,8 @@ export const courses: Course[] = [
     emoji: "🚁",
     descriptionKey: "drone360Desc",
     aboutKey: "drone360About",
-    image: "/projects/sabaq.jpg",
-    color: "from-space-cyan to-space-blue",
+    image: "/courses/drone-360.jpg",
+    color: "from-purple-600 to-fuchsia-600",
     level: "Beginner → Intermediate",
     totalDuration: "~2h",
     modules: [
@@ -97,9 +113,13 @@ export const courses: Course[] = [
         slidesEmbedUrl: "",
         duration: "—",
         quiz: [
-          { questionKey: "drone360Mod1Q1", type: "scale-1-5" },
-          { questionKey: "drone360Mod1Q2", type: "scale-1-5" },
-          { questionKey: "drone360Mod1Q3", type: "scale-1-5" },
+          { questionKey: "drone360Mod1Q1", type: "stars-1-5" },
+          {
+            questionKey: "drone360Mod1Q2",
+            type: "multiple-choice",
+            optionKeys: ["understoodYes", "understoodAlmost", "understoodNo"],
+          },
+          { questionKey: "drone360Mod1Q3", type: "free-text", optional: true },
         ],
       },
       {
@@ -110,11 +130,35 @@ export const courses: Course[] = [
         slidesEmbedUrl: "",
         duration: "—",
         quiz: [
-          { questionKey: "drone360Mod2Q1", type: "scale-1-5" },
-          { questionKey: "drone360Mod2Q2", type: "scale-1-5" },
-          { questionKey: "drone360Mod2Q3", type: "scale-1-5" },
+          { questionKey: "drone360Mod2Q1", type: "stars-1-5" },
+          {
+            questionKey: "drone360Mod2Q2",
+            type: "multiple-choice",
+            optionKeys: ["understoodYes", "understoodAlmost", "understoodNo"],
+          },
+          { questionKey: "drone360Mod2Q3", type: "free-text", optional: true },
         ],
       },
+    ],
+    finalEvaluation: [
+      { questionKey: "finalEvalQ1Overall", type: "stars-1-5" },
+      {
+        questionKey: "finalEvalQ2Benefit",
+        type: "multiple-choice",
+        optionKeys: ["benefitYesVery", "benefitYes", "benefitAverage", "benefitNo"],
+      },
+      {
+        questionKey: "finalEvalQ3Recommend",
+        type: "multiple-choice",
+        optionKeys: ["recommendYes", "recommendMaybe", "recommendNo"],
+      },
+      { questionKey: "finalEvalQ4Comments", type: "free-text", optional: true },
+    ],
+    sponsors: [
+      { id: "sponsor-1", name: "Sponsor 1", logo: "/courses/drone-360/sponsors/sponsor1.png" },
+      { id: "sponsor-2", name: "Sponsor 2", logo: "/courses/drone-360/sponsors/sponsor2.png" },
+      { id: "sponsor-3", name: "Sponsor 3", logo: "/courses/drone-360/sponsors/sponsor3.png" },
+      { id: "sponsor-4", name: "Sponsor 4", logo: "/courses/drone-360/sponsors/sponsor4.png" },
     ],
   },
 ];

@@ -13,22 +13,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import type { Course, CourseModule } from "@/data/courses";
+import type { Course, CourseModule, QuizQuestion } from "@/data/courses";
 import LanguageToggle from "@/components/LanguageToggle";
 import ParticleBackground from "@/components/ParticleBackground";
 import {
   getProgress,
   isModuleUnlocked,
+  markFinalEvaluationCompleted,
   markModuleCompleted,
   type CourseProgress,
+  type QuizAnswer,
 } from "@/lib/courseProgress";
+import { submitCourseEvent } from "@/lib/coursesWebhook";
+import Quiz from "./Quiz";
 
 interface Props {
   course: Course;
 }
 
-type View = "video" | "quiz" | "finished";
-type QuizStatus = "idle" | "sending" | "success" | "error";
+type View = "video" | "quiz" | "final-eval" | "finished";
+type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 export default function LearnClient({ course }: Props) {
   const { t, dir } = useLanguage();
@@ -36,14 +40,12 @@ export default function LearnClient({ course }: Props) {
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
   const [view, setView] = useState<View>("video");
-  const [scores, setScores] = useState<number[]>([0, 0, 0]);
-  const [quizStatus, setQuizStatus] = useState<QuizStatus>("idle");
+  const [quizStatus, setQuizStatus] = useState<SubmitStatus>("idle");
+  const [finalStatus, setFinalStatus] = useState<SubmitStatus>("idle");
 
   const moduleIds = useMemo(() => course.modules.map((m) => m.id), [course]);
-  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
   const BackArrow = dir === "rtl" ? ArrowRight : ArrowLeft;
 
-  // Load progress and gate access to registered users.
   useEffect(() => {
     const p = getProgress(course.slug);
     setProgress(p);
@@ -52,7 +54,16 @@ export default function LearnClient({ course }: Props) {
       return;
     }
     setActiveModuleId(p.currentModuleId ?? course.modules[0].id);
-  }, [course.slug, course.modules, router]);
+    if (
+      p.completedModuleIds.length === course.modules.length &&
+      !p.finalEvaluationCompleted &&
+      course.finalEvaluation
+    ) {
+      setView("final-eval");
+    } else if (p.finalEvaluationCompleted) {
+      setView("finished");
+    }
+  }, [course.slug, course.modules, course.finalEvaluation, router]);
 
   if (!progress) {
     return (
@@ -63,10 +74,11 @@ export default function LearnClient({ course }: Props) {
     );
   }
 
-  const activeModule: CourseModule | undefined =
+  const activeModule: CourseModule =
     course.modules.find((m) => m.id === activeModuleId) ?? course.modules[0];
   const activeIdx = course.modules.findIndex((m) => m.id === activeModule.id);
   const nextModule = course.modules[activeIdx + 1] ?? null;
+  const isLastModule = nextModule == null;
   const totalCount = course.modules.length;
   const completedCount = progress.completedModuleIds.length;
   const progressPct = Math.round((completedCount / totalCount) * 100);
@@ -75,59 +87,66 @@ export default function LearnClient({ course }: Props) {
     if (!isModuleUnlocked(progress, moduleIds, moduleId)) return;
     setActiveModuleId(moduleId);
     setView("video");
-    setScores([0, 0, 0]);
     setQuizStatus("idle");
   };
 
-  const handleQuizSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const buildAnswerLogPairs = (questions: QuizQuestion[], answers: QuizAnswer[]) =>
+    questions.map((q, i) => ({
+      question: t(q.questionKey),
+      answer: String(answers[i] ?? ""),
+    }));
+
+  const handleModuleQuizSubmit = async (answers: QuizAnswer[]) => {
     if (quizStatus === "sending") return;
-    if (scores.some((s) => s < 1 || s > 5)) return;
     setQuizStatus("sending");
-
-    const submission = {
-      subject: `[Course Quiz] ${course.titleEn} — ${activeModule.id}`,
-      from_name: progress.email ?? "anonymous",
-      email: progress.email ?? "noreply@portfolio",
-      message: [
-        `Course: ${course.titleEn} (${course.slug})`,
-        `Module: ${activeModule.id}`,
-        `Student email: ${progress.email}`,
-        `Quiz scores (1–5):`,
-        ...scores.map((s, i) => `  Q${i + 1}: ${s}/5`),
-        `Submitted: ${new Date().toISOString()}`,
-      ].join("\n"),
-    };
-
-    try {
-      if (accessKey) {
-        await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ access_key: accessKey, ...submission }),
-        });
-      }
-      const updated = markModuleCompleted(
-        course.slug,
-        activeModule.id,
-        scores,
-        nextModule?.id ?? null
-      );
-      setProgress(updated);
-      setQuizStatus("success");
-      setTimeout(() => {
-        if (nextModule) {
-          setActiveModuleId(nextModule.id);
-          setView("video");
-          setScores([0, 0, 0]);
-          setQuizStatus("idle");
+    const answerPairs = buildAnswerLogPairs(activeModule.quiz, answers);
+    await submitCourseEvent({
+      type: "module_quiz",
+      courseSlug: course.slug,
+      courseTitleEn: course.titleEn,
+      email: progress.email ?? "anonymous",
+      moduleId: activeModule.id,
+      moduleTitleEn: activeModule.id,
+      answers: answerPairs,
+    });
+    const updated = markModuleCompleted(
+      course.slug,
+      activeModule.id,
+      answers,
+      nextModule?.id ?? activeModule.id
+    );
+    setProgress(updated);
+    setQuizStatus("success");
+    setTimeout(() => {
+      if (isLastModule) {
+        if (course.finalEvaluation) {
+          setView("final-eval");
         } else {
           setView("finished");
         }
-      }, 900);
-    } catch {
-      setQuizStatus("error");
-    }
+      } else if (nextModule) {
+        setActiveModuleId(nextModule.id);
+        setView("video");
+      }
+      setQuizStatus("idle");
+    }, 700);
+  };
+
+  const handleFinalEvaluationSubmit = async (answers: QuizAnswer[]) => {
+    if (!course.finalEvaluation || finalStatus === "sending") return;
+    setFinalStatus("sending");
+    const answerPairs = buildAnswerLogPairs(course.finalEvaluation, answers);
+    await submitCourseEvent({
+      type: "final_evaluation",
+      courseSlug: course.slug,
+      courseTitleEn: course.titleEn,
+      email: progress.email ?? "anonymous",
+      answers: answerPairs,
+    });
+    const updated = markFinalEvaluationCompleted(course.slug, answers);
+    setProgress(updated);
+    setFinalStatus("success");
+    setTimeout(() => setView("finished"), 700);
   };
 
   return (
@@ -158,7 +177,6 @@ export default function LearnClient({ course }: Props) {
 
       <article className="relative z-[1] container mx-auto px-4 pb-20 pt-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Module list */}
           <aside className="lg:col-span-1 card-glow h-fit lg:sticky lg:top-6">
             <h2 className="text-base font-orbitron font-bold text-space-cyan mb-3">
               {t("courseModules")}
@@ -167,7 +185,7 @@ export default function LearnClient({ course }: Props) {
               {course.modules.map((m, i) => {
                 const completed = progress.completedModuleIds.includes(m.id);
                 const unlocked = isModuleUnlocked(progress, moduleIds, m.id);
-                const active = m.id === activeModule.id;
+                const active = m.id === activeModule.id && view !== "final-eval" && view !== "finished";
                 return (
                   <li key={m.id}>
                     <button
@@ -206,7 +224,6 @@ export default function LearnClient({ course }: Props) {
             </ol>
           </aside>
 
-          {/* Main */}
           <section className="lg:col-span-3 space-y-6">
             <motion.div
               key={`${activeModule.id}-${view}`}
@@ -231,6 +248,18 @@ export default function LearnClient({ course }: Props) {
                     {t("backToCourse")}
                   </Link>
                 </div>
+              ) : view === "final-eval" && course.finalEvaluation ? (
+                <Quiz
+                  questions={course.finalEvaluation}
+                  title={t("finalEvalTitle")}
+                  subtitle={t("finalEvalSubtitle")}
+                  submitLabel={t("finalEvalSubmit")}
+                  status={finalStatus}
+                  successMessage={t("finalEvalSubmitted")}
+                  errorMessage={t("quizSubmitError")}
+                  sendingLabel={t("quizSending")}
+                  onSubmit={handleFinalEvaluationSubmit}
+                />
               ) : view === "video" ? (
                 <div className="space-y-4">
                   <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -300,89 +329,18 @@ export default function LearnClient({ course }: Props) {
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleQuizSubmit} className="space-y-6">
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-orbitron font-bold text-space-cyan">
-                      {t("quizTitle")}
-                    </h2>
-                    <p className="text-sm text-space-ice/70 mt-1">{t("quizSubtitle")}</p>
-                  </div>
-
-                  {activeModule.quiz.map((q, qi) => (
-                    <fieldset key={q.questionKey} className="space-y-3">
-                      <legend className="text-sm font-semibold text-space-ice">
-                        {qi + 1}. {t(q.questionKey)}
-                      </legend>
-                      <div className="flex items-center gap-2">
-                        {[1, 2, 3, 4, 5].map((n) => (
-                          <label
-                            key={n}
-                            className={`flex-1 cursor-pointer rounded-lg border py-3 text-center font-orbitron font-bold transition-colors ${
-                              scores[qi] === n
-                                ? "border-space-cyan bg-space-cyan/20 text-space-cyan"
-                                : "border-space-blue/40 text-space-ice/70 hover:border-space-cyan/40"
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name={`q-${qi}`}
-                              value={n}
-                              checked={scores[qi] === n}
-                              onChange={() =>
-                                setScores((s) => s.map((v, i) => (i === qi ? n : v)))
-                              }
-                              required
-                              className="sr-only"
-                            />
-                            {n}
-                          </label>
-                        ))}
-                      </div>
-                      <div className="flex justify-between text-xs text-space-ice/50">
-                        <span>{t("quizScale1")}</span>
-                        <span>{t("quizScale5")}</span>
-                      </div>
-                    </fieldset>
-                  ))}
-
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setView("video")}
-                      className="text-sm text-space-ice/70 hover:text-space-cyan transition-colors"
-                    >
-                      <BackArrow size={14} className="inline mr-1" />
-                      {t("playerNowPlaying")}
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={
-                        quizStatus === "sending" || scores.some((s) => s < 1 || s > 5)
-                      }
-                      className="btn-primary inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      {quizStatus === "sending" ? (
-                        <>
-                          <Loader2 size={16} className="animate-spin" />
-                          {t("quizSending")}
-                        </>
-                      ) : (
-                        t("quizSubmit")
-                      )}
-                    </button>
-                  </div>
-
-                  {quizStatus === "success" && (
-                    <p className="text-xs text-green-400 text-center">
-                      {t("quizSubmitted")}
-                    </p>
-                  )}
-                  {quizStatus === "error" && (
-                    <p className="text-xs text-red-400 text-center">
-                      {t("quizSubmitError")}
-                    </p>
-                  )}
-                </form>
+                <Quiz
+                  key={activeModule.id}
+                  questions={activeModule.quiz}
+                  title={t("quizTitle")}
+                  subtitle={t("quizSubtitle")}
+                  submitLabel={t("quizSubmit")}
+                  status={quizStatus}
+                  successMessage={t("quizSubmitted")}
+                  errorMessage={t("quizSubmitError")}
+                  sendingLabel={t("quizSending")}
+                  onSubmit={handleModuleQuizSubmit}
+                />
               )}
             </motion.div>
           </section>

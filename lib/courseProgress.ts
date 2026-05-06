@@ -13,12 +13,16 @@
  *   email: string,
  *   completedModuleIds: string[],
  *   currentModuleId: string | null,
- *   quizScores: { [moduleId]: number[] }  // length-3 array, values 1..5
+ *   quizAnswers: { [moduleId]: (number | string)[] },
+ *   finalEvaluationCompleted: boolean,
+ *   finalEvaluationAnswers: (number | string)[] | null
  * }
  * ```
  */
 
 const KEY_PREFIX = "portfolio:course:";
+
+export type QuizAnswer = number | string;
 
 export type CourseProgress = {
   registered: boolean;
@@ -26,7 +30,9 @@ export type CourseProgress = {
   email: string | null;
   completedModuleIds: string[];
   currentModuleId: string | null;
-  quizScores: Record<string, number[]>;
+  quizAnswers: Record<string, QuizAnswer[]>;
+  finalEvaluationCompleted: boolean;
+  finalEvaluationAnswers: QuizAnswer[] | null;
 };
 
 const empty = (): CourseProgress => ({
@@ -35,7 +41,9 @@ const empty = (): CourseProgress => ({
   email: null,
   completedModuleIds: [],
   currentModuleId: null,
-  quizScores: {},
+  quizAnswers: {},
+  finalEvaluationCompleted: false,
+  finalEvaluationAnswers: null,
 });
 
 export function getProgress(slug: string): CourseProgress {
@@ -74,7 +82,7 @@ export function markRegistered(slug: string, email: string, firstModuleId: strin
 export function markModuleCompleted(
   slug: string,
   moduleId: string,
-  scores: number[],
+  answers: QuizAnswer[],
   nextModuleId: string | null
 ): CourseProgress {
   const current = getProgress(slug);
@@ -85,7 +93,21 @@ export function markModuleCompleted(
     ...current,
     completedModuleIds: completed,
     currentModuleId: nextModuleId ?? moduleId,
-    quizScores: { ...current.quizScores, [moduleId]: scores },
+    quizAnswers: { ...current.quizAnswers, [moduleId]: answers },
+  };
+  saveProgress(slug, progress);
+  return progress;
+}
+
+export function markFinalEvaluationCompleted(
+  slug: string,
+  answers: QuizAnswer[]
+): CourseProgress {
+  const current = getProgress(slug);
+  const progress: CourseProgress = {
+    ...current,
+    finalEvaluationCompleted: true,
+    finalEvaluationAnswers: answers,
   };
   saveProgress(slug, progress);
   return progress;
