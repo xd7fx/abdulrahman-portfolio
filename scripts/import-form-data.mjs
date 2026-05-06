@@ -14,7 +14,11 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import * as XLSX from "xlsx";
+import { createRequire } from "node:module";
+
+// xlsx ships CommonJS; force CJS resolution for ESM compatibility.
+const require = createRequire(import.meta.url);
+const XLSX = require("xlsx");
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, "..");
