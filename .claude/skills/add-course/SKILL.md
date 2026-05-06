@@ -37,7 +37,9 @@ Use `AskUserQuestion` (skip fields the user provided up-front).
 - Module description in English (1 sentence)
 - Module description in Arabic
 - YouTube video ID (the `v=` parameter of an UNLISTED YouTube video) — confirm it's `unlisted`, NOT private (private won't embed)
-- Google Slides embed URL — File → Share → Publish to web → Embed → copy the `src` of the resulting iframe (NOT the share URL). Optional.
+- Slides embed URL (optional). Any provider whose embed URL allows iframing. Verified providers:
+    - **Google Slides:** File → Share → Publish to web → Embed → copy `src` (format `https://docs.google.com/presentation/d/e/<id>/embed?...`).
+    - **Canva:** Share → More → Embed → copy `src` from the iframe snippet (format `https://www.canva.com/design/<id>/view?embed`). Short `canva.link/...` URLs are NOT embed URLs and will not work.
 - Approximate duration (e.g. "12:30")
 - 3 quiz questions in English + Arabic. Each is a 1–5 scale prompt asking how clear/useful/applicable the module was. The user can write their own — do not invent questions if they don't supply them.
 
@@ -102,7 +104,7 @@ Edit [data/courses.ts](../../../data/courses.ts). Append a new object to the `co
       titleKey: "<prefix>Mod1Title",
       descriptionKey: "<prefix>Mod1Desc",
       youtubeId: "<11-char YouTube ID>",
-      googleSlidesEmbedUrl: "<url>",  // omit if absent
+      slidesEmbedUrl: "<url>",  // omit if absent — any iframe-embeddable URL (Google Slides, Canva, etc.)
       duration: "<m:ss>",             // omit if absent
       quiz: [
         { questionKey: "<prefix>Mod1Q1", type: "scale-1-5" },
@@ -130,7 +132,7 @@ If all pass: tell the user the new URL (`/courses/<slug>`) and recommend `npm ru
 
 - All localized text goes through translation keys. Never hard-code Arabic or English copy in `data/courses.ts`.
 - YouTube video IDs are 11-character strings (e.g. `dQw4w9WgXcQ`). Reject obvious mistakes.
-- Google Slides embed URL must be the `src` from the "Publish to web → Embed" iframe — NOT the share link, NOT the editor URL. The format is `https://docs.google.com/presentation/d/e/.../embed?...`.
+- The `slidesEmbedUrl` must be a true embed URL (the `src` of the iframe Canva/Google Slides give you) — NOT a share link, NOT an editor URL, NOT a `canva.link/...` shortlink. Examples that work: `https://docs.google.com/presentation/d/e/.../embed?...`, `https://www.canva.com/design/.../view?embed`.
 - The video must be set to "Unlisted" on YouTube. "Private" videos do not embed.
 - Do not modify other courses' entries.
 - Do not invent quiz questions, descriptions, or YouTube IDs the user didn't supply.

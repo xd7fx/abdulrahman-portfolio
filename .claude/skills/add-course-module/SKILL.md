@@ -21,7 +21,7 @@ Use `AskUserQuestion`:
 - Module description in English (1 sentence)
 - Module description in Arabic
 - YouTube video ID (11 chars, from an UNLISTED video — NOT private)
-- Google Slides embed URL (optional). If provided, must be the `src` from "Publish to web → Embed", not the share/edit URL.
+- Slides embed URL (optional). Must be a true embed URL — the `src` of the iframe the provider gives you, not a share/edit/shortlink URL. Verified providers: **Google Slides** (`https://docs.google.com/presentation/d/e/<id>/embed?...`), **Canva** (`https://www.canva.com/design/<id>/view?embed`).
 - Approximate duration (e.g. "14:20")
 - 3 quiz questions in English + Arabic — 1–5 scale, asking how clear/useful/applicable the module was
 
@@ -54,7 +54,7 @@ Edit [data/courses.ts](../../../data/courses.ts). Locate the target course by it
   titleKey: "<prefix>Mod<n>Title",
   descriptionKey: "<prefix>Mod<n>Desc",
   youtubeId: "<11-char YouTube ID>",
-  googleSlidesEmbedUrl: "<url>",  // omit if absent
+  slidesEmbedUrl: "<url>",  // omit if absent — any iframe-embeddable URL (Google Slides, Canva, etc.)
   duration: "<m:ss>",             // omit if absent
   quiz: [
     { questionKey: "<prefix>Mod<n>Q1", type: "scale-1-5" },
@@ -75,7 +75,7 @@ If all pass: tell the user the module is live and existing students will see it 
 ## Constraints
 
 - 11-char YouTube IDs only; reject anything else.
-- Google Slides URL must be the embed `src`, not share/edit URLs.
+- `slidesEmbedUrl` must be a true embed `src` (Google Slides, Canva, etc.) — never a share/edit URL or `canva.link/...` shortlink.
 - Module must be set to Unlisted on YouTube.
 - Do not modify other modules of the same course.
 - Do not invent quiz questions.

@@ -53,7 +53,7 @@ Every content section reads from a typed module under [data/](data/) — never h
 
 Conventions specific to courses:
 - `youtubeId` must be the 11-character video id from an **Unlisted** YouTube video (Private won't embed).
-- `googleSlidesEmbedUrl` must be the `src` from File → Share → Publish to web → Embed (NOT the share/edit URL).
+- `slidesEmbedUrl` accepts any iframe-embeddable provider URL — verified: **Google Slides** (`docs.google.com/presentation/d/e/<id>/embed?...` from File → Share → Publish to web → Embed) and **Canva** (`www.canva.com/design/<id>/view?embed` from Share → More → Embed). Short `canva.link/...` URLs are redirects, not embed URLs — they will not iframe.
 - Each module's quiz has exactly 3 questions, all `type: "scale-1-5"`.
 - Translation keys for a course follow `<coursePrefix>Title/Desc/About` and `<coursePrefix>Mod<n>Title/Desc/Q1..Q3`. The `<coursePrefix>` is the slug in camelCase (e.g. `drone-360` → `drone360`).
 - The `/learn` route is excluded from the sitemap and `robots: { index: false }` — student pages aren't search content.

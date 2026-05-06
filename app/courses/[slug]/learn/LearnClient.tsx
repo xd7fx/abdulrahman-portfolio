@@ -268,16 +268,17 @@ export default function LearnClient({ course }: Props) {
                     )}
                   </div>
 
-                  {activeModule.googleSlidesEmbedUrl && (
+                  {activeModule.slidesEmbedUrl && (
                     <div className="space-y-2">
                       <h3 className="text-sm font-orbitron font-semibold text-space-cyan">
                         {t("playerSlides")}
                       </h3>
                       <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-space-cyan/20 bg-space-dark">
                         <iframe
-                          src={activeModule.googleSlidesEmbedUrl}
+                          src={activeModule.slidesEmbedUrl}
                           title={course.titleEn + " — slides — " + activeModule.id}
                           className="absolute inset-0 w-full h-full"
+                          allow="fullscreen"
                           allowFullScreen
                         />
                       </div>

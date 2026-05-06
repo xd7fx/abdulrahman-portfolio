@@ -11,7 +11,7 @@
  * through `useLanguage().t(...)` against `contexts/LanguageContext.tsx`.
  * Every key referenced here MUST exist in both `en` and `ar` blocks.
  *
- * Tech-noun fields (`youtubeId`, `googleSlidesEmbedUrl`) are stable
+ * Tech-noun fields (`youtubeId`, `slidesEmbedUrl`) are stable
  * identifiers, NOT translated.
  *
  * To add a new course or module, prefer the `/add-course` and
@@ -33,8 +33,18 @@ export type CourseModule = {
   descriptionKey: string;
   /** YouTube video ID — the part after `?v=` in the URL. Use unlisted videos. */
   youtubeId: string;
-  /** Optional Google Slides EMBED url — File → Share → Publish to web → Embed. */
-  googleSlidesEmbedUrl?: string;
+  /**
+   * Optional slides embed URL — any provider whose embed URL allows iframing
+   * with `X-Frame-Options: ALLOWALL`. Verified providers:
+   *   - Google Slides:  File → Share → Publish to web → Embed → copy `src`.
+   *     Format: `https://docs.google.com/presentation/d/e/<id>/embed?...`
+   *   - Canva:  Share → More → Embed → copy `src` from the iframe snippet.
+   *     Format: `https://www.canva.com/design/<id>/view?embed`
+   *     (NOTE: short `canva.link/...` URLs are NOT embed URLs — they are
+   *     redirect links that browsers refuse to iframe.)
+   * Other providers may work as long as they expose a public embed URL.
+   */
+  slidesEmbedUrl?: string;
   /** Approximate duration label, e.g. "12:30". Free-form. */
   duration?: string;
   /** Exactly 3 quiz questions. Each is rated on a 1–5 scale unless otherwise typed. */
@@ -84,7 +94,7 @@ export const courses: Course[] = [
         titleKey: "drone360Mod1Title",
         descriptionKey: "drone360Mod1Desc",
         youtubeId: "REPLACE_WITH_VIDEO_ID",
-        googleSlidesEmbedUrl: "",
+        slidesEmbedUrl: "",
         duration: "—",
         quiz: [
           { questionKey: "drone360Mod1Q1", type: "scale-1-5" },
@@ -97,7 +107,7 @@ export const courses: Course[] = [
         titleKey: "drone360Mod2Title",
         descriptionKey: "drone360Mod2Desc",
         youtubeId: "REPLACE_WITH_VIDEO_ID",
-        googleSlidesEmbedUrl: "",
+        slidesEmbedUrl: "",
         duration: "—",
         quiz: [
           { questionKey: "drone360Mod2Q1", type: "scale-1-5" },
