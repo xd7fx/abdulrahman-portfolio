@@ -15,9 +15,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Course } from "@/data/courses";
+import { specializations } from "@/data/specializations";
+import { universities } from "@/data/universities";
+import Combobox, { OTHER_VALUE, type ComboboxOption } from "@/components/Combobox";
 import LanguageToggle from "@/components/LanguageToggle";
 import ParticleBackground from "@/components/ParticleBackground";
 import { submitCourseEvent } from "@/lib/coursesWebhook";
@@ -51,8 +54,10 @@ export default function CourseLanding({ course }: Props) {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    university: "",
-    major: "",
+    universityChoice: "",
+    universityOther: "",
+    majorChoice: "",
+    majorOther: "",
     level: "" as (typeof LEVEL_KEYS)[number] | "",
     agreed: false,
   });
@@ -61,14 +66,39 @@ export default function CourseLanding({ course }: Props) {
     setProgress(getProgress(course.slug));
   }, [course.slug]);
 
+  // Build dropdown option lists from the (possibly empty) data files.
+  const universityOptions: ComboboxOption[] = useMemo(
+    () =>
+      universities.map((u) => ({
+        value: u.name,
+        label: u.name,
+        hint: u.sector === "government" ? t("uniSectorGov") : u.sector === "private" ? t("uniSectorPrivate") : undefined,
+      })),
+    [t]
+  );
+  const specializationOptions: ComboboxOption[] = useMemo(
+    () =>
+      specializations.map((s) => ({
+        value: s.name,
+        label: s.name,
+        hint: s.university,
+      })),
+    []
+  );
+
+  const universityFinal =
+    form.universityChoice === OTHER_VALUE ? form.universityOther.trim() : form.universityChoice;
+  const majorFinal =
+    form.majorChoice === OTHER_VALUE ? form.majorOther.trim() : form.majorChoice;
+
   const moduleIds = course.modules.map((m) => m.id);
   const isRegistered = progress?.registered ?? false;
   const BackArrow = dir === "rtl" ? ArrowRight : ArrowLeft;
   const canSubmit =
     form.name.trim().length > 0 &&
     form.email.trim().length > 0 &&
-    form.university.trim().length > 0 &&
-    form.major.trim().length > 0 &&
+    universityFinal.length > 0 &&
+    majorFinal.length > 0 &&
     form.level !== "" &&
     form.agreed &&
     status !== "sending";
@@ -84,8 +114,8 @@ export default function CourseLanding({ course }: Props) {
       courseTitleEn: course.titleEn,
       email: form.email,
       name: form.name,
-      university: form.university,
-      major: form.major,
+      university: universityFinal,
+      major: majorFinal,
       level: form.level || "unspecified",
       agreed: form.agreed,
     });
@@ -312,29 +342,65 @@ export default function CourseLanding({ course }: Props) {
                     />
                   </label>
 
-                  <label className="block">
-                    <span className="text-xs text-space-ice/70">{t("universityField")}</span>
-                    <input
-                      type="text"
-                      required
-                      value={form.university}
-                      onChange={(e) => setForm({ ...form, university: e.target.value })}
-                      placeholder={t("universityPlaceholder")}
-                      className="mt-1 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
-                    />
-                  </label>
+                  <div className="block">
+                    <label htmlFor="combobox-university" className="text-xs text-space-ice/70">
+                      {t("universityField")}
+                    </label>
+                    <div className="mt-1">
+                      <Combobox
+                        id="combobox-university"
+                        options={universityOptions}
+                        value={form.universityChoice}
+                        onChange={(v) => setForm({ ...form, universityChoice: v })}
+                        placeholder={t("universityPlaceholder")}
+                        searchPlaceholder={t("comboboxSearchPlaceholder")}
+                        otherLabel={t("universityOtherOption")}
+                        ariaLabel={t("universityField")}
+                        required
+                      />
+                    </div>
+                    {form.universityChoice === OTHER_VALUE && (
+                      <input
+                        type="text"
+                        required
+                        value={form.universityOther}
+                        onChange={(e) => setForm({ ...form, universityOther: e.target.value })}
+                        placeholder={t("universityOtherPlaceholder")}
+                        aria-label={t("universityOtherPlaceholder")}
+                        className="mt-2 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
+                      />
+                    )}
+                  </div>
 
-                  <label className="block">
-                    <span className="text-xs text-space-ice/70">{t("majorField")}</span>
-                    <input
-                      type="text"
-                      required
-                      value={form.major}
-                      onChange={(e) => setForm({ ...form, major: e.target.value })}
-                      placeholder={t("majorPlaceholder")}
-                      className="mt-1 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
-                    />
-                  </label>
+                  <div className="block">
+                    <label htmlFor="combobox-major" className="text-xs text-space-ice/70">
+                      {t("majorField")}
+                    </label>
+                    <div className="mt-1">
+                      <Combobox
+                        id="combobox-major"
+                        options={specializationOptions}
+                        value={form.majorChoice}
+                        onChange={(v) => setForm({ ...form, majorChoice: v })}
+                        placeholder={t("majorPlaceholder")}
+                        searchPlaceholder={t("comboboxSearchPlaceholder")}
+                        otherLabel={t("majorOtherOption")}
+                        ariaLabel={t("majorField")}
+                        required
+                      />
+                    </div>
+                    {form.majorChoice === OTHER_VALUE && (
+                      <input
+                        type="text"
+                        required
+                        value={form.majorOther}
+                        onChange={(e) => setForm({ ...form, majorOther: e.target.value })}
+                        placeholder={t("majorOtherPlaceholder")}
+                        aria-label={t("majorOtherPlaceholder")}
+                        className="mt-2 w-full px-3 py-2 text-sm rounded-lg bg-space-navy/40 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-white placeholder:text-space-ice/40"
+                      />
+                    )}
+                  </div>
 
                   <fieldset className="block">
                     <legend className="text-xs text-space-ice/70 mb-2">
