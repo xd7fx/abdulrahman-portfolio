@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
-import { getAllProjectSlugs, getProjectBySlug } from "@/data/projects";
+import { getAllProjectSlugs, getProjectBySlug, type Project } from "@/data/projects";
 import ProjectDetail from "./ProjectDetail";
 
 const SITE_URL = "https://abdulrahman-portfolio.vercel.app";
@@ -38,8 +39,35 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
+function buildProjectSchema(project: Project) {
+  const url = `${SITE_URL}/projects/${project.slug}`;
+  const image = project.image.startsWith("http") ? project.image : `${SITE_URL}${project.image}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${url}#creativework`,
+    name: project.titleEn,
+    headline: project.titleEn,
+    url,
+    image,
+    keywords: project.tech.join(", "),
+    creator: { "@id": `${SITE_URL}/#person` },
+    ...(project.year && { dateCreated: project.year }),
+  };
+}
+
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = getProjectBySlug(params.slug);
   if (!project) notFound();
-  return <ProjectDetail project={project} />;
+  return (
+    <>
+      <Script
+        id={`project-schema-${project.slug}`}
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProjectSchema(project)) }}
+      />
+      <ProjectDetail project={project} />
+    </>
+  );
 }

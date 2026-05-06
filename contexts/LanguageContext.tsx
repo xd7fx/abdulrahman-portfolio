@@ -486,22 +486,6 @@ const translations = {
     sdaQ1DataScienceCertIssuer: "الأكاديمية السعودية الرقمية",
     sdaQ1DataScienceCertDesc: "برنامج متقدم في علم البيانات بمشاريع عملية وتطبيقات صناعية.",
 
-    // Legacy certificate keys (unused — kept for backwards reference)
-    cert1: "AI والتعلم الآلي",
-    cert2: "الرؤية الحاسوبية",
-    cert3: "الروبوتات والأنظمة المستقلة",
-    cert4: "تطوير الويب الكامل",
-    cert5: "علم البيانات والتحليلات",
-    cert6: "عمليات التعلم الآلي",
-
-    // Certificate descriptions (legacy)
-    certDesc1: "برنامج تدريبي متقدم في AI والتعلم الآلي",
-    certDesc2: "تقنيات معالجة الصور والتعرف على الأنماط",
-    certDesc3: "أنظمة الروبوتات المستقلة وROS",
-    certDesc4: "تطوير تطبيقات ويب حديثة وكاملة",
-    certDesc5: "تحليل البيانات والتصور والنمذجة",
-    certDesc6: "استراتيجيات MLOps والنشر",
-    
     // Contact
     contactTitle: "تواصل معي",
     contactSubtitle: "البؤرة الخارجية - مركز الاتصالات",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
-import { getAchievementBySlug, getAllAchievementSlugs } from "@/data/achievements";
+import { getAchievementBySlug, getAllAchievementSlugs, type Achievement } from "@/data/achievements";
 import AchievementDetail from "./AchievementDetail";
 
 const SITE_URL = "https://abdulrahman-portfolio.vercel.app";
@@ -47,8 +48,42 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
+function buildAchievementSchema(achievement: Achievement) {
+  const url = `${SITE_URL}/achievements/${achievement.slug}`;
+  const titleLabel = achievement.slug
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(" ");
+  const image = achievement.image
+    ? achievement.image.startsWith("http")
+      ? achievement.image
+      : `${SITE_URL}${achievement.image}`
+    : `${SITE_URL}/og-image.png`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "EducationalOccupationalCredential",
+    "@id": `${url}#credential`,
+    name: titleLabel,
+    url,
+    image,
+    dateCreated: achievement.year,
+    credentialCategory: achievement.rank === "recognition" ? "recognition" : "award",
+    recipient: { "@id": `${SITE_URL}/#person` },
+  };
+}
+
 export default function AchievementPage({ params }: { params: { slug: string } }) {
   const achievement = getAchievementBySlug(params.slug);
   if (!achievement) notFound();
-  return <AchievementDetail achievement={achievement} />;
+  return (
+    <>
+      <Script
+        id={`achievement-schema-${achievement.slug}`}
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildAchievementSchema(achievement)) }}
+      />
+      <AchievementDetail achievement={achievement} />
+    </>
+  );
 }

@@ -5,8 +5,7 @@ import { ChevronDown, Rocket, Brain, Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import SectionPlanet from "./SectionPlanet";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const ROLES_KEYS = ["heroTitle", "aiDevelopment", "roboticsEngineering", "mlSolutions"] as const;
+import { heroRoles } from "@/data/heroRoles";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -15,7 +14,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (reduceMotion) return;
-    const id = setInterval(() => setRoleIdx((i) => (i + 1) % ROLES_KEYS.length), 2800);
+    const id = setInterval(() => setRoleIdx((i) => (i + 1) % heroRoles.length), 2800);
     return () => clearInterval(id);
   }, [reduceMotion]);
 
@@ -78,7 +77,7 @@ export default function Hero() {
               transition={{ duration: 0.4 }}
               className="text-2xl md:text-4xl font-orbitron font-semibold text-space-cyan"
             >
-              {t(ROLES_KEYS[roleIdx])}
+              {t(heroRoles[roleIdx].key)}
             </motion.h2>
           </motion.div>
 
