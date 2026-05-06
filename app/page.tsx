@@ -7,6 +7,7 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Certificates from "@/components/Certificates";
+import Courses from "@/components/Courses";
 import WorkWithMe from "@/components/WorkWithMe";
 import Contact from "@/components/Contact";
 import Navigation from "@/components/Navigation";
@@ -32,6 +33,7 @@ export default function Home() {
         <Projects />
         <Achievements />
         <Certificates />
+        <Courses />
         <WorkWithMe />
         <Contact />
       </div>
