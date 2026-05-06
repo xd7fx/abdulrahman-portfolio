@@ -41,6 +41,22 @@ Every content section reads from a typed module under [data/](data/) — never h
 | [data/education.ts](data/education.ts) | `Education[]` | [components/About.tsx](components/About.tsx) | ❌ | `/add-education` |
 | [data/skills.ts](data/skills.ts) | `SkillCategory[]` | [components/About.tsx](components/About.tsx) | ❌ | `/add-skill-category` |
 | [data/services.ts](data/services.ts) | `Service[]` | [components/WorkWithMe.tsx](components/WorkWithMe.tsx) | ❌ | `/add-service` |
+| [data/heroRoles.ts](data/heroRoles.ts) | `HeroRole[]` | [components/Hero.tsx](components/Hero.tsx) | ❌ rotating subtitle | manual edit |
+| [data/courses.ts](data/courses.ts) | `Course[]` | [components/Courses.tsx](components/Courses.tsx) | ✅ `/courses/[slug]` + `/courses/[slug]/learn` | `/add-course` (new course) and `/add-course-module` (new module in existing course) |
+
+### Courses mini-LMS
+
+[components/Courses.tsx](components/Courses.tsx) renders course cards on the home page. Each course has:
+- **Public landing** at `/courses/[slug]` — overview + module list with locked/unlocked indicators + inline registration form. The form posts to Web3Forms (re-uses `NEXT_PUBLIC_WEB3FORMS_KEY` from the contact form) and stores `registered: true` in localStorage on success.
+- **Auth-gated player** at `/courses/[slug]/learn` — sidebar module nav, current-module YouTube embed (uses `youtube-nocookie.com`), optional Google Slides iframe, and a 3-question 1–5 reflection quiz between modules. Quiz submission posts scores to Web3Forms AND marks the module complete in localStorage, unlocking the next.
+- **Progress** lives entirely in [lib/courseProgress.ts](lib/courseProgress.ts) — `localStorage` key `portfolio:course:<slug>`. No backend, no real auth. Per-device.
+
+Conventions specific to courses:
+- `youtubeId` must be the 11-character video id from an **Unlisted** YouTube video (Private won't embed).
+- `googleSlidesEmbedUrl` must be the `src` from File → Share → Publish to web → Embed (NOT the share/edit URL).
+- Each module's quiz has exactly 3 questions, all `type: "scale-1-5"`.
+- Translation keys for a course follow `<coursePrefix>Title/Desc/About` and `<coursePrefix>Mod<n>Title/Desc/Q1..Q3`. The `<coursePrefix>` is the slug in camelCase (e.g. `drone-360` → `drone360`).
+- The `/learn` route is excluded from the sitemap and `robots: { index: false }` — student pages aren't search content.
 
 **Icon convention:** data modules store an `iconName` string; the consuming component owns a small `iconRegistry: Record<IconName, LucideIcon>`. Adding a new icon means editing the type union in the data file AND the registry in the component (and in any detail-page renderer that uses it). Don't import icons directly into data modules.
 
