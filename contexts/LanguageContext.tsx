@@ -30,6 +30,7 @@ const translations = {
     heroDescription: "Specialized in AI, Machine Learning, Computer Vision, and Robotics. Building innovative solutions that bridge the gap between technology and real-world impact.",
     exploreWork: "Explore My Work",
     getInTouch: "Get In Touch",
+    browseCourses: "Browse Courses",
     
     // About
     aboutTitle: "About Me",
@@ -411,6 +412,7 @@ const translations = {
     heroDescription: "متخصص في AI، Machine Learning، Computer Vision، والروبوتات. أبني حلول مبتكرة تربط بين التكنولوجيا والتأثير الواقعي.",
     exploreWork: "استكشف أعمالي",
     getInTouch: "تواصل معي",
+    browseCourses: "تصفّح الكورسات",
     viewProjects: "عرض المشاريع",
     
     // About

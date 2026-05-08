@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ChevronDown, Rocket, Brain, Eye } from "lucide-react";
+import { ChevronDown, Rocket, Brain, Eye, GraduationCap } from "lucide-react";
 import { useEffect, useState } from "react";
 import SectionPlanet from "./SectionPlanet";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -99,6 +99,13 @@ export default function Hero() {
           >
             <a href="#projects" className="btn-primary">
               {t("exploreWork")}
+            </a>
+            <a
+              href="#courses"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-orbitron font-semibold text-sm uppercase tracking-wider border-2 border-space-lava text-space-lava hover:bg-space-lava/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-lava"
+            >
+              <GraduationCap size={16} aria-hidden />
+              {t("browseCourses")}
             </a>
             <a
               href="#contact"

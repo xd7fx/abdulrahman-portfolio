@@ -7,7 +7,7 @@ import LanguageToggle from "./LanguageToggle";
 import MobileSidebar from "./MobileSidebar";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const SECTIONS = ["home", "about", "projects", "achievements", "certificates", "work", "contact"] as const;
+const SECTIONS = ["home", "about", "projects", "achievements", "certificates", "courses", "work", "contact"] as const;
 type SectionId = (typeof SECTIONS)[number];
 
 export default function Navigation() {
@@ -26,6 +26,7 @@ export default function Navigation() {
     { name: t("projects"), href: "#projects" },
     { name: t("achievements"), href: "#achievements" },
     { name: t("certificates"), href: "#certificates" },
+    { name: t("coursesTitle"), href: "#courses" },
     { name: t("workWithMeTitle"), href: "#work" },
     { name: t("contact"), href: "#contact" },
   ];

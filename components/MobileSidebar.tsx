@@ -20,6 +20,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
     { name: t("projects"), href: "#projects" },
     { name: t("achievements"), href: "#achievements" },
     { name: t("certificates"), href: "#certificates" },
+    { name: t("coursesTitle"), href: "#courses" },
     { name: t("workWithMeTitle"), href: "#work" },
     { name: t("contact"), href: "#contact" },
   ];
