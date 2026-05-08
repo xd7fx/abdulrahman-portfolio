@@ -116,7 +116,7 @@ export default function CourseLanding({ course }: Props) {
       name: form.name,
       university: universityFinal,
       major: majorFinal,
-      level: form.level || "unspecified",
+      level: form.level ? t(form.level) : "unspecified",
       agreed: form.agreed,
     });
 
