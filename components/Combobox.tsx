@@ -25,7 +25,7 @@ interface ComboboxProps {
   searchPlaceholder: string;
   /** Label for the "Other" sentinel option. */
   otherLabel: string;
-  /** Maximum filtered results to show at once. */
+  /** Maximum filtered results to show at once. Defaults to no limit (show all matches). */
   maxResults?: number;
   /** ARIA label for the trigger button. */
   ariaLabel: string;
@@ -44,7 +44,7 @@ export default function Combobox({
   placeholder,
   searchPlaceholder,
   otherLabel,
-  maxResults = 25,
+  maxResults,
   ariaLabel,
   id,
   required,
@@ -85,12 +85,13 @@ export default function Combobox({
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return options.slice(0, maxResults);
+    const cap = maxResults ?? Infinity;
+    if (!q) return cap === Infinity ? options : options.slice(0, cap);
     const matches: ComboboxOption[] = [];
     for (const opt of options) {
       if (opt.label.toLowerCase().includes(q) || (opt.hint?.toLowerCase().includes(q) ?? false)) {
         matches.push(opt);
-        if (matches.length >= maxResults) break;
+        if (matches.length >= cap) break;
       }
     }
     return matches;
