@@ -155,10 +155,8 @@ export const courses: Course[] = [
       { questionKey: "finalEvalQ4Comments", type: "free-text", optional: true },
     ],
     sponsors: [
-      { id: "sponsor-1", name: "Sponsor 1", logo: "/courses/drone-360/sponsors/sponsor1.png" },
-      { id: "sponsor-2", name: "Sponsor 2", logo: "/courses/drone-360/sponsors/sponsor2.png" },
-      { id: "sponsor-3", name: "Sponsor 3", logo: "/courses/drone-360/sponsors/sponsor3.png" },
-      { id: "sponsor-4", name: "Sponsor 4", logo: "/courses/drone-360/sponsors/sponsor4.png" },
+      { id: "sda-the-hub", name: "SDA — The Hub", logo: "/courses/drone-360/sponsors/SDA_the_hub.png" },
+      { id: "haymanat", name: "Haymanat", logo: "/courses/drone-360/sponsors/haymanat.jpg" },
     ],
   },
 ];

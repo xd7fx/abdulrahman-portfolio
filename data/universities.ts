@@ -4,7 +4,7 @@
  * Regenerate from the xlsx source(s) in `archive/raw-data/` by running:
  *   npm run import:form-data
  *
- * Generated: 2026-05-06T20:41:48.784Z
+ * Generated: 2026-05-08T13:48:59.283Z
  * Source rows: 93
  */
 export type UniversitySector = "government" | "private" | "unknown";
