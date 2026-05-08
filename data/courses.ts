@@ -120,15 +120,15 @@ export const courses: Course[] = [
     image: "/courses/drone-360.jpg",
     color: "from-purple-600 to-fuchsia-600",
     level: "Beginner → Intermediate",
-    totalDuration: "~2h",
+    totalDuration: "3 days",
     modules: [
       {
-        id: "intro-to-drones",
+        id: "day-1",
         titleKey: "drone360Mod1Title",
         descriptionKey: "drone360Mod1Desc",
-        youtubeId: "REPLACE_WITH_VIDEO_ID",
+        youtubeId: "_ToxHBoU1eo",
         slidesEmbedUrl: "",
-        duration: "—",
+        duration: "Day 1",
         quiz: [
           { questionKey: "drone360Mod1Q1", type: "stars-1-5" },
           {
@@ -140,12 +140,12 @@ export const courses: Course[] = [
         ],
       },
       {
-        id: "first-flight",
+        id: "day-2",
         titleKey: "drone360Mod2Title",
         descriptionKey: "drone360Mod2Desc",
-        youtubeId: "REPLACE_WITH_VIDEO_ID",
+        youtubeId: "Rg81qc8Se0g",
         slidesEmbedUrl: "",
-        duration: "—",
+        duration: "Day 2",
         quiz: [
           { questionKey: "drone360Mod2Q1", type: "stars-1-5" },
           {
@@ -154,6 +154,23 @@ export const courses: Course[] = [
             optionKeys: ["understoodYes", "understoodAlmost", "understoodNo"],
           },
           { questionKey: "drone360Mod2Q3", type: "free-text", optional: true },
+        ],
+      },
+      {
+        id: "day-3",
+        titleKey: "drone360Mod3Title",
+        descriptionKey: "drone360Mod3Desc",
+        youtubeId: "FzgowD22thg",
+        slidesEmbedUrl: "",
+        duration: "Day 3",
+        quiz: [
+          { questionKey: "drone360Mod3Q1", type: "stars-1-5" },
+          {
+            questionKey: "drone360Mod3Q2",
+            type: "multiple-choice",
+            optionKeys: ["understoodYes", "understoodAlmost", "understoodNo"],
+          },
+          { questionKey: "drone360Mod3Q3", type: "free-text", optional: true },
         ],
       },
     ],
