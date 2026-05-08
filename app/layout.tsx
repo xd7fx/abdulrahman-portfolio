@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Orbitron, Inter } from "next/font/google";
+import { Orbitron, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -11,9 +11,9 @@ const orbitron = Orbitron({
   display: "swap",
 });
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-body",
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
@@ -147,7 +147,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${orbitron.variable} ${inter.variable} font-sans antialiased bg-space-dark text-white selection:bg-space-cyan/40 selection:text-white`}
+        className={`${orbitron.variable} ${spaceGrotesk.variable} font-sans antialiased bg-space-dark text-white selection:bg-space-cyan/40 selection:text-white`}
       >
         <a
           href="#home"

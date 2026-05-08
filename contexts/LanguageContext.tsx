@@ -33,7 +33,7 @@ const translations = {
     
     // About
     aboutTitle: "About Me",
-    aboutSubtitle: "Ice World - Discover My Story",
+    aboutSubtitle: "Discover My Story",
     aboutBio: "I'm Abdulrahman Alnashri, an AI & Robotics Engineer passionate about creating intelligent systems that solve real-world problems. With expertise in machine learning, computer vision, and autonomous systems, I've supervised award-winning projects including the YAMAMAH Rescue Drone team that won 1st place at WRO Saudi Arabia 2025.",
     technicalArsenalTitle: "Technical Arsenal",
     skillCatAi: "AI & ML",
@@ -73,7 +73,7 @@ const translations = {
     
     // Projects
     projectsTitle: "Signature Projects",
-    projectsSubtitle: "Dark Matter - Explore My Work",
+    projectsSubtitle: "Explore My Work",
     viewGithub: "View on GitHub",
     viewProject: "View Project",
     
@@ -135,7 +135,7 @@ const translations = {
     
     // Achievements
     achievementsTitle: "Achievements & Recognition",
-    achievementsSubtitle: "Lava Planet - Hall of Fame",
+    achievementsSubtitle: "Hall of Fame",
     
     // Achievement 1
     ach1Title: "Drones Hackathon Winner",
@@ -179,7 +179,7 @@ const translations = {
     
     // Courses
     coursesTitle: "Courses",
-    coursesSubtitle: "Knowledge Hub — Learn With Me",
+    coursesSubtitle: "Learn With Me",
     coursesIntro: "Self-paced courses I built from real project experience. Each module is a video plus slides plus a short reflection quiz. Sign up once and your progress is saved.",
     viewCourse: "View Course",
     enrollNow: "Enroll Now",
@@ -279,7 +279,7 @@ const translations = {
 
     // Certificates
     certificatesTitle: "Certificates & Training",
-    certificatesSubtitle: "Crystal Moon - Training Records",
+    certificatesSubtitle: "Training Records",
     continuousLearning: "Continuous learning through industry-recognized certifications in AI, Robotics, Computer Vision, and Data Science from leading institutions.",
     viewCertificate: "View Certificate",
     totalCertificates: "Total Certificates",
@@ -309,7 +309,7 @@ const translations = {
 
     // Contact
     contactTitle: "Get In Touch",
-    contactSubtitle: "Outpost - Communication Hub",
+    contactSubtitle: "Communication Hub",
     contactDescription: "Interested in collaboration, have a project idea, or just want to connect? Feel free to reach out. Let's build something amazing together!",
     contactInfo: "Contact Information",
     email: "Email",
@@ -415,7 +415,7 @@ const translations = {
     
     // About
     aboutTitle: "عني",
-    aboutSubtitle: "عالم الجليد - اكتشف قصتي",
+    aboutSubtitle: "اكتشف قصتي",
     aboutBio: "أنا عبدالرحمن الناشري، مهندس AI وروبوتات شغوف بإنشاء أنظمة ذكية تحل المشاكل الواقعية. بخبرة في Machine Learning، Computer Vision، والأنظمة المستقلة، أشرفت على مشاريع حائزة على جوائز منها فريق طائرة يمامة للإنقاذ الذي فاز بالمركز الأول في WRO السعودية 2025.",
     skills: "المهارات",
     experience: "الخبرة",
@@ -456,7 +456,7 @@ const translations = {
     
     // Projects
     projectsTitle: "المشاريع المميزة",
-    projectsSubtitle: "المادة المظلمة - استكشف أعمالي",
+    projectsSubtitle: "استكشف أعمالي",
     viewGithub: "عرض على GitHub",
     viewProject: "عرض المشروع",
     technologies: "التقنيات",
@@ -519,7 +519,7 @@ const translations = {
     
     // Achievements
     achievementsTitle: "الإنجازات والتقدير",
-    achievementsSubtitle: "كوكب الحمم - قاعة المجد",
+    achievementsSubtitle: "قاعة المجد",
     
     // Achievement 1
     ach1Title: "فائز هاكثون الدرونز",
@@ -563,7 +563,7 @@ const translations = {
     
     // Courses
     coursesTitle: "الكورسات",
-    coursesSubtitle: "مركز المعرفة — تعلّم معي",
+    coursesSubtitle: "تعلّم معي",
     coursesIntro: "كورسات بنيتها من خبرتي العملية في مشاريع حقيقية. كل وحدة تتكون من فيديو + سلايدز + كويز قصير للتقييم. سجّل مرة وتقدمك يُحفظ.",
     viewCourse: "عرض الكورس",
     enrollNow: "سجّل الآن",
@@ -663,7 +663,7 @@ const translations = {
 
     // Certificates
     certificatesTitle: "الشهادات والتدريب",
-    certificatesSubtitle: "القمر البلوري - سجلات التدريب",
+    certificatesSubtitle: "سجلات التدريب",
     viewCertificate: "عرض الشهادة",
 
     // Certificate entries
@@ -688,7 +688,7 @@ const translations = {
 
     // Contact
     contactTitle: "تواصل معي",
-    contactSubtitle: "البؤرة الخارجية - مركز الاتصالات",
+    contactSubtitle: "مركز الاتصالات",
     contactDescription: "مهتم بالتعاون، لديك فكرة مشروع، أو تريد التواصل فقط؟ لا تتردد في التواصل. لنبني شيئاً رائعاً معاً!",
     contactInfo: "معلومات التواصل",
     email: "البريد الإلكتروني",

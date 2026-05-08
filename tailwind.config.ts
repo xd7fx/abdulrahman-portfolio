@@ -32,9 +32,9 @@ const config: Config = {
       },
       fontFamily: {
         orbitron: ["var(--font-orbitron)", "Orbitron", "sans-serif"],
-        sans: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-body)", "Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
         // Legacy alias kept for any component still referring to font-exo.
-        exo: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        exo: ["var(--font-body)", "Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       animation: {
         float: "float 6s ease-in-out infinite",
