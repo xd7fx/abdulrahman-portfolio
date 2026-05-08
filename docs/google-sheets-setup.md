@@ -17,9 +17,9 @@ volumes.
 
    | Tab name | Header row (row 1) |
    |----------|--------------------|
-   | `registrations` | `timestamp`, `courseSlug`, `courseTitleEn`, `name`, `email`, `university`, `major`, `level`, `agreed` |
-   | `module_quizzes` | `timestamp`, `courseSlug`, `courseTitleEn`, `email`, `moduleId`, `moduleTitleEn`, `q1_question`, `q1_answer`, `q2_question`, `q2_answer`, `q3_question`, `q3_answer` |
-   | `final_evaluations` | `timestamp`, `courseSlug`, `courseTitleEn`, `email`, `q1_question`, `q1_answer`, `q2_question`, `q2_answer`, `q3_question`, `q3_answer`, `q4_question`, `q4_answer` |
+   | `registrations` | `timestamp`, `language`, `courseSlug`, `courseTitleEn`, `name`, `email`, `university`, `major`, `level`, `agreed` |
+   | `module_quizzes` | `timestamp`, `language`, `courseSlug`, `courseTitleEn`, `email`, `moduleId`, `moduleTitleEn`, `q1_question`, `q1_answer`, `q2_question`, `q2_answer`, `q3_question`, `q3_answer` |
+   | `final_evaluations` | `timestamp`, `language`, `courseSlug`, `courseTitleEn`, `email`, `q1_question`, `q1_answer`, `q2_question`, `q2_answer`, `q3_question`, `q3_answer`, `q4_question`, `q4_answer` |
 
    Tab names must match exactly (lowercase, with underscores).
 
@@ -34,10 +34,12 @@ volumes.
        const event = JSON.parse(e.postData.contents);
        const ss = SpreadsheetApp.getActive();
        const ts = event.timestamp || new Date().toISOString();
+       const lang = event.language || '';
 
        if (event.type === 'registration') {
          ss.getSheetByName('registrations').appendRow([
            ts,
+           lang,
            event.courseSlug,
            event.courseTitleEn,
            event.name || '',
@@ -51,6 +53,7 @@ volumes.
          const a = event.answers || [];
          ss.getSheetByName('module_quizzes').appendRow([
            ts,
+           lang,
            event.courseSlug,
            event.courseTitleEn,
            event.email || '',
@@ -67,6 +70,7 @@ volumes.
          const a = event.answers || [];
          ss.getSheetByName('final_evaluations').appendRow([
            ts,
+           lang,
            event.courseSlug,
            event.courseTitleEn,
            event.email || '',

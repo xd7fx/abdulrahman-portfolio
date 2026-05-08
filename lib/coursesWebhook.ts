@@ -28,6 +28,8 @@ export type CourseEventBase = {
   courseTitleEn: string;
   /** Student email (always present once registered). */
   email: string;
+  /** UI language at the time of submission ("ar" | "en"). */
+  language?: "ar" | "en";
 };
 
 export type RegistrationEvent = CourseEventBase & {
@@ -71,6 +73,7 @@ function buildHumanReadableMessage(event: CourseEvent): string {
     `Type: ${event.type}`,
     `Timestamp: ${event.timestamp ?? new Date().toISOString()}`,
     `Email: ${event.email}`,
+    `Language: ${event.language ?? "—"}`,
   ];
   switch (event.type) {
     case "registration":

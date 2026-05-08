@@ -35,7 +35,7 @@ type View = "video" | "quiz" | "final-eval" | "finished";
 type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 export default function LearnClient({ course }: Props) {
-  const { t, dir } = useLanguage();
+  const { t, dir, language } = useLanguage();
   const router = useRouter();
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
@@ -108,6 +108,7 @@ export default function LearnClient({ course }: Props) {
       moduleId: activeModule.id,
       moduleTitleEn: activeModule.id,
       answers: answerPairs,
+      language,
     });
     const updated = markModuleCompleted(
       course.slug,
@@ -142,6 +143,7 @@ export default function LearnClient({ course }: Props) {
       courseTitleEn: course.titleEn,
       email: progress.email ?? "anonymous",
       answers: answerPairs,
+      language,
     });
     const updated = markFinalEvaluationCompleted(course.slug, answers);
     setProgress(updated);

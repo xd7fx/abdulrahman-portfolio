@@ -47,7 +47,7 @@ const LEVEL_KEYS = [
 ] as const;
 
 export default function CourseLanding({ course }: Props) {
-  const { t, dir } = useLanguage();
+  const { t, dir, language } = useLanguage();
   const router = useRouter();
   const [progress, setProgress] = useState<CourseProgress | null>(null);
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -118,6 +118,7 @@ export default function CourseLanding({ course }: Props) {
       major: majorFinal,
       level: form.level ? t(form.level) : "unspecified",
       agreed: form.agreed,
+      language,
     });
 
     // Local success even if both webhooks failed — student can still take the course.
