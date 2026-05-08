@@ -27,128 +27,106 @@ export default function Achievements() {
 
   return (
     <section id="achievements" className="py-12 relative overflow-hidden z-[1]">
-      <SectionPlanet planet="lava" size={480} position="right" />
+      <SectionPlanet planet="lava" size={420} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
           title={t("achievementsTitle")}
           subtitle={t("achievementsSubtitle")}
         />
 
-        <div className="max-w-5xl mx-auto">
-          <div className="relative">
-            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-space-cyan via-space-blue to-space-lava" />
-
-            <div className="space-y-12">
-              {achievements.map((achievement, index) => {
-                const Icon = iconRegistry[achievement.iconName];
-                const title = t(achievement.titleKey);
-                const subtitle = t(achievement.subtitleKey);
-                const description = t(achievement.descriptionKey);
-
-                return (
-                  <motion.div
-                    key={achievement.slug}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`relative flex items-center ${
-                      index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                    } flex-col`}
-                  >
-                    <div className="w-full md:w-5/12">
-                      <Link
-                        href={`/achievements/${achievement.slug}`}
-                        aria-label={`${t("viewDetails")} — ${title}`}
-                        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-2xl"
-                      >
-                        <motion.div
-                          className="card-glow relative group"
-                          whileHover={{ scale: 1.03 }}
-                        >
-                          <div className={`absolute inset-0 bg-gradient-to-br ${achievement.color} opacity-10 rounded-lg`} />
-
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-4">
-                              <div className="inline-block px-4 py-1 rounded-full bg-space-cyan/20 border border-space-cyan/50 text-space-cyan font-orbitron font-bold text-sm">
-                                {achievement.year}
-                              </div>
-                              <span
-                                className="inline-flex items-center gap-1 text-xs text-space-cyan/80 group-hover:text-space-cyan transition-colors"
-                                aria-hidden
-                              >
-                                {t("viewDetails")}
-                                <ArrowUpRight size={12} className={dir === "rtl" ? "-scale-x-100" : ""} />
-                              </span>
-                            </div>
-
-                            <div className="flex items-start gap-3 mb-3">
-                              <span className="text-4xl shrink-0">{achievement.emoji}</span>
-                              <div className="min-w-0">
-                                <h3 className="text-xl font-orbitron font-bold mb-1">
-                                  {title}
-                                </h3>
-                                <p className="text-space-cyan text-sm font-semibold">
-                                  {subtitle}
-                                </p>
-                              </div>
-                            </div>
-
-                            <p className="text-space-ice/80 text-sm leading-relaxed">
-                              {description}
-                            </p>
-                          </div>
-                        </motion.div>
-                      </Link>
-                    </div>
-
-                    <div className="hidden md:flex w-2/12 justify-center my-8 md:my-0">
-                      <motion.div
-                        className="w-16 h-16 rounded-full bg-space-dark border-4 border-space-cyan flex items-center justify-center relative z-10"
-                        whileHover={{ scale: 1.2, rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <Icon className="w-8 h-8 text-space-cyan" aria-hidden />
-                      </motion.div>
-                    </div>
-
-                    <div className="hidden md:block w-5/12" />
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
+        <div className="max-w-6xl mx-auto">
+          {/* Stats panel — top */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8"
           >
             {[
-              { label: t("firstPlaceAwards"), value: String(stats.first), emoji: "🥇" },
-              { label: t("secondPlaceAwards"), value: String(stats.second), emoji: "🥈" },
-              { label: t("specialRecognition"), value: String(stats.recognition), emoji: "⭐" },
-              { label: t("totalAchievements"), value: String(stats.total), emoji: "🏆" },
-            ].map((stat, index) => (
-              <motion.div
+              { label: t("firstPlaceAwards"), value: stats.first, emoji: "🥇" },
+              { label: t("secondPlaceAwards"), value: stats.second, emoji: "🥈" },
+              { label: t("specialRecognition"), value: stats.recognition, emoji: "⭐" },
+              { label: t("totalAchievements"), value: stats.total, emoji: "🏆" },
+            ].map((stat) => (
+              <div
                 key={stat.label}
-                className="card-glow text-center"
-                whileHover={{ scale: 1.05 }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7 + index * 0.1 }}
-                viewport={{ once: true }}
+                className="rounded-xl border border-space-cyan/20 bg-space-navy/30 backdrop-blur-sm px-4 py-3 flex items-center gap-3"
               >
-                <div className="text-3xl mb-2">{stat.emoji}</div>
-                <div className="text-2xl font-orbitron font-bold text-space-cyan mb-1">
-                  {stat.value}
+                <span className="text-2xl shrink-0" aria-hidden>
+                  {stat.emoji}
+                </span>
+                <div className="min-w-0">
+                  <div className="text-xl font-orbitron font-bold text-space-cyan leading-none">
+                    {stat.value}
+                  </div>
+                  <div className="text-[11px] text-space-ice/60 truncate">{stat.label}</div>
                 </div>
-                <div className="text-xs text-space-ice/70">{stat.label}</div>
-              </motion.div>
+              </div>
             ))}
           </motion.div>
+
+          {/* Compact grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {achievements.map((achievement, index) => {
+              const Icon = iconRegistry[achievement.iconName];
+              const title = t(achievement.titleKey);
+              const subtitle = t(achievement.subtitleKey);
+
+              return (
+                <motion.div
+                  key={achievement.slug}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: Math.min(index * 0.04, 0.3) }}
+                  viewport={{ once: true }}
+                >
+                  <Link
+                    href={`/achievements/${achievement.slug}`}
+                    aria-label={`${t("viewDetails")} — ${title}`}
+                    className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-xl"
+                  >
+                    <div className="relative h-full rounded-xl border border-space-cyan/20 bg-space-navy/30 backdrop-blur-sm p-4 transition-all duration-300 hover:border-space-cyan/50 hover:bg-space-navy/50">
+                      <div
+                        className={`absolute inset-0 rounded-xl bg-gradient-to-br ${achievement.color} opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none`}
+                        aria-hidden
+                      />
+                      <div className="relative z-10 flex flex-col h-full">
+                        <div className="flex items-center justify-between gap-2 mb-3">
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-space-cyan/15 border border-space-cyan/40 text-space-cyan font-orbitron font-semibold text-[11px]">
+                            <Icon size={11} aria-hidden />
+                            {achievement.year}
+                          </div>
+                          <span
+                            className="text-2xl leading-none"
+                            aria-hidden
+                          >
+                            {achievement.emoji}
+                          </span>
+                        </div>
+
+                        <h3 className="text-base font-orbitron font-bold leading-snug mb-1 line-clamp-2">
+                          {title}
+                        </h3>
+                        <p className="text-xs text-space-cyan/90 font-semibold mb-2 line-clamp-1">
+                          {subtitle}
+                        </p>
+
+                        <div className="mt-auto pt-2 flex items-center justify-end text-[11px] text-space-cyan/70 group-hover:text-space-cyan transition-colors">
+                          {t("viewDetails")}
+                          <ArrowUpRight
+                            size={12}
+                            className={`ms-1 ${dir === "rtl" ? "-scale-x-100" : ""}`}
+                            aria-hidden
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

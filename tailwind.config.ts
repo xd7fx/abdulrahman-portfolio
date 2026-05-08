@@ -32,7 +32,9 @@ const config: Config = {
       },
       fontFamily: {
         orbitron: ["var(--font-orbitron)", "Orbitron", "sans-serif"],
-        exo: ["var(--font-exo)", "Exo 2", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        // Legacy alias kept for any component still referring to font-exo.
+        exo: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       animation: {
         float: "float 6s ease-in-out infinite",

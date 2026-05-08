@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Orbitron, Exo_2 } from "next/font/google";
+import { Orbitron, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -7,13 +7,13 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-orbitron",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
-const exo2 = Exo_2({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-exo",
+  variable: "--font-inter",
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
@@ -147,7 +147,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${orbitron.variable} ${exo2.variable} font-exo antialiased bg-space-dark text-white selection:bg-space-cyan/40 selection:text-white`}
+        className={`${orbitron.variable} ${inter.variable} font-sans antialiased bg-space-dark text-white selection:bg-space-cyan/40 selection:text-white`}
       >
         <a
           href="#home"
