@@ -52,7 +52,9 @@ Every content section reads from a typed module under [data/](data/) — never h
 - **Progress** lives entirely in [lib/courseProgress.ts](lib/courseProgress.ts) — `localStorage` key `portfolio:course:<slug>`. No backend, no real auth. Per-device.
 
 Conventions specific to courses:
-- `youtubeId` must be the 11-character video id from an **Unlisted** YouTube video (Private won't embed).
+- A module's video source is one of two fields, checked in order:
+  - `videoUrl` — direct URL (typically `/courses/<slug>/videos/<file>.mp4` under `/public`). Renders as native HTML5 `<video>`. Use for self-hosted content. **Mind GitHub's 100MB-per-file limit** — for larger videos use Git LFS or fall back to a third-party host. Optional `videoPoster` provides the thumbnail shown before play.
+  - `youtubeId` — 11-character video id from an **Unlisted** YouTube video (Private won't embed). Used only when `videoUrl` is empty.
 - `slidesEmbedUrl` accepts any iframe-embeddable provider URL — verified: **Google Slides** (`docs.google.com/presentation/d/e/<id>/embed?...` from File → Share → Publish to web → Embed) and **Canva** (`www.canva.com/design/<id>/view?embed` from Share → More → Embed). Short `canva.link/...` URLs are redirects, not embed URLs — they will not iframe.
 - Each module's quiz has exactly 3 questions, all `type: "scale-1-5"`.
 - Translation keys for a course follow `<coursePrefix>Title/Desc/About` and `<coursePrefix>Mod<n>Title/Desc/Q1..Q3`. The `<coursePrefix>` is the slug in camelCase (e.g. `drone-360` → `drone360`).

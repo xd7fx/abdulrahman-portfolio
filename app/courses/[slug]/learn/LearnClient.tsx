@@ -279,8 +279,21 @@ export default function LearnClient({ course }: Props) {
                   </div>
 
                   <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-space-cyan/20 bg-space-dark">
-                    {activeModule.youtubeId &&
-                    activeModule.youtubeId !== "REPLACE_WITH_VIDEO_ID" ? (
+                    {activeModule.videoUrl ? (
+                      <video
+                        key={activeModule.id}
+                        src={activeModule.videoUrl}
+                        poster={activeModule.videoPoster}
+                        controls
+                        controlsList="nodownload"
+                        playsInline
+                        preload="metadata"
+                        className="absolute inset-0 w-full h-full bg-black"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : activeModule.youtubeId &&
+                      activeModule.youtubeId !== "REPLACE_WITH_VIDEO_ID" ? (
                       <iframe
                         src={`https://www.youtube-nocookie.com/embed/${activeModule.youtubeId}?rel=0&modestbranding=1`}
                         title={course.titleEn + " — " + activeModule.id}
@@ -290,7 +303,15 @@ export default function LearnClient({ course }: Props) {
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-space-ice/60 text-sm text-center px-6">
-                        Video coming soon — paste the YouTube ID into{" "}
+                        Video coming soon — set{" "}
+                        <code className="mx-1 px-1.5 py-0.5 rounded bg-space-navy/60 text-xs">
+                          videoUrl
+                        </code>{" "}
+                        or{" "}
+                        <code className="mx-1 px-1.5 py-0.5 rounded bg-space-navy/60 text-xs">
+                          youtubeId
+                        </code>{" "}
+                        in{" "}
                         <code className="mx-1 px-1.5 py-0.5 rounded bg-space-navy/60 text-xs">
                           data/courses.ts
                         </code>{" "}

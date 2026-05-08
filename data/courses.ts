@@ -38,8 +38,25 @@ export type CourseModule = {
   titleKey: string;
   /** Translation key for the short module description. */
   descriptionKey: string;
-  /** YouTube video ID — the part after `?v=` in the URL. Use unlisted videos. */
+  /**
+   * Direct video URL — typically a path under `/public` like
+   * `/courses/drone-360/videos/intro.mp4`, or any absolute URL the browser
+   * can request directly. When set, the player renders a native HTML5
+   * `<video>` tag and `youtubeId` is ignored. Prefer this for fully-owned
+   * content that doesn't need a third-party host.
+   */
+  videoUrl?: string;
+  /**
+   * YouTube video ID — the part after `?v=` in the URL. Use unlisted videos.
+   * Ignored when `videoUrl` is set.
+   */
   youtubeId: string;
+  /**
+   * Optional poster (thumbnail) shown before the user presses play on a
+   * `videoUrl` source. Path under `/public` or remote URL allow-listed in
+   * next.config.mjs. Has no effect on YouTube embeds.
+   */
+  videoPoster?: string;
   /**
    * Optional slides embed URL — any provider whose embed URL allows iframing
    * (Google Slides, Canva, etc.). Must be a true `src` from an embed snippet,
