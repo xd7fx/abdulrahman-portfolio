@@ -40,6 +40,29 @@ const NAME_HEADERS = [
   "university",
   "institution",
 ];
+const NAME_EN_HEADERS = [
+  "name_en",
+  "english",
+  "english name",
+  "university_en",
+  "institution_en",
+  "الاسم بالإنجليزية",
+  "الاسم بالانجليزية",
+  "الاسم بالانجليزي",
+  "الإنجليزية",
+];
+const PROGRAM_EN_HEADERS = [
+  "program_en",
+  "specialization_en",
+  "major_en",
+  "english",
+  "name_en",
+  "english name",
+  "البرنامج بالإنجليزية",
+  "البرنامج بالانجليزية",
+  "التخصص بالإنجليزية",
+  "التخصص بالانجليزية",
+];
 const SECTOR_HEADERS = ["نوع القطاع", "القطاع", "النوع", "sector", "type"];
 const PROGRAM_HEADERS = ["البرنامج الأكاديمي", "البرنامج", "التخصص", "program", "major", "specialization"];
 
@@ -96,6 +119,32 @@ function dedupeBy(items, keyFn) {
   return out;
 }
 
+function loadExistingUniversityEnLookup() {
+  // Best-effort: parse the existing data/universities.ts to preserve any
+  // hand-curated `nameEn` values when the xlsx source has no English column.
+  if (!existsSync(OUT_UNIVERSITIES)) return new Map();
+  const text = readFileSync(OUT_UNIVERSITIES, "utf8");
+  const map = new Map();
+  const re = /\{\s*name:\s*"((?:[^"\\]|\\.)*)"[^}]*?nameEn:\s*"((?:[^"\\]|\\.)*)"/g;
+  let m;
+  while ((m = re.exec(text))) {
+    map.set(m[1], m[2]);
+  }
+  return map;
+}
+
+function loadExistingSpecializationEnLookup() {
+  if (!existsSync(OUT_SPECIALIZATIONS)) return new Map();
+  const text = readFileSync(OUT_SPECIALIZATIONS, "utf8");
+  const map = new Map();
+  const re = /\{\s*name:\s*"((?:[^"\\]|\\.)*)"[^}]*?nameEn:\s*"((?:[^"\\]|\\.)*)"/g;
+  let m;
+  while ((m = re.exec(text))) {
+    map.set(m[1], m[2]);
+  }
+  return map;
+}
+
 function buildUniversities() {
   const file = pickFirstExistingFile(UNIVERSITY_FILE_CANDIDATES);
   if (!file) {
@@ -112,16 +161,24 @@ function buildUniversities() {
   const header = rows[0];
   let nameIdx = findColIdx(header, NAME_HEADERS);
   let sectorIdx = findColIdx(header, SECTOR_HEADERS);
+  let nameEnIdx = findColIdx(header, NAME_EN_HEADERS);
   // Fallback positional if headers couldn't be matched
   if (nameIdx === -1) nameIdx = 0;
   if (sectorIdx === -1) sectorIdx = 1;
 
+  const enLookup = loadExistingUniversityEnLookup();
   const dataRows = rows.slice(1);
   const items = dataRows
-    .map((r) => ({
-      name: (r[nameIdx] || "").trim(),
-      sector: classifySector(r[sectorIdx] || ""),
-    }))
+    .map((r) => {
+      const name = (r[nameIdx] || "").trim();
+      const fromXlsx = nameEnIdx !== -1 ? (r[nameEnIdx] || "").trim() : "";
+      const nameEn = fromXlsx || enLookup.get(name) || "";
+      return {
+        name,
+        nameEn,
+        sector: classifySector(r[sectorIdx] || ""),
+      };
+    })
     .filter((u) => u.name.length > 0);
   return dedupeBy(items, (u) => u.name);
 }
@@ -142,6 +199,7 @@ function buildSpecializations() {
   const header = rows[0];
   let progIdx = findColIdx(header, PROGRAM_HEADERS);
   let uniIdx = findColIdx(header, NAME_HEADERS);
+  let progEnIdx = findColIdx(header, PROGRAM_EN_HEADERS);
   if (progIdx === -1 && uniIdx === -1) {
     // Whole-sheet positional fallback: prefer (university, program)
     uniIdx = 0;
@@ -151,12 +209,19 @@ function buildSpecializations() {
     progIdx = uniIdx === 0 ? 1 : 0;
   }
 
+  const enLookup = loadExistingSpecializationEnLookup();
   const dataRows = rows.slice(1);
   const items = dataRows
-    .map((r) => ({
-      name: (r[progIdx] || "").trim(),
-      university: uniIdx !== -1 ? (r[uniIdx] || "").trim() || undefined : undefined,
-    }))
+    .map((r) => {
+      const name = (r[progIdx] || "").trim();
+      const fromXlsx = progEnIdx !== -1 ? (r[progEnIdx] || "").trim() : "";
+      const nameEn = fromXlsx || enLookup.get(name) || "";
+      return {
+        name,
+        nameEn,
+        university: uniIdx !== -1 ? (r[uniIdx] || "").trim() || undefined : undefined,
+      };
+    })
     .filter((s) => s.name.length > 0);
   return dedupeBy(items, (s) => s.name);
 }
@@ -169,10 +234,15 @@ function tsLiteral(v) {
 function writeUniversities(items) {
   const lines = [
     "/**",
-    " * AUTO-GENERATED — do not edit by hand.",
+    " * AUTO-GENERATED from xlsx + preserved English names — do not edit `name`/`sector` by hand.",
     " *",
-    " * Regenerate from the xlsx source(s) in `archive/raw-data/` by running:",
+    " * Regenerate from the xlsx source in `archive/raw-data/` by running:",
     " *   npm run import:form-data",
+    " *",
+    " * `nameEn` values are preserved across re-imports: the script reads",
+    " * existing `nameEn` strings from this file and re-applies them by Arabic",
+    " * name. To override, add an `name_en` column to the xlsx OR edit this",
+    " * file by hand (subsequent re-runs will keep the edit).",
     " *",
     ` * Generated: ${new Date().toISOString()}`,
     ` * Source rows: ${items.length}`,
@@ -181,12 +251,15 @@ function writeUniversities(items) {
     "",
     "export type University = {",
     "  name: string;",
+    "  /** Official English name. Empty string when not yet translated. */",
+    "  nameEn: string;",
     "  sector: UniversitySector;",
     "};",
     "",
     "export const universities: University[] = [",
     ...items.map(
-      (u) => `  { name: ${tsLiteral(u.name)}, sector: ${tsLiteral(u.sector)} },`
+      (u) =>
+        `  { name: ${tsLiteral(u.name)}, nameEn: ${tsLiteral(u.nameEn || "")}, sector: ${tsLiteral(u.sector)} },`
     ),
     "];",
     "",
@@ -198,22 +271,29 @@ function writeUniversities(items) {
 function writeSpecializations(items) {
   const lines = [
     "/**",
-    " * AUTO-GENERATED — do not edit by hand.",
+    " * AUTO-GENERATED from xlsx + preserved English names — do not edit `name`/`university` by hand.",
     " *",
-    " * Regenerate from the xlsx source(s) in `archive/raw-data/` by running:",
+    " * Regenerate from the xlsx source in `archive/raw-data/` by running:",
     " *   npm run import:form-data",
+    " *",
+    " * `nameEn` values are preserved across re-imports.",
     " *",
     ` * Generated: ${new Date().toISOString()}`,
     ` * Source rows: ${items.length}`,
     " */",
     "export type Specialization = {",
     "  name: string;",
+    "  /** Official English name. Empty string when not yet translated. */",
+    "  nameEn: string;",
     "  university?: string;",
     "};",
     "",
     "export const specializations: Specialization[] = [",
     ...items.map((s) => {
-      const parts = [`name: ${tsLiteral(s.name)}`];
+      const parts = [
+        `name: ${tsLiteral(s.name)}`,
+        `nameEn: ${tsLiteral(s.nameEn || "")}`,
+      ];
       if (s.university) parts.push(`university: ${tsLiteral(s.university)}`);
       return `  { ${parts.join(", ")} },`;
     }),

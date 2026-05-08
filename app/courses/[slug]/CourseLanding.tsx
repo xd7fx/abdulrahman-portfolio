@@ -66,30 +66,66 @@ export default function CourseLanding({ course }: Props) {
     setProgress(getProgress(course.slug));
   }, [course.slug]);
 
-  // Build dropdown option lists from the (possibly empty) data files.
+  // Build dropdown option lists. The canonical `value` stays in Arabic so
+  // the form state survives a mid-form language toggle; the `label` shows
+  // the user-facing string in the active language (falling back to Arabic
+  // when an English name hasn't been filled in yet).
   const universityOptions: ComboboxOption[] = useMemo(
     () =>
-      universities.map((u) => ({
-        value: u.name,
-        label: u.name,
-        hint: u.sector === "government" ? t("uniSectorGov") : u.sector === "private" ? t("uniSectorPrivate") : undefined,
-      })),
-    [t]
+      universities.map((u) => {
+        const label = language === "en" && u.nameEn ? u.nameEn : u.name;
+        const altHint = language === "en" ? u.name : u.nameEn;
+        const sectorHint =
+          u.sector === "government"
+            ? t("uniSectorGov")
+            : u.sector === "private"
+              ? t("uniSectorPrivate")
+              : undefined;
+        return {
+          value: u.name,
+          label,
+          hint: [altHint, sectorHint].filter(Boolean).join(" · ") || undefined,
+        };
+      }),
+    [t, language]
   );
   const specializationOptions: ComboboxOption[] = useMemo(
     () =>
-      specializations.map((s) => ({
-        value: s.name,
-        label: s.name,
-        hint: s.university,
-      })),
-    []
+      specializations.map((s) => {
+        const label = language === "en" && s.nameEn ? s.nameEn : s.name;
+        const altHint = language === "en" ? s.name : s.nameEn;
+        return {
+          value: s.name,
+          label,
+          hint: [altHint, s.university].filter(Boolean).join(" · ") || undefined,
+        };
+      }),
+    [language]
   );
 
+  // Resolve the value the user picked into the language-appropriate string
+  // for storage. "Other" values are user-typed and stay verbatim.
+  const resolveUniversity = (raw: string) => {
+    if (!raw) return "";
+    const u = universities.find((x) => x.name === raw);
+    if (!u) return raw;
+    return language === "en" && u.nameEn ? u.nameEn : u.name;
+  };
+  const resolveMajor = (raw: string) => {
+    if (!raw) return "";
+    const s = specializations.find((x) => x.name === raw);
+    if (!s) return raw;
+    return language === "en" && s.nameEn ? s.nameEn : s.name;
+  };
+
   const universityFinal =
-    form.universityChoice === OTHER_VALUE ? form.universityOther.trim() : form.universityChoice;
+    form.universityChoice === OTHER_VALUE
+      ? form.universityOther.trim()
+      : resolveUniversity(form.universityChoice);
   const majorFinal =
-    form.majorChoice === OTHER_VALUE ? form.majorOther.trim() : form.majorChoice;
+    form.majorChoice === OTHER_VALUE
+      ? form.majorOther.trim()
+      : resolveMajor(form.majorChoice);
 
   const moduleIds = course.modules.map((m) => m.id);
   const isRegistered = progress?.registered ?? false;
