@@ -120,7 +120,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
+            className="grid grid-cols-4 gap-2 sm:gap-3 max-w-3xl mx-auto"
           >
             {[
               { label: t("projectsCount"), value: "7" },
@@ -130,16 +130,17 @@ export default function Hero() {
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
-                className="card-glow text-center"
-                whileHover={{ scale: 1.05 }}
-                initial={{ opacity: 0, scale: 0.8 }}
+                className="rounded-xl border border-space-cyan/20 bg-space-navy/30 backdrop-blur-sm py-3 px-2 text-center"
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1 + index * 0.1 }}
+                transition={{ delay: 1 + index * 0.08 }}
               >
-                <div className="text-3xl md:text-4xl font-orbitron font-bold text-space-cyan mb-2">
+                <div className="text-base sm:text-xl md:text-2xl font-orbitron font-bold text-space-cyan leading-none mb-1">
                   {stat.value}
                 </div>
-                <div className="text-sm text-space-ice/70">{stat.label}</div>
+                <div className="text-[10px] sm:text-xs text-space-ice/60 truncate">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </motion.div>

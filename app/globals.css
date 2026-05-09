@@ -15,9 +15,8 @@
   body {
     @apply bg-space-dark text-white;
     background-image:
-      radial-gradient(circle at 20% 50%, rgba(43, 58, 138, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 20%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+      radial-gradient(circle at 20% 50%, rgba(43, 58, 138, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.05) 0%, transparent 50%);
     background-attachment: fixed;
     overflow-x: hidden;
     width: 100%;
@@ -42,15 +41,12 @@
 
 @layer components {
   .glow-text {
-    text-shadow: 0 0 10px rgba(0, 191, 255, 0.8),
-                 0 0 20px rgba(0, 191, 255, 0.6),
-                 0 0 30px rgba(0, 191, 255, 0.4);
+    text-shadow: 0 0 12px rgba(0, 191, 255, 0.45),
+                 0 0 24px rgba(0, 191, 255, 0.2);
   }
 
   .glow-border {
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.2),
-                inset 0 0 10px rgba(0, 191, 255, 0.1);
+    border: 1px solid rgba(0, 191, 255, 0.2);
   }
 
   .card-glow {
@@ -58,10 +54,8 @@
   }
 
   .card-glow:hover {
-    @apply bg-space-navy/50;
-    box-shadow: 0 0 16px rgba(0, 191, 255, 0.35),
-                inset 0 0 16px rgba(0, 191, 255, 0.15);
-    transform: translateY(-3px);
+    @apply bg-space-navy/40 border-space-cyan/40;
+    transform: translateY(-2px);
   }
 
   .btn-primary {
