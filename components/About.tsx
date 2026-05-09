@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import SectionPlanet from "./SectionPlanet";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { education } from "@/data/education";
+import { experiences } from "@/data/experience";
 
 export default function About() {
   const { t } = useLanguage();
@@ -17,21 +19,21 @@ export default function About() {
           subtitle={t("aboutSubtitle")}
         />
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto space-y-6">
           {/* Bio */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="card-glow mb-8"
+            className="card-glow"
           >
             <p className="text-base md:text-lg text-space-ice/90 leading-relaxed">
               {t("aboutBio")}
             </p>
           </motion.div>
 
-          {/* Highlights — 3 across on every breakpoint so the page stays short */}
+          {/* Highlights — 3 across on every breakpoint */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -62,6 +64,70 @@ export default function About() {
               </motion.div>
             ))}
           </motion.div>
+
+          {/* Education + Experience — side-by-side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <motion.div
+              className="card-glow"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-2xl">🎓</span>
+                <h3 className="text-lg font-orbitron font-bold text-space-cyan">
+                  {t("educationTitle")}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                {education.map((entry) => (
+                  <div key={entry.id}>
+                    <h4 className="text-sm font-semibold text-space-ice">
+                      {t(entry.degreeKey)}
+                    </h4>
+                    <p className="text-xs text-space-cyan">{t(entry.schoolKey)}</p>
+                    {entry.gpaKey && (
+                      <p className="text-[11px] text-space-ice/70 mt-0.5">
+                        {t(entry.gpaKey)}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="card-glow"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.05 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-2xl">💼</span>
+                <h3 className="text-lg font-orbitron font-bold text-space-cyan">
+                  {t("experienceTitle")}
+                </h3>
+              </div>
+              <div className="space-y-3">
+                {experiences.map((entry) => (
+                  <div key={entry.id}>
+                    <h4 className="text-sm font-semibold text-space-ice">
+                      {t(entry.titleKey)}
+                    </h4>
+                    <p className="text-xs text-space-cyan">{t(entry.companyKey)}</p>
+                    <p className="text-[11px] text-space-ice/70 mt-0.5">
+                      {t(entry.periodKey)}
+                    </p>
+                    <p className="text-[11px] text-space-ice/50">
+                      {t(entry.locationKey)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

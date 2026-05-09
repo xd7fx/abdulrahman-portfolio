@@ -37,8 +37,8 @@ const translations = {
     aboutSubtitle: "Discover My Story",
     aboutBio: "I'm Abdulrahman Alnashri, an AI & Robotics Engineer passionate about creating intelligent systems that solve real-world problems. With expertise in machine learning, computer vision, and autonomous systems, I've supervised award-winning projects including the YAMAMAH Rescue Drone team that won 1st place at WRO Saudi Arabia 2025.",
     technicalArsenalTitle: "Technical Arsenal",
-    backgroundTitle: "Background",
-    backgroundSubtitle: "Education, Experience & Tech Stack",
+    backgroundTitle: "Tech Stack",
+    backgroundSubtitle: "What I Build With",
     skillCatAi: "AI & ML",
     skillCatRobotics: "Robotics",
     skillCatVision: "Computer Vision",
@@ -730,8 +730,8 @@ const translations = {
     
     // About Section Stats
     technicalArsenalTitle: "الترسانة التقنية",
-    backgroundTitle: "الخلفية المهنية",
-    backgroundSubtitle: "التعليم، الخبرات، والترسانة التقنية",
+    backgroundTitle: "الترسانة التقنية",
+    backgroundSubtitle: "الأدوات والتقنيات التي أعمل بها",
     bestEngineer2024: "أفضل مهندس 2024",
     wro2025Winner: "فائز WRO 2025",
     teamSupervisor: "مشرف فريق",
