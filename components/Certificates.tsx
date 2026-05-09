@@ -110,11 +110,11 @@ export default function Certificates() {
                 transition={{ delay: 0.6 + index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="text-3xl mb-2">{stat.emoji}</div>
-                <div className="text-2xl font-orbitron font-bold text-space-cyan mb-1">
+                <div className="text-xl md:text-2xl mb-1">{stat.emoji}</div>
+                <div className="text-base sm:text-lg md:text-xl font-orbitron font-bold text-space-cyan leading-none mb-0.5">
                   {stat.value}
                 </div>
-                <div className="text-xs text-space-ice/70">{stat.label}</div>
+                <div className="text-[10px] md:text-xs text-space-ice/60 truncate">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>

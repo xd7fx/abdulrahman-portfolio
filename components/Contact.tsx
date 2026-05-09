@@ -75,7 +75,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <p className="text-lg text-space-ice/80 max-w-2xl mx-auto">{t("contactDescription")}</p>
+            <p className="text-sm md:text-base lg:text-lg text-space-ice/80 max-w-2xl mx-auto">{t("contactDescription")}</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -88,7 +88,7 @@ export default function Contact() {
               className="space-y-6"
             >
               <div className="card-glow">
-                <h3 className="text-2xl font-orbitron font-bold mb-6 text-space-cyan">{t("contactInfo")}</h3>
+                <h3 className="text-lg md:text-xl lg:text-2xl font-orbitron font-bold mb-4 md:mb-6 text-space-cyan">{t("contactInfo")}</h3>
 
                 <div className="space-y-4">
                   <motion.a
@@ -96,8 +96,8 @@ export default function Contact() {
                     className="flex items-center gap-4 p-4 rounded-lg hover:bg-space-navy/30 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan"
                     whileHover={{ x: 5 }}
                   >
-                    <div className="w-12 h-12 rounded-full bg-space-cyan/20 flex items-center justify-center group-hover:bg-space-cyan/30 transition-colors">
-                      <Mail className="w-6 h-6 text-space-cyan" />
+                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-space-cyan/20 flex items-center justify-center group-hover:bg-space-cyan/30 transition-colors shrink-0">
+                      <Mail className="w-4 h-4 md:w-6 md:h-6 text-space-cyan" />
                     </div>
                     <div>
                       <p className="text-sm text-space-ice/70">{t("email")}</p>
@@ -106,8 +106,8 @@ export default function Contact() {
                   </motion.a>
 
                   <motion.div className="flex items-center gap-4 p-4 rounded-lg" whileHover={{ x: 5 }}>
-                    <div className="w-12 h-12 rounded-full bg-space-cyan/20 flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-space-cyan" />
+                    <div className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-space-cyan/20 flex items-center justify-center shrink-0">
+                      <MapPin className="w-4 h-4 md:w-6 md:h-6 text-space-cyan" />
                     </div>
                     <div>
                       <p className="text-sm text-space-ice/70">{t("location")}</p>
@@ -118,7 +118,7 @@ export default function Contact() {
               </div>
 
               <div className="card-glow">
-                <h3 className="text-xl font-orbitron font-bold mb-4 text-space-cyan">{t("connectWithMe")}</h3>
+                <h3 className="text-base md:text-lg lg:text-xl font-orbitron font-bold mb-3 md:mb-4 text-space-cyan">{t("connectWithMe")}</h3>
                 <div className="flex gap-4">
                   <motion.a
                     href="https://github.com/XD7FX"
@@ -154,7 +154,7 @@ export default function Contact() {
               viewport={{ once: true }}
             >
               <form onSubmit={handleSubmit} className="card-glow" noValidate>
-                <h3 className="text-2xl font-orbitron font-bold mb-6 text-space-cyan">{t("sendMessage")}</h3>
+                <h3 className="text-lg md:text-xl lg:text-2xl font-orbitron font-bold mb-4 md:mb-6 text-space-cyan">{t("sendMessage")}</h3>
 
                 <div className="space-y-4">
                   <div>

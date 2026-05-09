@@ -28,27 +28,27 @@ export default function Hero() {
       <div className="container mx-auto px-4 relative z-[2]">
         <div className="max-w-5xl mx-auto text-center">
           {/* Animated Icons */}
-          <div className="flex justify-center gap-8 mb-8">
+          <div className="flex justify-center gap-5 sm:gap-7 md:gap-8 mb-5 md:mb-7">
             <motion.div
               animate={reduceMotion ? undefined : { y: [0, -20, 0], rotate: [0, 10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               aria-hidden
             >
-              <Rocket className="w-12 h-12 text-space-cyan" />
+              <Rocket className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 text-space-cyan" />
             </motion.div>
             <motion.div
               animate={reduceMotion ? undefined : { y: [0, -20, 0], scale: [1, 1.2, 1] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               aria-hidden
             >
-              <Brain className="w-12 h-12 text-space-lava" />
+              <Brain className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 text-space-lava" />
             </motion.div>
             <motion.div
               animate={reduceMotion ? undefined : { y: [0, -20, 0], rotate: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               aria-hidden
             >
-              <Eye className="w-12 h-12 text-space-ice" />
+              <Eye className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 text-space-ice" />
             </motion.div>
           </div>
 
@@ -57,7 +57,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-[clamp(1.4rem,7.5vw,5rem)] md:text-7xl font-orbitron font-bold mb-6 leading-tight"
+            className="text-[clamp(1.25rem,6vw,4.5rem)] md:text-6xl lg:text-7xl font-orbitron font-bold mb-3 md:mb-5 leading-tight"
           >
             <span className="glow-text">{t("heroName")}</span>
           </motion.h1>
@@ -67,7 +67,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-10 md:h-12 mb-4 relative flex items-center justify-center"
+            className="h-7 md:h-10 mb-3 md:mb-4 relative flex items-center justify-center"
           >
             <motion.h2
               key={roleIdx}
@@ -75,7 +75,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.4 }}
-              className="text-2xl md:text-4xl font-orbitron font-semibold text-space-cyan"
+              className="text-base sm:text-xl md:text-3xl font-orbitron font-semibold text-space-cyan"
             >
               {t(heroRoles[roleIdx].key)}
             </motion.h2>
@@ -85,7 +85,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-space-ice/80 mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-sm sm:text-base md:text-lg text-space-ice/80 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-2"
           >
             {t("heroDescription")}
           </motion.p>

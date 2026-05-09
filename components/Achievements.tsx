@@ -53,14 +53,14 @@ export default function Achievements() {
                 key={stat.label}
                 className="rounded-xl border border-space-cyan/20 bg-space-navy/30 backdrop-blur-sm px-4 py-3 flex items-center gap-3"
               >
-                <span className="text-2xl shrink-0" aria-hidden>
+                <span className="text-lg sm:text-xl md:text-2xl shrink-0" aria-hidden>
                   {stat.emoji}
                 </span>
                 <div className="min-w-0">
-                  <div className="text-xl font-orbitron font-bold text-space-cyan leading-none">
+                  <div className="text-base sm:text-lg md:text-xl font-orbitron font-bold text-space-cyan leading-none">
                     {stat.value}
                   </div>
-                  <div className="text-[11px] text-space-ice/60 truncate">{stat.label}</div>
+                  <div className="text-[10px] md:text-[11px] text-space-ice/60 truncate">{stat.label}</div>
                 </div>
               </div>
             ))}

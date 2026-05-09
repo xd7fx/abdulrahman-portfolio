@@ -75,8 +75,8 @@ export default function About() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl">🎓</span>
-                <h3 className="text-lg font-orbitron font-bold text-space-cyan">
+                <span className="text-xl md:text-2xl">🎓</span>
+                <h3 className="text-base md:text-lg font-orbitron font-bold text-space-cyan">
                   {t("educationTitle")}
                 </h3>
               </div>
@@ -105,8 +105,8 @@ export default function About() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl">💼</span>
-                <h3 className="text-lg font-orbitron font-bold text-space-cyan">
+                <span className="text-xl md:text-2xl">💼</span>
+                <h3 className="text-base md:text-lg font-orbitron font-bold text-space-cyan">
                   {t("experienceTitle")}
                 </h3>
               </div>

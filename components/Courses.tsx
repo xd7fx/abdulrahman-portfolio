@@ -27,7 +27,7 @@ export default function Courses() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-lg text-space-ice/80 max-w-3xl mx-auto leading-relaxed text-center mb-12"
+            className="text-sm md:text-base lg:text-lg text-space-ice/80 max-w-3xl mx-auto leading-relaxed text-center mb-8 md:mb-10"
           >
             {t("coursesIntro")}
           </motion.p>
@@ -69,11 +69,11 @@ export default function Courses() {
                 </div>
 
                 <div className="relative z-10 flex flex-col flex-1">
-                  <h3 className="text-lg font-orbitron font-bold leading-snug mb-2">
+                  <h3 className="text-base md:text-lg font-orbitron font-bold leading-snug mb-2">
                     {t(course.titleKey)}
                   </h3>
 
-                  <p className="text-space-ice/80 mb-4 leading-relaxed text-sm line-clamp-3">
+                  <p className="text-space-ice/80 mb-4 leading-relaxed text-xs md:text-sm line-clamp-3">
                     {t(course.descriptionKey)}
                   </p>
 

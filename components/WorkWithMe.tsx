@@ -34,7 +34,7 @@ export default function WorkWithMe() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <p className="text-lg text-space-ice/80 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-base lg:text-lg text-space-ice/80 max-w-3xl mx-auto leading-relaxed">
               {t("workWithMeIntro")}
             </p>
           </motion.div>
@@ -52,14 +52,14 @@ export default function WorkWithMe() {
                   className="card-glow group text-center"
                 >
                   <div
-                    className={`w-16 h-16 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform mx-auto`}
+                    className={`w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform mx-auto`}
                   >
-                    <Icon className="w-8 h-8 text-white" aria-hidden />
+                    <Icon className="w-5 h-5 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white" aria-hidden />
                   </div>
-                  <h3 className="text-lg font-orbitron font-bold mb-3 group-hover:text-space-cyan transition-colors">
+                  <h3 className="text-sm md:text-base lg:text-lg font-orbitron font-bold mb-2 md:mb-3 group-hover:text-space-cyan transition-colors">
                     {t(service.titleKey)}
                   </h3>
-                  <p className="text-space-ice/70 leading-relaxed text-sm">
+                  <p className="text-space-ice/70 leading-relaxed text-xs md:text-sm">
                     {t(service.descriptionKey)}
                   </p>
                 </motion.div>
