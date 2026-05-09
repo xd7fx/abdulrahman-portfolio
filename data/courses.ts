@@ -78,6 +78,12 @@ export type Sponsor = {
   logo: string;
   /** Optional sponsor website. */
   link?: string;
+  /**
+   * Optional Tailwind padding override for the logo image inside its tile.
+   * Defaults to "p-4". Use a smaller value (e.g. "p-1") when the logo file
+   * has a lot of built-in whitespace and needs to fill more of the tile.
+   */
+  logoPadding?: string;
 };
 
 export type Course = {
@@ -192,7 +198,9 @@ export const courses: Course[] = [
       { id: "sda-the-hub", name: "SDA — The Hub", logo: "/courses/drone-360/sponsors/SDA_the_hub.png" },
       // TODO: replace placeholder names with the real sponsor names
       { id: "sponsor-4", name: "Sponsor", logo: "/courses/drone-360/sponsors/4.jpg" },
-      { id: "sponsor-62", name: "Sponsor", logo: "/courses/drone-360/sponsors/62.png" },
+      // 62.png has a lot of built-in whitespace, so we tighten the tile
+      // padding to make the logo read at a larger visual size.
+      { id: "sponsor-62", name: "Sponsor", logo: "/courses/drone-360/sponsors/62.png", logoPadding: "p-1" },
     ],
   },
 ];

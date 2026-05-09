@@ -532,7 +532,7 @@ export default function CourseLanding({ course }: Props) {
                         alt={sponsor.name}
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-contain p-4"
+                        className={`object-contain ${sponsor.logoPadding ?? "p-4"}`}
                       />
                     </div>
                   </div>
