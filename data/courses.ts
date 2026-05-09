@@ -127,7 +127,7 @@ export const courses: Course[] = [
         titleKey: "drone360Mod1Title",
         descriptionKey: "drone360Mod1Desc",
         youtubeId: "_ToxHBoU1eo",
-        slidesEmbedUrl: "",
+        slidesEmbedUrl: "https://www.canva.com/design/DAHCdOYE4v0/toZV-_tnWcf8GrjmWnvvow/view?embed",
         duration: "Day 1",
         quiz: [
           { questionKey: "drone360Mod1Q1", type: "stars-1-5" },
@@ -144,7 +144,7 @@ export const courses: Course[] = [
         titleKey: "drone360Mod2Title",
         descriptionKey: "drone360Mod2Desc",
         youtubeId: "Rg81qc8Se0g",
-        slidesEmbedUrl: "",
+        slidesEmbedUrl: "https://www.canva.com/design/DAHH4o23Myw/lMW9LY5omwK4b_bgJzoQ_A/view?embed",
         duration: "Day 2",
         quiz: [
           { questionKey: "drone360Mod2Q1", type: "stars-1-5" },
@@ -161,7 +161,7 @@ export const courses: Course[] = [
         titleKey: "drone360Mod3Title",
         descriptionKey: "drone360Mod3Desc",
         youtubeId: "FzgowD22thg",
-        slidesEmbedUrl: "",
+        slidesEmbedUrl: "https://www.canva.com/design/DAHJGOs0u-A/wD5L9ET111XjvOAq7_ilnA/view?embed",
         duration: "Day 3",
         quiz: [
           { questionKey: "drone360Mod3Q1", type: "stars-1-5" },
