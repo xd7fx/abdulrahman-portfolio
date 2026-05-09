@@ -57,7 +57,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-3xl sm:text-5xl md:text-7xl font-orbitron font-bold mb-6 whitespace-nowrap"
+            className="text-[clamp(1.4rem,7.5vw,5rem)] md:text-7xl font-orbitron font-bold mb-6 leading-tight"
           >
             <span className="glow-text">{t("heroName")}</span>
           </motion.h1>
@@ -95,24 +95,24 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-nowrap justify-center items-stretch gap-2 sm:gap-3 md:gap-4 mb-12"
+            className="grid grid-cols-3 gap-1.5 sm:gap-3 md:gap-4 mb-12 max-w-2xl mx-auto"
           >
             <a
               href="#projects"
-              className="inline-flex items-center justify-center px-3 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-lg font-orbitron font-semibold text-[11px] sm:text-xs md:text-sm uppercase tracking-wider bg-gradient-to-r from-space-cyan to-space-blue hover:shadow-lg hover:shadow-space-cyan/40 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan whitespace-nowrap"
+              className="min-w-0 inline-flex items-center justify-center px-1.5 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-lg font-orbitron font-semibold text-[9px] sm:text-xs md:text-sm uppercase tracking-tight sm:tracking-wider bg-gradient-to-r from-space-cyan to-space-blue hover:shadow-lg hover:shadow-space-cyan/40 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-center leading-tight"
             >
               {t("exploreWork")}
             </a>
             <a
               href="#courses"
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-lg font-orbitron font-semibold text-[11px] sm:text-xs md:text-sm uppercase tracking-wider border-2 border-space-lava text-space-lava hover:bg-space-lava/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-lava whitespace-nowrap"
+              className="min-w-0 inline-flex items-center justify-center gap-1.5 px-1.5 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-lg font-orbitron font-semibold text-[9px] sm:text-xs md:text-sm uppercase tracking-tight sm:tracking-wider border-2 border-space-lava text-space-lava hover:bg-space-lava/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-lava text-center leading-tight"
             >
               <GraduationCap size={14} aria-hidden className="hidden sm:inline" />
               {t("browseCourses")}
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-3 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-lg font-orbitron font-semibold text-[11px] sm:text-xs md:text-sm uppercase tracking-wider border-2 border-space-cyan hover:bg-space-cyan/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan whitespace-nowrap"
+              className="min-w-0 inline-flex items-center justify-center px-1.5 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-lg font-orbitron font-semibold text-[9px] sm:text-xs md:text-sm uppercase tracking-tight sm:tracking-wider border-2 border-space-cyan hover:bg-space-cyan/10 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan text-center leading-tight"
             >
               {t("getInTouch")}
             </a>
