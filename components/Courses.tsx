@@ -14,7 +14,7 @@ export default function Courses() {
 
   return (
     <section id="courses" className="py-10 md:py-14 relative overflow-hidden z-[1]">
-      <SectionPlanet planet="baren" size={460} position="right" />
+      <SectionPlanet planet="baren" size={460} position="right" verticalAlign="top" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
           title={t("coursesTitle")}

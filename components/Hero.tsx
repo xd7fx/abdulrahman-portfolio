@@ -23,7 +23,7 @@ export default function Hero() {
       id="home"
       className="min-h-[88vh] md:min-h-screen flex items-center justify-center relative pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden z-[1]"
     >
-      <SectionPlanet planet="terran" size={500} position="left" />
+      <SectionPlanet planet="terran" size={500} position="left" verticalAlign="top" />
 
       <div className="container mx-auto px-4 relative z-[2]">
         <div className="max-w-5xl mx-auto text-center">

@@ -7,6 +7,14 @@ interface SectionPlanetProps {
   planet: "terran" | "lava" | "ice" | "black_hole" | "baren";
   size?: number;
   position?: "left" | "right" | "center";
+  /**
+   * Vertical anchor for the planet. Defaults to "center" (the planet is
+   * vertically centered in the section). Use "top" / "bottom" when the
+   * section is short enough that the centered planet gets clipped — this
+   * lifts or lowers it so the visible portion sits cleanly inside the
+   * section's bounds.
+   */
+  verticalAlign?: "top" | "center" | "bottom";
 }
 
 const planetImages = {
@@ -17,21 +25,28 @@ const planetImages = {
   baren: "/planets/Baren.png",
 };
 
-export default function SectionPlanet({ 
-  planet, 
-  size = 400, 
-  position = "right" 
+export default function SectionPlanet({
+  planet,
+  size = 400,
+  position = "right",
+  verticalAlign = "center",
 }: SectionPlanetProps) {
-  
+
   const positionClasses = {
     right: "right-[-20%] md:right-[-5%]",
     left: "left-[-20%] md:left-[-5%]",
     center: "left-1/2 -translate-x-1/2"
   };
 
+  const verticalClasses = {
+    top: "top-[15%] -translate-y-1/2",
+    center: "top-1/2 -translate-y-1/2",
+    bottom: "top-[85%] -translate-y-1/2",
+  };
+
   return (
     <motion.div
-      className={`absolute ${positionClasses[position]} top-1/2 -translate-y-1/2 pointer-events-none opacity-20 z-0`}
+      className={`absolute ${positionClasses[position]} ${verticalClasses[verticalAlign]} pointer-events-none opacity-20 z-0`}
       initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
       whileInView={{ opacity: 0.2, scale: 1, rotate: 0 }}
       viewport={{ once: true, amount: 0.1 }}

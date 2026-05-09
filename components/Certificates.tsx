@@ -12,7 +12,7 @@ export default function Certificates() {
 
   return (
     <section id="certificates" className="py-10 md:py-14 relative overflow-hidden z-[1]">
-      <SectionPlanet planet="ice" size={460} position="left" />
+      <SectionPlanet planet="ice" size={460} position="left" verticalAlign="top" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
           title={t("certificatesTitle")}
