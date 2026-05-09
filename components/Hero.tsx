@@ -21,7 +21,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden z-[1]"
+      className="min-h-[88vh] md:min-h-screen flex items-center justify-center relative pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden z-[1]"
     >
       <SectionPlanet planet="terran" size={500} position="left" />
 
@@ -150,15 +150,16 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator — desktop only; takes too much vertical real estate
+          on phones where the user can already see About below the stats. */}
       <motion.a
         href="#about"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-full p-1"
+        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-full p-1"
         animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         aria-label="Scroll to About section"
       >
-        <ChevronDown className="w-8 h-8 text-space-cyan" />
+        <ChevronDown className="w-7 h-7 text-space-cyan" />
       </motion.a>
     </section>
   );
