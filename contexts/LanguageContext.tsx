@@ -73,7 +73,19 @@ const translations = {
     exp2Period: "Jun 2024 – Aug 2024 (3 months)",
     exp2Location: "Jeddah, Saudi Arabia · On-site",
     exp2Desc: "Comprehensive robotics internship covering mechanical design, electronics, AI/ROS, and web development",
-    
+
+    exp3Title: "AI Specialist · Zid AI App",
+    exp3Company: "Zid · Full-time",
+    exp3Period: "Jan 2026 – Present",
+    exp3Location: "Riyadh, Saudi Arabia · On-site",
+    exp3Desc: "Building embedded AI for merchants — copywriting, SEO, image enhancement, theme content, and store migration from Salla/Shopify. Stack: React, TypeScript, Supabase, serverless, OAuth 2.0.",
+
+    exp4Title: "Technical Supervisor — YAMAMAH Drone",
+    exp4Company: "Royal Commission for Jubail and Yanbu · Self-employed",
+    exp4Period: "Aug 2025 – Oct 2025 (3 months)",
+    exp4Location: "Remote",
+    exp4Desc: "Supervised the AI-powered autonomous rescue drone — Raspberry Pi edge AI, computer vision for victim detection with privacy blurring, n8n agent orchestration, STT/TTS, and weather-aware mission planning. Led the team to 1st place at WRO Saudi Arabia 2025 and Bronze Medal at the World Finals in Singapore.",
+
     // Projects
     projectsTitle: "Signature Projects",
     projectsSubtitle: "Explore My Work",
@@ -179,7 +191,17 @@ const translations = {
     ach8Title: "AgentX Hackathon Winner",
     ach8Subtitle: "3rd Place — Team Leader (2025)",
     ach8Desc: "Led team to 3rd place at AgentX Hackathon with SABAQ project - a functional AI prototype demonstrating scalable Multi-Agent Architecture designed for future integration with government services.",
-    
+
+    // Achievement 9
+    ach9Title: "RoboRumble Hackathon Mentor",
+    ach9Subtitle: "King Saud University · Mentor (2026)",
+    ach9Desc: "Mentored teams at the RoboRumble robotics hackathon at King Saud University — guided them through tackling technical challenges, refining designs, and rehearsing pitches under tight deadlines.",
+
+    // Achievement 10
+    ach10Title: "Princess Nourah Hackathon Mentor",
+    ach10Subtitle: "Princess Nourah University · Mentor (2026)",
+    ach10Desc: "Mentored 3 teams at the Princess Nourah hackathon (virtual + in-person stages). Coached on problem framing, solution design, and prototype building — every team reached the demo stage.",
+
     // Courses
     coursesTitle: "Courses",
     coursesSubtitle: "Learn With Me",
@@ -462,7 +484,19 @@ const translations = {
     exp2Period: "يونيو 2024 – أغسطس 2024 (3 أشهر)",
     exp2Location: "جدة، السعودية · من المقر",
     exp2Desc: "تدريب شامل في الروبوتات يغطي التصميم الميكانيكي، الإلكترونيات، AI/ROS، وتطوير الويب",
-    
+
+    exp3Title: "أخصائي ذكاء اصطناعي · تطبيق زد للذكاء الاصطناعي",
+    exp3Company: "زد · دوام كامل",
+    exp3Period: "يناير 2026 – حتى الآن",
+    exp3Location: "الرياض، السعودية · من المقر",
+    exp3Desc: "بناء ذكاء اصطناعي مدمج للتجار — كتابة المحتوى، تحسين SEO، تحسين الصور، محتوى القوالب، ونقل المتاجر من سلة وشوبيفاي. التقنيات: React، TypeScript، Supabase، Serverless، OAuth 2.0.",
+
+    exp4Title: "المشرف التقني — درون يمامة",
+    exp4Company: "الهيئة الملكية للجبيل وينبع · عمل حر",
+    exp4Period: "أغسطس 2025 – أكتوبر 2025 (3 أشهر)",
+    exp4Location: "عن بُعد",
+    exp4Desc: "الإشراف على تصميم وتنفيذ درون الإنقاذ ذاتي القيادة — معالجة الذكاء الاصطناعي على Raspberry Pi، رؤية حاسوبية لكشف الضحايا مع تمويه الوجوه، تنسيق وكلاء n8n، STT/TTS، وتخطيط الطلعات بناءً على الطقس. قدت الفريق للمركز الأول في WRO السعودية 2025 وميدالية برونزية في النهائيات العالمية بسنغافورة.",
+
     // Projects
     projectsTitle: "المشاريع المميزة",
     projectsSubtitle: "استكشف أعمالي",
@@ -569,7 +603,17 @@ const translations = {
     ach8Title: "فائز هاكثون AgentX",
     ach8Subtitle: "المركز الثالث — قائد الفريق (2025)",
     ach8Desc: "قدت الفريق للمركز الثالث في هاكثون AgentX بمشروع سَبَق - نموذج أولي للذكاء الاصطناعي يستعرض معمارية متعددة الوكلاء قابلة للتوسع ومصممة للتكامل المستقبلي مع الخدمات الحكومية.",
-    
+
+    // Achievement 9
+    ach9Title: "منتور في هاكثون RoboRumble",
+    ach9Subtitle: "جامعة الملك سعود · منتور (2026)",
+    ach9Desc: "إرشاد الفرق المشاركة في هاكثون RoboRumble للروبوتات بجامعة الملك سعود — مساعدتهم على حل التحديات التقنية، تحسين التصميم، وتجهيز العروض تحت ضغط الوقت.",
+
+    // Achievement 10
+    ach10Title: "منتور في هاكثون الأميرة نورة",
+    ach10Subtitle: "جامعة الأميرة نورة · منتور (2026)",
+    ach10Desc: "إرشاد 3 فرق في هاكثون الأميرة نورة (مرحلة افتراضية + حضورية). توجيه على تأطير المشكلة، تصميم الحل، وبناء النموذج الأولي — كل الفرق وصلت لمرحلة العرض.",
+
     // Courses
     coursesTitle: "الكورسات",
     coursesSubtitle: "تعلّم معي",

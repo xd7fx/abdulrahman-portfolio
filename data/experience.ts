@@ -21,6 +21,22 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
+    id: "zid-ai-specialist",
+    titleKey: "exp3Title",
+    companyKey: "exp3Company",
+    periodKey: "exp3Period",
+    locationKey: "exp3Location",
+    descriptionKey: "exp3Desc",
+  },
+  {
+    id: "yamamah-tech-supervisor",
+    titleKey: "exp4Title",
+    companyKey: "exp4Company",
+    periodKey: "exp4Period",
+    locationKey: "exp4Location",
+    descriptionKey: "exp4Desc",
+  },
+  {
     id: "drone-club-pr",
     titleKey: "exp1Title",
     companyKey: "exp1Company",

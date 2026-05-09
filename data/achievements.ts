@@ -47,6 +47,28 @@ export type Achievement = {
 
 export const achievements: Achievement[] = [
   {
+    slug: "princess-nourah-mentor-2026",
+    titleKey: "ach10Title",
+    subtitleKey: "ach10Subtitle",
+    descriptionKey: "ach10Desc",
+    year: "2026",
+    emoji: "🤝",
+    iconName: "Star",
+    color: "from-rose-500 to-pink-600",
+    rank: "recognition",
+  },
+  {
+    slug: "roborumble-mentor-2026",
+    titleKey: "ach9Title",
+    subtitleKey: "ach9Subtitle",
+    descriptionKey: "ach9Desc",
+    year: "2026",
+    emoji: "🤝",
+    iconName: "Star",
+    color: "from-fuchsia-500 to-purple-600",
+    rank: "recognition",
+  },
+  {
     slug: "agentx-2025",
     titleKey: "ach8Title",
     subtitleKey: "ach8Subtitle",
