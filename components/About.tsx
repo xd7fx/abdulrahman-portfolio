@@ -1,22 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code, Cpu, Database, Eye, LucideIcon, Wrench, Zap } from "lucide-react";
 import SectionPlanet from "./SectionPlanet";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { skillCategories, type SkillIcon } from "@/data/skills";
-import { experiences } from "@/data/experience";
-import { education } from "@/data/education";
-
-const skillIconRegistry: Record<SkillIcon, LucideIcon> = {
-  Cpu,
-  Wrench,
-  Eye,
-  Zap,
-  Code,
-  Database,
-};
 
 export default function About() {
   const { t } = useLanguage();
@@ -30,123 +17,27 @@ export default function About() {
           subtitle={t("aboutSubtitle")}
         />
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
+          {/* Bio */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="card-glow mb-12"
+            className="card-glow mb-8"
           >
-            <div className="prose prose-invert max-w-none">
-              <p className="text-lg text-space-ice/90 leading-relaxed mb-4">
-                {t("aboutBio")}
-              </p>
-            </div>
+            <p className="text-base md:text-lg text-space-ice/90 leading-relaxed">
+              {t("aboutBio")}
+            </p>
           </motion.div>
 
-          {/* Skills Grid */}
+          {/* Highlights — 3 across on every breakpoint so the page stays short */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-          >
-            <h3 className="text-3xl font-orbitron font-bold text-center mb-8 text-space-cyan">
-              {t("technicalArsenalTitle")}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {skillCategories.map((skill, index) => {
-                const Icon = skillIconRegistry[skill.iconName];
-                return (
-                  <motion.div
-                    key={skill.categoryKey}
-                    className="card-glow"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <Icon className="w-6 h-6 text-space-cyan" aria-hidden />
-                      <h4 className="text-xl font-orbitron font-semibold">
-                        {t(skill.categoryKey)}
-                      </h4>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {skill.items.map((item) => (
-                        <span
-                          key={item}
-                          className="px-3 py-1 text-xs rounded-full bg-space-blue/30 border border-space-cyan/30 text-space-ice"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-
-          {/* Education & Experience */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {/* Education */}
-            <motion.div className="card-glow" whileHover={{ scale: 1.02 }}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl">🎓</span>
-                <h3 className="text-xl font-orbitron font-bold text-space-cyan">
-                  {t("educationTitle")}
-                </h3>
-              </div>
-              <div className="space-y-4">
-                {education.map((entry) => (
-                  <div key={entry.id}>
-                    <h4 className="font-semibold text-space-ice">{t(entry.degreeKey)}</h4>
-                    <p className="text-sm text-space-cyan">{t(entry.schoolKey)}</p>
-                    {entry.gpaKey && (
-                      <p className="text-xs text-space-ice/70 mt-1">{t(entry.gpaKey)}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Experience */}
-            <motion.div className="card-glow" whileHover={{ scale: 1.02 }}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl">💼</span>
-                <h3 className="text-xl font-orbitron font-bold text-space-cyan">
-                  {t("experienceTitle")}
-                </h3>
-              </div>
-              <div className="space-y-4">
-                {experiences.map((entry) => (
-                  <div key={entry.id}>
-                    <h4 className="font-semibold text-space-ice">{t(entry.titleKey)}</h4>
-                    <p className="text-sm text-space-cyan">{t(entry.companyKey)}</p>
-                    <p className="text-xs text-space-ice/70 mt-1">{t(entry.periodKey)}</p>
-                    <p className="text-xs text-space-ice/50">{t(entry.locationKey)}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Highlights */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            viewport={{ once: true }}
-            className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4"
           >
             {[
               { titleKey: "bestEngineer2024", subtitleKey: "smartMethods", emoji: "🌟" },
@@ -155,18 +46,19 @@ export default function About() {
             ].map((highlight, index) => (
               <motion.div
                 key={highlight.titleKey}
-                className="card-glow text-center"
-                whileHover={{ scale: 1.05 }}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0 + index * 0.1 }}
+                className="rounded-xl border border-space-cyan/20 bg-space-navy/30 backdrop-blur-sm p-3 md:p-4 text-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + index * 0.08 }}
                 viewport={{ once: true }}
               >
-                <div className="text-4xl mb-3">{highlight.emoji}</div>
-                <h4 className="text-lg font-orbitron font-semibold text-space-cyan mb-1">
+                <div className="text-2xl md:text-3xl mb-1.5">{highlight.emoji}</div>
+                <h4 className="text-[11px] sm:text-xs md:text-sm font-orbitron font-semibold text-space-cyan leading-tight mb-0.5 line-clamp-2">
                   {t(highlight.titleKey)}
                 </h4>
-                <p className="text-sm text-space-ice/70">{t(highlight.subtitleKey)}</p>
+                <p className="text-[10px] md:text-xs text-space-ice/60 line-clamp-1">
+                  {t(highlight.subtitleKey)}
+                </p>
               </motion.div>
             ))}
           </motion.div>

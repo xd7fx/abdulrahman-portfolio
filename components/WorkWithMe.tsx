@@ -39,7 +39,7 @@ export default function WorkWithMe() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12">
             {services.map((service, index) => {
               const Icon = serviceIconRegistry[service.iconName];
               return (

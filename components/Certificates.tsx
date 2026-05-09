@@ -32,7 +32,7 @@ export default function Certificates() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
             {certificates.map((cert, index) => (
               <motion.div
                 key={cert.id}
@@ -93,7 +93,7 @@ export default function Certificates() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="mt-12 grid grid-cols-4 gap-2 sm:gap-3 md:gap-4"
           >
             {[
               { label: t("totalCertificates"), value: "30+", emoji: "📜" },

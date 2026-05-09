@@ -8,6 +8,7 @@ import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
 import Certificates from "@/components/Certificates";
 import Courses from "@/components/Courses";
+import Background from "@/components/Background";
 import WorkWithMe from "@/components/WorkWithMe";
 import Contact from "@/components/Contact";
 import Navigation from "@/components/Navigation";
@@ -34,6 +35,7 @@ export default function Home() {
         <Achievements />
         <Certificates />
         <Courses />
+        <Background />
         <WorkWithMe />
         <Contact />
       </div>
