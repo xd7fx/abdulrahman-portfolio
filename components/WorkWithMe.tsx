@@ -18,7 +18,7 @@ export default function WorkWithMe() {
   const { t } = useLanguage();
 
   return (
-    <section id="work" className="py-12 relative overflow-visible z-[1]">
+    <section id="work" className="py-10 md:py-14 relative overflow-visible z-[1]">
       <SectionPlanet planet="terran" size={450} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
@@ -32,14 +32,14 @@ export default function WorkWithMe() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-12"
           >
             <p className="text-sm md:text-base lg:text-lg text-space-ice/80 max-w-3xl mx-auto leading-relaxed">
               {t("workWithMeIntro")}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
             {services.map((service, index) => {
               const Icon = serviceIconRegistry[service.iconName];
               return (
@@ -72,7 +72,7 @@ export default function WorkWithMe() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-8 md:mt-10"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 border border-green-500/30">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />

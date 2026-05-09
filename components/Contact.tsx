@@ -62,7 +62,7 @@ export default function Contact() {
     "w-full px-4 py-3 rounded-lg bg-space-navy/50 border border-space-cyan/30 focus:border-space-cyan focus:outline-none focus:ring-2 focus:ring-space-cyan/50 transition-all";
 
   return (
-    <section id="contact" className="py-12 relative overflow-hidden z-[1]">
+    <section id="contact" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="baren" size={420} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader title={t("contactTitle")} subtitle={t("contactSubtitle")} />
@@ -73,7 +73,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-10"
           >
             <p className="text-sm md:text-base lg:text-lg text-space-ice/80 max-w-2xl mx-auto">{t("contactDescription")}</p>
           </motion.div>

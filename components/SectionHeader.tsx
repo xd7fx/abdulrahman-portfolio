@@ -14,7 +14,7 @@ export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="text-center mb-12 relative z-[2]"
+      className="text-center mb-8 md:mb-10 relative z-[2]"
     >
       {/* Title */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold glow-text mb-2 md:mb-3">

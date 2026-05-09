@@ -13,7 +13,7 @@ export default function Courses() {
   const { t, dir } = useLanguage();
 
   return (
-    <section id="courses" className="py-12 relative overflow-hidden z-[1]">
+    <section id="courses" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="baren" size={460} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader

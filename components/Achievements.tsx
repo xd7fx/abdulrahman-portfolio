@@ -26,7 +26,7 @@ export default function Achievements() {
   };
 
   return (
-    <section id="achievements" className="py-12 relative overflow-hidden z-[1]">
+    <section id="achievements" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="lava" size={420} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
@@ -41,7 +41,7 @@ export default function Achievements() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8"
+            className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mb-6 md:mb-8"
           >
             {[
               { label: t("firstPlaceAwards"), value: stats.first, emoji: "🥇" },

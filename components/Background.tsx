@@ -20,7 +20,7 @@ export default function Background() {
   const { t } = useLanguage();
 
   return (
-    <section id="background" className="py-12 relative overflow-hidden z-[1]">
+    <section id="background" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="baren" size={420} position="left" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader

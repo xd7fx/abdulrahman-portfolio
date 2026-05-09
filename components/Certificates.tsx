@@ -11,7 +11,7 @@ export default function Certificates() {
   const { t } = useLanguage();
 
   return (
-    <section id="certificates" className="py-12 relative overflow-hidden z-[1]">
+    <section id="certificates" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="ice" size={460} position="left" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
@@ -25,7 +25,7 @@ export default function Certificates() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-10"
           >
             <p className="text-lg text-space-ice/80 max-w-3xl mx-auto">
               {t("continuousLearning")}
@@ -93,7 +93,7 @@ export default function Certificates() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="mt-12 grid grid-cols-4 gap-2 sm:gap-3 md:gap-4"
+            className="mt-8 md:mt-10 grid grid-cols-4 gap-2 sm:gap-3 md:gap-4"
           >
             {[
               { label: t("totalCertificates"), value: "30+", emoji: "📜" },

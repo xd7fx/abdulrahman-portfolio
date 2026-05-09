@@ -13,7 +13,7 @@ export default function Projects() {
   const { t, dir } = useLanguage();
 
   return (
-    <section id="projects" className="py-12 relative overflow-hidden z-[1]">
+    <section id="projects" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="black_hole" size={500} position="left" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader

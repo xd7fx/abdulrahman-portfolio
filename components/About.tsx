@@ -11,7 +11,7 @@ export default function About() {
   const { t } = useLanguage();
 
   return (
-    <section id="about" className="py-12 relative overflow-hidden z-[1]">
+    <section id="about" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="ice" size={450} position="right" />
       <div className="container mx-auto px-4 relative z-[2]">
         <SectionHeader
