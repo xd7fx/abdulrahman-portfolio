@@ -120,7 +120,7 @@ export const courses: Course[] = [
     image: "/courses/drone-360.jpg",
     color: "from-purple-600 to-fuchsia-600",
     level: "Beginner → Intermediate",
-    totalDuration: "3 days",
+    totalDuration: "5h",
     modules: [
       {
         id: "day-1",
@@ -190,7 +190,9 @@ export const courses: Course[] = [
     ],
     sponsors: [
       { id: "sda-the-hub", name: "SDA — The Hub", logo: "/courses/drone-360/sponsors/SDA_the_hub.png" },
-      { id: "haymanat", name: "Haymanat", logo: "/courses/drone-360/sponsors/haymanat.jpg" },
+      // TODO: replace placeholder names with the real sponsor names
+      { id: "sponsor-4", name: "Sponsor", logo: "/courses/drone-360/sponsors/4.jpg" },
+      { id: "sponsor-62", name: "Sponsor", logo: "/courses/drone-360/sponsors/62.png" },
     ],
   },
 ];
