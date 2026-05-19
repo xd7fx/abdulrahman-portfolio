@@ -119,7 +119,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                   <Github size={20} />
                 </a>
                 <a
-                  href="https://linkedin.com/in/abdulrahman-alnashri"
+                  href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-lg hover:bg-space-navy/50 transition-colors"

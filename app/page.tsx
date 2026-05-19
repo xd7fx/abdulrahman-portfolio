@@ -59,7 +59,7 @@ export default function Home() {
               <Github size={18} />
             </a>
             <a
-              href="https://linkedin.com/in/abdulrahman-alnashri"
+              href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-space-navy/50 transition-colors"

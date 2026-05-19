@@ -119,7 +119,7 @@ const personSchema = {
   image: `${siteUrl}/og-image.png`,
   sameAs: [
     "https://github.com/XD7FX",
-    "https://linkedin.com/in/abdulrahman-alnashri",
+    "https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/",
   ],
   alumniOf: [
     { "@type": "CollegeOrUniversity", name: "University of Jeddah" },

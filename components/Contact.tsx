@@ -132,7 +132,7 @@ export default function Contact() {
                     <Github className="w-6 h-6" />
                   </motion.a>
                   <motion.a
-                    href="https://linkedin.com/in/abdulrahman-alnashri"
+                    href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-space-navy/50 flex items-center justify-center hover:bg-space-cyan/20 transition-colors"

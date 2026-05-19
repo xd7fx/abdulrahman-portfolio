@@ -112,4 +112,4 @@ MIT.
 ## Author
 
 **Abdulrahman Alnashri** · AI & Robotics Engineer
-[GitHub](https://github.com/XD7FX) · [LinkedIn](https://linkedin.com/in/abdulrahman-alnashri) · <abdulrahman.alnashri9@gmail.com>
+[GitHub](https://github.com/XD7FX) · [LinkedIn](https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/) · <abdulrahman.alnashri9@gmail.com>

@@ -123,7 +123,7 @@ export default function Navigation() {
                 <Github size={20} />
               </motion.a>
               <motion.a
-                href="https://linkedin.com/in/abdulrahman-alnashri"
+                href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg hover:bg-space-navy/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan"
