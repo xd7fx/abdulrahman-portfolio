@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
@@ -122,6 +122,7 @@ function FloatingRobot({ robot }: { robot: typeof robots[0] }) {
 }
 
 export default function FloatingRobots() {
+  const reduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -129,10 +130,10 @@ export default function FloatingRobots() {
   }, []);
 
   // Don't render on mobile for better performance
-  if (isMobile) return null;
+  if (isMobile || reduceMotion) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-30">
+    <div aria-hidden className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-30">
       {robots.map((robot) => (
         <FloatingRobot key={robot.id} robot={robot} />
       ))}

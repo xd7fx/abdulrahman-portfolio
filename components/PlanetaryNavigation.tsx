@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -47,6 +47,7 @@ const planetsData: Planet[] = [
     color: "from-orange-500 to-red-600",
     section: "achievements",
   },
+  { id: "mentoring", nameKey: "mentorshipTitle", descKey: "mentorshipSubtitle", image: "/planets/Terran.png", color: "from-space-cyan to-space-blue", section: "mentorship" },
   {
     id: "ice2",
     nameKey: "crystalMoon",
@@ -75,6 +76,7 @@ const planetsData: Planet[] = [
 
 export default function PlanetaryNavigation() {
   const { t } = useLanguage();
+  const reduceMotion = useReducedMotion();
   const planets = planetsData;
   const [currentPlanet, setCurrentPlanet] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -84,9 +86,9 @@ export default function PlanetaryNavigation() {
     setIsTransitioning(true);
     setCurrentPlanet(index);
     const section = document.getElementById(planets[index].section);
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+    if (section) section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
     setTimeout(() => setIsTransitioning(false), 1000);
-  }, [currentPlanet, isTransitioning, planets]);
+  }, [currentPlanet, isTransitioning, planets, reduceMotion]);
 
   const nextPlanet = useCallback(() => {
     navigateToPlanet((currentPlanet + 1) % planets.length);
@@ -120,6 +122,9 @@ export default function PlanetaryNavigation() {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || !e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      const target = e.target;
+      if (target instanceof HTMLElement && target.closest('input, textarea, select, button, a, [contenteditable], [role="combobox"], [role="listbox"]')) return;
       if (e.key === "ArrowRight" || e.key === "ArrowDown") nextPlanet();
       if (e.key === "ArrowLeft" || e.key === "ArrowUp") prevPlanet();
     };
@@ -130,14 +135,14 @@ export default function PlanetaryNavigation() {
   return (
     <>
       {/* Desktop Navigation - Right Side */}
-      <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center space-y-4">
+      <div className="hidden 2xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center space-y-4">
         {/* Planet Navigator */}
-        <div className="relative">
+        <div className="relative group">
           {/* Current Planet Display */}
           <motion.div
             className="relative w-24 h-24 cursor-pointer"
             whileHover={{ scale: 1.1 }}
-            animate={{ rotate: 360 }}
+            animate={reduceMotion ? undefined : { rotate: 360 }}
             transition={{ rotate: { duration: 20, repeat: Infinity, ease: "linear" } }}
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-space-cyan/20 to-space-blue/20 blur-xl" />
@@ -155,7 +160,7 @@ export default function PlanetaryNavigation() {
 
           {/* Planet Info */}
           <motion.div
-            className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-space-navy/90 backdrop-blur-md rounded-lg p-3 border border-space-cyan/30 min-w-[200px]"
+            className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-space-navy/90 backdrop-blur-md rounded-lg p-3 border border-space-cyan/30 w-52 pointer-events-none !opacity-0 group-hover:!opacity-100"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             key={currentPlanet}
@@ -178,6 +183,7 @@ export default function PlanetaryNavigation() {
         {/* Navigation Arrows */}
         <div className="flex flex-col space-y-2">
           <motion.button
+            aria-label={t("previousSection")}
             onClick={prevPlanet}
             className="w-10 h-10 rounded-full bg-space-navy/80 backdrop-blur-sm border border-space-cyan/30 flex items-center justify-center hover:bg-space-cyan/20 transition-colors"
             whileHover={{ scale: 1.1 }}
@@ -186,6 +192,7 @@ export default function PlanetaryNavigation() {
             <span className="text-space-cyan">↑</span>
           </motion.button>
           <motion.button
+            aria-label={t("nextSection")}
             onClick={nextPlanet}
             className="w-10 h-10 rounded-full bg-space-navy/80 backdrop-blur-sm border border-space-cyan/30 flex items-center justify-center hover:bg-space-cyan/20 transition-colors"
             whileHover={{ scale: 1.1 }}
@@ -200,6 +207,7 @@ export default function PlanetaryNavigation() {
           {planetsData.map((planet, index) => (
             <motion.button
               key={planet.id}
+              aria-label={t(planet.nameKey)}
               onClick={() => navigateToPlanet(index)}
               className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                 currentPlanet === index
@@ -227,57 +235,11 @@ export default function PlanetaryNavigation() {
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
         >
-          <div>↑↓</div>
+          <div>Alt + ↑↓</div>
           <div>{t("navigate")}</div>
         </motion.div>
       </div>
 
-      {/* Mobile Navigation - Bottom Horizontal */}
-      <div className="md:hidden fixed bottom-4 left-0 right-0 z-[90] px-2">
-        <div className="bg-space-navy/90 backdrop-blur-md rounded-full p-2 border border-space-cyan/30 flex items-center justify-between gap-2 max-w-sm mx-auto">
-          {/* Previous Button */}
-          <motion.button
-            onClick={prevPlanet}
-            className="w-8 h-8 rounded-full bg-space-navy/80 border border-space-cyan/30 flex items-center justify-center flex-shrink-0"
-            whileTap={{ scale: 0.9 }}
-          >
-            <span className="text-space-cyan text-sm">←</span>
-          </motion.button>
-
-          {/* All Planets Horizontal */}
-          <div className="flex items-center gap-1 flex-1 justify-center">
-            {planetsData.map((planet, index) => (
-              <motion.button
-                key={planet.id}
-                onClick={() => navigateToPlanet(index)}
-                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
-                  currentPlanet === index
-                    ? "ring-2 ring-space-cyan"
-                    : "opacity-40"
-                }`}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Image
-                  src={planet.image}
-                  alt={t(planet.nameKey)}
-                  width={32}
-                  height={32}
-                  className="pixelated"
-                />
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Next Button */}
-          <motion.button
-            onClick={nextPlanet}
-            className="w-8 h-8 rounded-full bg-space-navy/80 border border-space-cyan/30 flex items-center justify-center flex-shrink-0"
-            whileTap={{ scale: 0.9 }}
-          >
-            <span className="text-space-cyan text-sm">→</span>
-          </motion.button>
-        </div>
-      </div>
     </>
   );
 }

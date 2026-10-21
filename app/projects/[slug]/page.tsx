@@ -1,10 +1,11 @@
+import { site } from "@/data/site";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import { getAllProjectSlugs, getProjectBySlug, type Project } from "@/data/projects";
 import ProjectDetail from "./ProjectDetail";
 
-const SITE_URL = "https://abdulrahman-portfolio.vercel.app";
+const SITE_URL = site.url;
 
 export function generateStaticParams() {
   return getAllProjectSlugs().map((slug) => ({ slug }));
@@ -17,7 +18,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const title = `${project.titleEn} — Abdulrahman Alnashri`;
   const url = `${SITE_URL}/projects/${project.slug}`;
   const description = `${project.titleEn}. Tech: ${project.tech.slice(0, 6).join(", ")}.`;
-  const ogImage = project.image.startsWith("http") ? project.image : `${SITE_URL}${project.image}`;
+  const ogImage = project.image ? (project.image.startsWith("http") ? project.image : `${SITE_URL}${project.image}`) : `${SITE_URL}/opengraph-image`;
 
   return {
     title,
@@ -41,7 +42,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 
 function buildProjectSchema(project: Project) {
   const url = `${SITE_URL}/projects/${project.slug}`;
-  const image = project.image.startsWith("http") ? project.image : `${SITE_URL}${project.image}`;
+  const image = project.image ? (project.image.startsWith("http") ? project.image : `${SITE_URL}${project.image}`) : `${SITE_URL}/opengraph-image`;
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",

@@ -1,10 +1,11 @@
+import { site } from "@/data/site";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import { getAchievementBySlug, getAllAchievementSlugs, type Achievement } from "@/data/achievements";
 import AchievementDetail from "./AchievementDetail";
 
-const SITE_URL = "https://abdulrahman-portfolio.vercel.app";
+const SITE_URL = site.url;
 
 export function generateStaticParams() {
   return getAllAchievementSlugs().map((slug) => ({ slug }));
@@ -26,7 +27,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     ? achievement.image.startsWith("http")
       ? achievement.image
       : `${SITE_URL}${achievement.image}`
-    : `${SITE_URL}/og-image.png`;
+    : `${SITE_URL}/opengraph-image`;
 
   return {
     title: pageTitle,
@@ -58,7 +59,7 @@ function buildAchievementSchema(achievement: Achievement) {
     ? achievement.image.startsWith("http")
       ? achievement.image
       : `${SITE_URL}${achievement.image}`
-    : `${SITE_URL}/og-image.png`;
+    : `${SITE_URL}/opengraph-image`;
   return {
     "@context": "https://schema.org",
     "@type": "EducationalOccupationalCredential",

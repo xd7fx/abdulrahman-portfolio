@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import SectionPlanet from "./SectionPlanet";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { heroRoles } from "@/data/heroRoles";
+import { projects } from "@/data/projects";
+import { awards } from "@/data/achievements";
+import { certificates } from "@/data/certificates";
+import { mentorship } from "@/data/mentorship";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -52,6 +56,9 @@ export default function Hero() {
             </motion.div>
           </div>
 
+          <p className="inline-flex items-center gap-2 text-xs sm:text-sm text-space-cyan border border-space-cyan/30 bg-space-navy/50 rounded-full px-4 py-2 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-space-cyan" aria-hidden />{t("heroTitle")}
+          </p>
           {/* Main Heading */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -126,10 +133,10 @@ export default function Hero() {
             className="grid grid-cols-4 gap-2 sm:gap-3 max-w-3xl mx-auto"
           >
             {[
-              { label: t("projectsCount"), value: "7" },
-              { label: t("awardsCount"), value: "9" },
-              { label: t("certificatesCount"), value: "30+" },
-              { label: t("gpaLabel"), value: "4.26/5" },
+              { label: t("projectsCount"), value: projects.length },
+              { label: t("awardsCount"), value: awards.length },
+              { label: t("certificatesCount"), value: certificates.length },
+              { label: t("mentoringExperiences"), value: mentorship.length },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

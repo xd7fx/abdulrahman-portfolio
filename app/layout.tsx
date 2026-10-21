@@ -1,3 +1,4 @@
+import { site } from "@/data/site";
 import type { Metadata, Viewport } from "next";
 import { Orbitron, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
@@ -18,10 +19,10 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-const siteUrl = "https://abdulrahman-portfolio.vercel.app";
-const siteName = "Abdulrahman Alnashri | AI & Robotics Engineer";
+const siteUrl = site.url;
+const siteName = "Abdulrahman Alnashri | AI Engineer at Zid";
 const description =
-  "AI & Robotics Engineer building intelligent systems that merge Machine Learning, Computer Vision, and Autonomous Robotics. WRO Saudi Arabia 2025 winner & Best Engineer 2024.";
+  "AI Engineer at Zid building AI products for e-commerce, KawnGraph for coding agents, and applied robotics projects. Explore projects, mentoring, awards, and verified credentials.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -62,10 +63,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Abdulrahman Alnashri — AI & Robotics Engineer",
+        alt: "Abdulrahman Alnashri — AI Engineer at Zid",
       },
     ],
   },
@@ -73,7 +74,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteName,
     description,
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
     creator: "@xd7fx",
   },
   robots: {
@@ -90,9 +91,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
     ],
-    apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.webmanifest",
   category: "technology",
@@ -114,12 +113,13 @@ const personSchema = {
   familyName: "Alnashri",
   url: siteUrl,
   email: "abdulrahman.alnashri9@gmail.com",
-  jobTitle: "AI & Robotics Engineer",
+  jobTitle: "AI Engineer",
+  worksFor: { "@type": "Organization", name: "Zid" },
   description,
-  image: `${siteUrl}/og-image.png`,
+  image: `${siteUrl}/opengraph-image`,
   sameAs: [
-    "https://github.com/XD7FX",
-    "https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/",
+    site.github,
+    site.linkedin,
   ],
   alumniOf: [
     { "@type": "CollegeOrUniversity", name: "University of Jeddah" },
@@ -127,6 +127,9 @@ const personSchema = {
   ],
   knowsAbout: [
     "Artificial Intelligence",
+    "Generative AI",
+    "Agentic AI",
+    "Model Context Protocol",
     "Robotics",
     "Computer Vision",
     "Machine Learning",

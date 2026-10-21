@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { projects, type Project } from "@/data/projects";
 import LanguageToggle from "@/components/LanguageToggle";
+import ProjectVisual from "@/components/ProjectVisual";
 import ParticleBackground from "@/components/ParticleBackground";
 
 interface Props {
@@ -83,28 +84,22 @@ export default function ProjectDetail({ project }: Props) {
                 <span className="font-semibold">{project.year}</span>
               </span>
             )}
-            {project.role && (
+            {(project.roleKey || project.role) && (
               <span className="inline-flex items-center gap-2">
                 <UserRound size={14} className="text-space-cyan" aria-hidden />
                 <span className="text-space-ice/60">{t("role")}:</span>
-                <span className="font-semibold">{project.role}</span>
+                <span className="font-semibold">{project.roleKey ? t(project.roleKey) : project.role}</span>
               </span>
             )}
           </div>
 
           {/* Hero image */}
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-space-cyan/20 mb-10">
-            <Image
-              src={project.image}
-              alt={project.titleEn || title}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 1024px"
-              className="object-cover"
-            />
+            <ProjectVisual project={project} priority />
             <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-25`} />
           </div>
 
+          {project.status && <p className="text-space-cyan text-sm mb-4">{t(project.status)}</p>}
           {/* Action buttons */}
           <div className="flex flex-wrap gap-3 mb-12">
             {project.github && (
@@ -129,6 +124,7 @@ export default function ProjectDetail({ project }: Props) {
                 <span className="font-semibold">{t("liveDemo")}</span>
               </a>
             )}
+            {project.source && <a href={project.source} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-space-cyan/30 text-space-cyan"><ExternalLink size={18} />{t("sourcePost")}</a>}
             {project.video && (
               <a
                 href={project.video}
@@ -237,14 +233,7 @@ export default function ProjectDetail({ project }: Props) {
                 className="card-glow group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-2xl"
               >
                 <div className="relative h-28 rounded-lg overflow-hidden mb-3">
-                  <Image
-                    src={other.image}
-                    alt={other.titleEn || t(other.titleKey)}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    loading="lazy"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  <ProjectVisual project={other} />
                   <div className={`absolute inset-0 bg-gradient-to-t ${other.color} opacity-30`} />
                 </div>
                 <h3 className="text-base font-orbitron font-bold leading-snug">

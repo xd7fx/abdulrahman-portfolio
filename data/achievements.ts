@@ -14,7 +14,7 @@
  */
 export type AchievementIcon = "Trophy" | "Award" | "Star" | "Target";
 
-export type AchievementRank = "1st" | "2nd" | "3rd" | "recognition";
+export type AchievementRank = "1st" | "2nd" | "3rd" | "bronze" | "recognition";
 
 export type Achievement = {
   /** URL slug used by /achievements/[slug]. Lowercase, hyphenated, ASCII only. */
@@ -43,11 +43,14 @@ export type Achievement = {
   image?: string;
   /** Optional external link (certificate URL, news article, etc.). */
   link?: string;
+  category?: "award" | "mentorship";
 };
 
 export const achievements: Achievement[] = [
+  { slug: "wro-world-bronze-2025", titleKey: "wroBronzeTitle", subtitleKey: "wroBronzeSubtitle", descriptionKey: "wroBronzeDesc", year: "2025", emoji: "🥉", iconName: "Award", color: "from-space-lava to-space-blue", rank: "bronze", relatedProjectSlug: "yamamah", image: "/projects/yamamah.jpg" },
   {
     slug: "princess-nourah-mentor-2026",
+    category: "mentorship",
     titleKey: "ach10Title",
     subtitleKey: "ach10Subtitle",
     descriptionKey: "ach10Desc",
@@ -59,6 +62,7 @@ export const achievements: Achievement[] = [
   },
   {
     slug: "roborumble-mentor-2026",
+    category: "mentorship",
     titleKey: "ach9Title",
     subtitleKey: "ach9Subtitle",
     descriptionKey: "ach9Desc",
@@ -94,6 +98,7 @@ export const achievements: Achievement[] = [
   },
   {
     slug: "sda-week5-2025",
+    link: "https://eu.credential.net/be444f75-1c8a-429c-b898-d4b6f028f84d",
     titleKey: "ach4Title",
     subtitleKey: "ach4Subtitle",
     descriptionKey: "ach4Desc",
@@ -105,6 +110,7 @@ export const achievements: Achievement[] = [
   },
   {
     slug: "drones-hackathon-2024",
+    relatedProjectSlug: "sidan",
     titleKey: "ach1Title",
     subtitleKey: "ach1Subtitle",
     descriptionKey: "ach1Desc",
@@ -116,6 +122,7 @@ export const achievements: Achievement[] = [
   },
   {
     slug: "robotics-workshop-2024",
+    category: "mentorship",
     titleKey: "ach6Title",
     subtitleKey: "ach6Subtitle",
     descriptionKey: "ach6Desc",
@@ -145,7 +152,7 @@ export const achievements: Achievement[] = [
     emoji: "🌟",
     iconName: "Star",
     color: "from-green-500 to-emerald-600",
-    rank: "1st",
+    rank: "recognition",
   },
   {
     slug: "social-media-award-2024",
@@ -167,3 +174,6 @@ export function getAchievementBySlug(slug: string): Achievement | undefined {
 export function getAllAchievementSlugs(): string[] {
   return achievements.map((a) => a.slug);
 }
+
+/** Awards exclude teaching and mentoring records retained for old detail links. */
+export const awards = achievements.filter((entry) => entry.category !== "mentorship");

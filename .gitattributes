@@ -1,0 +1,2 @@
+# Keep certificate and resume documents as binary assets in diffs.
+*.pdf binary

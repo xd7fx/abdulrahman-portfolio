@@ -1,5 +1,7 @@
 "use client";
 
+import { site } from "@/data/site";
+
 import { useState, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Menu, X, Github, Linkedin, FileDown } from "lucide-react";
@@ -7,7 +9,7 @@ import LanguageToggle from "./LanguageToggle";
 import MobileSidebar from "./MobileSidebar";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const SECTIONS = ["home", "about", "projects", "achievements", "certificates", "courses", "background", "work", "contact"] as const;
+const SECTIONS = ["home", "about", "projects", "achievements", "mentorship", "certificates", "courses", "background", "work", "contact"] as const;
 type SectionId = (typeof SECTIONS)[number];
 
 export default function Navigation() {
@@ -25,6 +27,7 @@ export default function Navigation() {
     { name: t("about"), href: "#about" },
     { name: t("projects"), href: "#projects" },
     { name: t("achievements"), href: "#achievements" },
+    { name: t("mentorship"), href: "#mentorship" },
     { name: t("certificates"), href: "#certificates" },
     { name: t("coursesTitle"), href: "#courses" },
     { name: t("backgroundTitle"), href: "#background" },
@@ -81,7 +84,7 @@ export default function Navigation() {
             </motion.a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-8">
+            <div className="hidden xl:flex items-center gap-2 2xl:gap-4">
               {navItems.map((item) => {
                 const id = item.href.slice(1) as SectionId;
                 const isActive = activeSection === id;
@@ -109,10 +112,10 @@ export default function Navigation() {
             </div>
 
             {/* Social Links & Language Toggle */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden xl:flex items-center gap-3">
               <LanguageToggle />
               <motion.a
-                href="https://github.com/XD7FX"
+                href={site.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg hover:bg-space-navy/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan"
@@ -123,7 +126,7 @@ export default function Navigation() {
                 <Github size={20} />
               </motion.a>
               <motion.a
-                href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
+                href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-lg hover:bg-space-navy/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan"
@@ -146,7 +149,7 @@ export default function Navigation() {
             </div>
 
             {/* Mobile Actions */}
-            <div className="md:hidden flex items-center gap-2">
+            <div className="xl:hidden flex items-center gap-2">
               <motion.button
                 className="p-2 rounded-lg hover:bg-space-navy/50"
                 onClick={() => setIsOpen((v) => !v)}

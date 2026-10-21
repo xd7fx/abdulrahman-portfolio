@@ -27,18 +27,6 @@ export default function WorkWithMe() {
         />
 
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <p className="text-sm md:text-base lg:text-lg text-space-ice/80 max-w-3xl mx-auto leading-relaxed">
-              {t("workWithMeIntro")}
-            </p>
-          </motion.div>
-
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
             {services.map((service, index) => {
               const Icon = serviceIconRegistry[service.iconName];

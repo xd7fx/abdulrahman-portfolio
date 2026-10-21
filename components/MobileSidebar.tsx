@@ -1,5 +1,7 @@
 "use client";
 
+import { site } from "@/data/site";
+
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Github, Linkedin, FileDown } from "lucide-react";
@@ -19,6 +21,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
     { name: t("about"), href: "#about" },
     { name: t("projects"), href: "#projects" },
     { name: t("achievements"), href: "#achievements" },
+    { name: t("mentorship"), href: "#mentorship" },
     { name: t("certificates"), href: "#certificates" },
     { name: t("coursesTitle"), href: "#courses" },
     { name: t("backgroundTitle"), href: "#background" },
@@ -47,7 +50,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm"
+            className="xl:hidden fixed inset-0 bg-black/80 backdrop-blur-sm"
             style={{ zIndex: 999998 }}
             onClick={onClose}
             aria-hidden
@@ -62,7 +65,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
             animate={{ x: 0 }}
             exit={{ x: isRTL ? "100%" : "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className={`md:hidden fixed top-0 ${isRTL ? "right-0 border-l" : "left-0 border-r"} bottom-0 w-72 bg-space-dark/98 backdrop-blur-md border-space-cyan/30 p-6 overflow-y-auto`}
+            className={`xl:hidden fixed top-0 ${isRTL ? "right-0 border-l" : "left-0 border-r"} bottom-0 w-72 bg-space-dark/98 backdrop-blur-md border-space-cyan/30 p-6 overflow-y-auto`}
             style={{ zIndex: 999999 }}
           >
             <button
@@ -110,7 +113,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
             <div className="mt-8 pt-6 border-t border-space-blue/30">
               <div className="flex items-center justify-center gap-3">
                 <a
-                  href="https://github.com/XD7FX"
+                  href={site.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-lg hover:bg-space-navy/50 transition-colors"
@@ -119,7 +122,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                   <Github size={20} />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
+                  href={site.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-lg hover:bg-space-navy/50 transition-colors"

@@ -1,10 +1,11 @@
+import { site } from "@/data/site";
 import type { Metadata } from "next";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import { getAllCourseSlugs, getCourseBySlug, type Course } from "@/data/courses";
 import CourseLanding from "./CourseLanding";
 
-const SITE_URL = "https://abdulrahman-portfolio.vercel.app";
+const SITE_URL = site.url;
 
 export function generateStaticParams() {
   return getAllCourseSlugs().map((slug) => ({ slug }));

@@ -1,5 +1,7 @@
 "use client";
 
+import { site } from "@/data/site";
+
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, MapPin, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { useState } from "react";
@@ -121,7 +123,7 @@ export default function Contact() {
                 <h3 className="text-base md:text-lg lg:text-xl font-orbitron font-bold mb-3 md:mb-4 text-space-cyan">{t("connectWithMe")}</h3>
                 <div className="flex gap-4">
                   <motion.a
-                    href="https://github.com/XD7FX"
+                    href={site.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-space-navy/50 flex items-center justify-center hover:bg-space-cyan/20 transition-colors"
@@ -132,7 +134,7 @@ export default function Contact() {
                     <Github className="w-6 h-6" />
                   </motion.a>
                   <motion.a
-                    href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
+                    href={site.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-space-navy/50 flex items-center justify-center hover:bg-space-cyan/20 transition-colors"

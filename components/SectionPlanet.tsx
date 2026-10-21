@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 interface SectionPlanetProps {
@@ -31,6 +31,7 @@ export default function SectionPlanet({
   position = "right",
   verticalAlign = "center",
 }: SectionPlanetProps) {
+  const reduceMotion = useReducedMotion();
 
   const positionClasses = {
     right: "right-[-20%] md:right-[-5%]",
@@ -47,13 +48,13 @@ export default function SectionPlanet({
   return (
     <motion.div
       className={`absolute ${positionClasses[position]} ${verticalClasses[verticalAlign]} pointer-events-none opacity-20 z-0`}
-      initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.5, rotate: -180 }}
       whileInView={{ opacity: 0.2, scale: 1, rotate: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 1.5 }}
     >
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           y: [0, -40, 0],
           rotate: 360,
         }}
@@ -75,7 +76,7 @@ export default function SectionPlanet({
       >
         <Image
           src={planetImages[planet]}
-          alt={planet}
+          alt=""
           width={size}
           height={size}
           className="pixelated"

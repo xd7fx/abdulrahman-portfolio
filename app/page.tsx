@@ -1,11 +1,14 @@
 "use client";
 
+import { site } from "@/data/site";
+
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Achievements from "@/components/Achievements";
+import Mentorship from "@/components/Mentorship";
 import Certificates from "@/components/Certificates";
 import Courses from "@/components/Courses";
 import Background from "@/components/Background";
@@ -33,6 +36,7 @@ export default function Home() {
         <About />
         <Projects />
         <Achievements />
+        <Mentorship />
         <Certificates />
         <Courses />
         <Background />
@@ -50,7 +54,7 @@ export default function Home() {
         >
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com/XD7FX"
+              href={site.github}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-space-navy/50 transition-colors"
@@ -59,7 +63,7 @@ export default function Home() {
               <Github size={18} />
             </a>
             <a
-              href="https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/"
+              href={site.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg hover:bg-space-navy/50 transition-colors"
@@ -76,7 +80,7 @@ export default function Home() {
             </a>
           </div>
           <p className="text-space-ice/70 text-sm">
-            © {year} Abdulrahman Alnashri · {t("heroTitle")}
+            © {year} {t("heroName")} · {t("heroTitle")}
           </p>
           <p className="text-space-ice/50 text-xs">
             {t("builtWith")} Next.js, TailwindCSS &amp; Framer Motion
