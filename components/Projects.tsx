@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { Github, ExternalLink, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,9 +9,12 @@ import SectionPlanet from "./SectionPlanet";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { projects } from "@/data/projects";
+import ProjectVisual from "./ProjectVisual";
 
 export default function Projects() {
   const { t, dir } = useLanguage();
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = showAll ? projects : projects.filter((project) => project.featured).slice(0, 3);
 
   return (
     <section id="projects" className="py-10 md:py-14 relative overflow-hidden z-[1]">
@@ -23,7 +27,7 @@ export default function Projects() {
 
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => {
+            {visibleProjects.map((project, index) => {
               const title = t(project.titleKey);
               const description = t(project.descriptionKey);
               const achievements = project.achievementKeys.map((k) => t(k));
@@ -33,7 +37,7 @@ export default function Projects() {
                   key={project.slug}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.25) }}
                   viewport={{ once: true }}
                   className="card-glow group relative overflow-hidden flex flex-col"
                 >
@@ -45,16 +49,8 @@ export default function Projects() {
                     <span className="sr-only">{t("viewDetails")}</span>
                   </Link>
 
-                  {project.image && (
-                    <div className="relative h-32 mb-4 rounded-lg overflow-hidden">
-                      <Image
-                        src={project.image}
-                        alt={project.titleEn || title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        loading="lazy"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
+                  <div className="relative h-32 mb-4 rounded-lg overflow-hidden">
+                      <ProjectVisual project={project} />
                       <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-40`} />
                       <div
                         className={`absolute top-2 ${dir === "rtl" ? "left-2" : "right-2"} text-3xl drop-shadow-2xl`}
@@ -62,14 +58,14 @@ export default function Projects() {
                       >
                         {project.emoji}
                       </div>
-                    </div>
-                  )}
+                  </div>
 
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none`}
                   />
 
                   <div className="relative z-10 flex flex-col flex-1">
+                    {project.status && <p className="text-xs text-space-cyan mb-2">{t(project.status)} · {project.year}</p>}
                     <div className="flex items-start justify-between mb-3 gap-3">
                       <h3 className="text-lg font-orbitron font-bold leading-snug">
                         {title}
@@ -134,7 +130,7 @@ export default function Projects() {
                           aria-label={`${t("viewOnGithub")} — ${project.titleEn}`}
                         >
                           <Github size={16} />
-                          <span className="text-sm">Code</span>
+                          <span className="text-sm">{t("code")}</span>
                         </motion.a>
                       )}
                       {project.demo && (
@@ -149,7 +145,7 @@ export default function Projects() {
                           aria-label={`${t("liveDemo")} — ${project.titleEn}`}
                         >
                           <ExternalLink size={16} />
-                          <span className="text-sm">Demo</span>
+                          <span className="text-sm">{t("visitProject")}</span>
                         </motion.a>
                       )}
                       <span
@@ -164,6 +160,11 @@ export default function Projects() {
                 </motion.article>
               );
             })}
+          </div>
+          <div className="text-center mt-8">
+            <button type="button" className="btn-primary" aria-expanded={showAll} onClick={() => setShowAll(!showAll)}>
+              {t(showAll ? "showFeaturedProjects" : "showAllProjects")} <span className="ms-2">({projects.length})</span>
+            </button>
           </div>
         </div>
       </div>

@@ -9,6 +9,13 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/achievements/princess-nourah-mentor-2026", destination: "/#mentorship-noura", permanent: true },
+      { source: "/achievements/roborumble-mentor-2026", destination: "/#mentorship-roborumble", permanent: true },
+      { source: "/achievements/robotics-workshop-2024", destination: "/#mentorship-exploring-robotics", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

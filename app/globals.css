@@ -148,3 +148,10 @@
 
   .card-glow:hover { transform: none; }
 }
+
+/* Portfolio anchors account for the fixed header. */
+section[id] { scroll-margin-top: 6rem; }
+html[dir="rtl"] .font-orbitron {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Geeza Pro", Tahoma, sans-serif;
+  letter-spacing: normal;
+}

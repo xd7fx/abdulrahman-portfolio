@@ -6,7 +6,7 @@ import Link from "next/link";
 import SectionPlanet from "./SectionPlanet";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { achievements, type AchievementIcon } from "@/data/achievements";
+import { awards as achievements, type AchievementIcon } from "@/data/achievements";
 
 const iconRegistry: Record<AchievementIcon, LucideIcon> = {
   Trophy,
@@ -21,7 +21,8 @@ export default function Achievements() {
   const stats = {
     first: achievements.filter((a) => a.rank === "1st").length,
     second: achievements.filter((a) => a.rank === "2nd").length,
-    recognition: achievements.filter((a) => a.rank === "recognition" || a.rank === "3rd").length,
+    recognition: achievements.filter((a) => a.rank === "recognition").length,
+    podium: achievements.filter((a) => a.rank !== "recognition").length,
     total: achievements.length,
   };
 
@@ -44,8 +45,8 @@ export default function Achievements() {
             className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mb-6 md:mb-8"
           >
             {[
+              { label: t("podiumAwards"), value: stats.podium, emoji: "🏅" },
               { label: t("firstPlaceAwards"), value: stats.first, emoji: "🥇" },
-              { label: t("secondPlaceAwards"), value: stats.second, emoji: "🥈" },
               { label: t("specialRecognition"), value: stats.recognition, emoji: "⭐" },
               { label: t("totalAchievements"), value: stats.total, emoji: "🏆" },
             ].map((stat) => (

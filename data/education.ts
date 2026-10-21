@@ -13,18 +13,11 @@ export type Education = {
   schoolKey: string;
   /** Translation key for an optional GPA / score line. */
   gpaKey?: string;
+  periodKey?: string;
 };
 
 export const education: Education[] = [
-  {
-    id: "bsc-ai-uoj",
-    degreeKey: "bscAI",
-    schoolKey: "universityOfJeddah",
-    gpaKey: "gpa",
-  },
-  {
-    id: "le-wagon-sda-bootcamp",
-    degreeKey: "dataBootcamp",
-    schoolKey: "leWagonSDA",
-  },
+  { id: "le-wagon-sda-bootcamp", degreeKey: "dataBootcamp", schoolKey: "leWagonSDA" },
+  { id: "kaust-ai-program", degreeKey: "kaustAiDegree", schoolKey: "kaustAiSchool", periodKey: "kaustAiPeriod" },
+  { id: "bsc-ai-uoj", degreeKey: "bscAI", schoolKey: "universityOfJeddah", gpaKey: "gpa" },
 ];

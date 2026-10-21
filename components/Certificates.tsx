@@ -1,123 +1,69 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { GraduationCap, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { FileText, ExternalLink, GraduationCap, Search } from "lucide-react";
 import SectionPlanet from "./SectionPlanet";
 import SectionHeader from "./SectionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { certificates } from "@/data/certificates";
 
 export default function Certificates() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [query, setQuery] = useState("");
+  const [year, setYear] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  const search = query.trim().toLocaleLowerCase();
+  const filtered = certificates.filter((cert) => (!year || cert.year === year) &&
+    `${t(cert.titleKey)} ${t(cert.issuerKey)}`.toLocaleLowerCase().includes(search));
+  const visible = showAll || search || year ? filtered : filtered.filter((cert) => ["credential-8", "credential-7", "credential-10"].includes(cert.id));
+  const years = Array.from(new Set(certificates.map((cert) => cert.year))).sort().reverse();
 
   return (
     <section id="certificates" className="py-10 md:py-14 relative overflow-hidden z-[1]">
       <SectionPlanet planet="ice" size={460} position="left" verticalAlign="top" />
       <div className="container mx-auto px-4 relative z-[2]">
-        <SectionHeader
-          title={t("certificatesTitle")}
-          subtitle={t("certificatesSubtitle")}
-        />
-
+        <SectionHeader title={t("certificatesTitle")} subtitle={t("certificatesSubtitle")} />
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-10"
-          >
-            <p className="text-lg text-space-ice/80 max-w-3xl mx-auto">
-              {t("continuousLearning")}
-            </p>
-          </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
-            {certificates.map((cert, index) => (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                viewport={{ once: true }}
-                className="card-glow group relative overflow-hidden"
-                whileHover={{ y: -5 }}
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${cert.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}
-                />
-
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <GraduationCap className="w-10 h-10 text-space-cyan" aria-hidden />
-                    <span className="text-xs font-orbitron font-semibold text-space-cyan/70">
-                      {cert.year}
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg font-orbitron font-bold mb-2 group-hover:text-space-cyan transition-colors">
-                    {t(cert.titleKey)}
-                  </h3>
-
-                  <p className="text-space-cyan text-sm font-semibold mb-2">
-                    {t(cert.issuerKey)}
-                  </p>
-
-                  <p className="text-space-ice/70 text-sm mb-4">
-                    {t(cert.descriptionKey)}
-                  </p>
-
-                  {cert.link && (
-                    <a
-                      href={cert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${t("viewCertificate")} — ${t(cert.titleKey)}`}
-                    >
-                      <motion.span
-                        className="inline-flex items-center gap-2 text-sm text-space-cyan hover:text-white transition-colors"
-                        whileHover={{ x: 5 }}
-                      >
-                        <span>{t("viewCertificate")}</span>
-                        <ExternalLink size={14} />
-                      </motion.span>
-                    </a>
-                  )}
+          <div className="grid sm:grid-cols-[1fr_10rem] gap-3 mb-4">
+            <label className="flex items-center gap-3 rounded-lg border border-space-cyan/30 bg-space-navy/60 px-4">
+              <Search size={18} className="text-space-cyan shrink-0" aria-hidden />
+              <span className="sr-only">{t("searchCertificates")}</span>
+              <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("searchCertificates")}
+                className="w-full min-w-0 py-3 bg-transparent text-sm focus:outline-none" />
+            </label>
+            <label>
+              <span className="sr-only">{t("filterYear")}</span>
+              <select value={year} onChange={(e) => setYear(e.target.value)} className="w-full rounded-lg border border-space-cyan/30 bg-space-navy px-4 py-3 text-sm">
+                <option value="">{t("allYears")}</option>
+                {years.map((value) => <option key={value} value={value}>{value}</option>)}
+              </select>
+            </label>
+          </div>
+          <p role="status" className="text-xs text-space-ice/60 mb-6">{filtered.length} / {certificates.length} · {t("certificateRecords")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {visible.map((cert) => (
+              <article key={cert.id} className="card-glow flex flex-col">
+                <div className="flex items-center justify-between gap-3 mb-4 text-space-cyan">
+                  <GraduationCap size={24} aria-hidden />
+                  <time dateTime={cert.issued} className="text-xs">{new Intl.DateTimeFormat(language, { month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(`${cert.issued}-01T00:00:00Z`))}</time>
                 </div>
-              </motion.div>
+                <h3 className="font-semibold leading-snug mb-2">{t(cert.titleKey)}</h3>
+                <p className="text-space-cyan text-sm mb-3">{t(cert.issuerKey)}</p>
+                <p className="text-space-ice/70 text-sm mb-5">{t(cert.descriptionKey)}</p>
+                <div className="flex flex-wrap gap-4 text-xs text-space-cyan mt-auto">
+                  {cert.link && <a href={cert.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-white"
+                    aria-label={`${t("viewCertificate")} — ${t(cert.titleKey)}`}><ExternalLink size={14} />{t("viewCertificate")}</a>}
+                  {cert.file && <a href={cert.file} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-white"
+                    aria-label={`${t("originalFile")} — ${t(cert.titleKey)}`}><FileText size={14} />{t("originalFile")}</a>}
+                </div>
+              </article>
             ))}
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="mt-8 md:mt-10 grid grid-cols-4 gap-2 sm:gap-3 md:gap-4"
-          >
-            {[
-              { label: t("totalCertificates"), value: "30+", emoji: "📜" },
-              { label: t("institutions"), value: "10+", emoji: "🏛️" },
-              { label: t("trainingHours"), value: "600+", emoji: "⏱️" },
-              { label: t("specializations"), value: "8", emoji: "🎯" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                className="card-glow text-center"
-                whileHover={{ scale: 1.05 }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-xl md:text-2xl mb-1">{stat.emoji}</div>
-                <div className="text-base sm:text-lg md:text-xl font-orbitron font-bold text-space-cyan leading-none mb-0.5">
-                  {stat.value}
-                </div>
-                <div className="text-[10px] md:text-xs text-space-ice/60 truncate">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {!filtered.length && <p className="text-center text-space-ice/70 py-12">{t("noResults")}</p>}
+          {!search && !year && <div className="text-center mt-8"><button type="button" className="btn-primary" onClick={() => setShowAll(!showAll)} aria-expanded={showAll}>
+            {t(showAll ? "showFewer" : "showAllCertificates")} <span className="ms-2">({certificates.length})</span>
+          </button></div>}
         </div>
       </div>
     </section>

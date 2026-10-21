@@ -47,9 +47,289 @@ export type Project = {
   year?: string;
   /** Free-form role label (e.g. "Team Leader"). Shown on detail page. */
   role?: string;
+  roleKey?: string;
+  featured?: boolean;
+  status?: "product" | "openSource" | "prototype" | "inDevelopment";
+  source?: string;
 };
 
 export const projects: Project[] = [
+{
+  "slug": "content-agent",
+  "titleKey": "contentAgentTitle",
+  "titleEn": "Content Agent · Zid AI",
+  "emoji": "✦",
+  "descriptionKey": "contentAgentDesc",
+  "image": "",
+  "tech": [
+    "Generative AI",
+    "React",
+    "TypeScript",
+    "Supabase",
+    "Social APIs",
+    "OAuth 2.0"
+  ],
+  "achievementKeys": [
+    "contentAgentAch1",
+    "contentAgentAch2",
+    "contentAgentAch3",
+    "contentAgentAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2026",
+  "roleKey": "roleBuilder",
+  "status": "product",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7512834850383585280/",
+  "featured": true
+},
+{
+  "slug": "banner-designer",
+  "titleKey": "bannerDesignerTitle",
+  "titleEn": "Banner Designer · Zid AI",
+  "emoji": "◈",
+  "descriptionKey": "bannerDesignerDesc",
+  "image": "",
+  "tech": [
+    "Generative AI",
+    "Conversational UI",
+    "React",
+    "TypeScript"
+  ],
+  "achievementKeys": [
+    "bannerDesignerAch1",
+    "bannerDesignerAch2",
+    "bannerDesignerAch3",
+    "bannerDesignerAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2026",
+  "roleKey": "roleBuilder",
+  "status": "product",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7510020465395138560/",
+  "featured": true
+},
+{
+  "slug": "kawngraph",
+  "titleKey": "kawngraphTitle",
+  "titleEn": "KawnGraph",
+  "emoji": "⌘",
+  "descriptionKey": "kawngraphDesc",
+  "image": "",
+  "tech": [
+    "TypeScript",
+    "MCP",
+    "Context Graphs",
+    "Developer Tools"
+  ],
+  "achievementKeys": [
+    "kawngraphAch1",
+    "kawngraphAch2",
+    "kawngraphAch3",
+    "kawngraphAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2026",
+  "roleKey": "roleBuilder",
+  "status": "openSource",
+  "github": "https://github.com/xd7fx/kawngraph",
+  "featured": true
+},
+{
+  "slug": "adaptive-ai-os",
+  "titleKey": "adaptiveAiOsTitle",
+  "titleEn": "Adaptive AI Operating System",
+  "emoji": "◎",
+  "descriptionKey": "adaptiveAiOsDesc",
+  "image": "",
+  "tech": [
+    "Agentic AI",
+    "Context Engineering",
+    "AI Workflows"
+  ],
+  "achievementKeys": [
+    "adaptiveAiOsAch1",
+    "adaptiveAiOsAch2",
+    "adaptiveAiOsAch3",
+    "adaptiveAiOsAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2026",
+  "roleKey": "roleBuilder",
+  "status": "inDevelopment",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7492513520480108544/"
+},
+{
+  "slug": "sanad",
+  "titleKey": "sanadTitle",
+  "titleEn": "Sanad · Drone Emergency Response",
+  "emoji": "🚁",
+  "descriptionKey": "sanadDesc",
+  "image": "",
+  "tech": [
+    "YOLO",
+    "Computer Vision",
+    "Python",
+    "Drones"
+  ],
+  "achievementKeys": [
+    "sanadAch1",
+    "sanadAch2",
+    "sanadAch3",
+    "sanadAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2026",
+  "roleKey": "roleBuilder",
+  "status": "prototype",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7432726240815554562/"
+},
+{
+  "slug": "tuwaiqthon-creator",
+  "titleKey": "tuwaiqthonCreatorTitle",
+  "titleEn": "AI Creator Platform · Tuwaiqthon",
+  "emoji": "▶",
+  "descriptionKey": "tuwaiqthonCreatorDesc",
+  "image": "",
+  "tech": [
+    "Generative AI",
+    "MVP",
+    "Content Tools"
+  ],
+  "achievementKeys": [
+    "tuwaiqthonCreatorAch1",
+    "tuwaiqthonCreatorAch2",
+    "tuwaiqthonCreatorAch3",
+    "tuwaiqthonCreatorAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2026",
+  "roleKey": "roleTeamMember",
+  "status": "prototype",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7436712394258644992/"
+},
+{
+  "slug": "emotion-recognition",
+  "titleKey": "emotionRecognitionTitle",
+  "titleEn": "Emotion Recognition · Graduation Project",
+  "emoji": "◉",
+  "descriptionKey": "emotionRecognitionDesc",
+  "image": "",
+  "tech": [
+    "Deep Learning",
+    "Computer Vision",
+    "Audio Processing"
+  ],
+  "achievementKeys": [
+    "emotionRecognitionAch1",
+    "emotionRecognitionAch2",
+    "emotionRecognitionAch3",
+    "emotionRecognitionAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2024",
+  "roleKey": "roleTeamMember",
+  "status": "prototype",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7270122213981253634/"
+},
+{
+  "slug": "sidan",
+  "titleKey": "sidanTitle",
+  "titleEn": "Sidan · Hajj & Umrah Drones",
+  "emoji": "🚁",
+  "descriptionKey": "sidanDesc",
+  "image": "/projects/sidan.jpg",
+  "tech": [
+    "Drones",
+    "Applied AI",
+    "Prototyping"
+  ],
+  "achievementKeys": [
+    "sidanAch1",
+    "sidanAch2",
+    "sidanAch3",
+    "sidanAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2024",
+  "roleKey": "roleTeamMember",
+  "status": "prototype",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7268248067257118720/"
+},
+{
+  "slug": "heart-disease-predictor",
+  "titleKey": "heartDiseasePredictorTitle",
+  "titleEn": "Heart Disease Predictor",
+  "emoji": "♡",
+  "descriptionKey": "heartDiseasePredictorDesc",
+  "image": "",
+  "tech": [
+    "Python",
+    "pandas",
+    "scikit-learn",
+    "Streamlit"
+  ],
+  "achievementKeys": [
+    "heartDiseasePredictorAch1",
+    "heartDiseasePredictorAch2",
+    "heartDiseasePredictorAch3",
+    "heartDiseasePredictorAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2024",
+  "roleKey": "roleBuilder",
+  "status": "prototype",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7258100566273265664/"
+},
+{
+  "slug": "calorie-predictor",
+  "titleKey": "caloriePredictorTitle",
+  "titleEn": "Calorie Predictor",
+  "emoji": "↗",
+  "descriptionKey": "caloriePredictorDesc",
+  "image": "",
+  "tech": [
+    "Python",
+    "Machine Learning",
+    "Streamlit",
+    "Data Visualization"
+  ],
+  "achievementKeys": [
+    "caloriePredictorAch1",
+    "caloriePredictorAch2",
+    "caloriePredictorAch3",
+    "caloriePredictorAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2024",
+  "roleKey": "roleBuilder",
+  "status": "prototype",
+  "source": "https://www.linkedin.com/feed/update/urn:li:activity:7258055222961352704/"
+},
+{
+  "slug": "personal-portfolio",
+  "titleKey": "personalPortfolioTitle",
+  "titleEn": "Personal Portfolio",
+  "emoji": "✧",
+  "descriptionKey": "personalPortfolioDesc",
+  "image": "",
+  "tech": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Framer Motion"
+  ],
+  "achievementKeys": [
+    "personalPortfolioAch1",
+    "personalPortfolioAch2",
+    "personalPortfolioAch3",
+    "personalPortfolioAch4"
+  ],
+  "color": "from-space-blue to-space-cyan",
+  "year": "2025–2026",
+  "roleKey": "roleBuilder",
+  "status": "openSource",
+  "github": "https://github.com/xd7fx/abdulrahman-portfolio"
+},
   {
     slug: "sabaq",
     titleKey: "sabaqTitle",
@@ -62,7 +342,8 @@ export const projects: Project[] = [
     demo: "https://sabeq-system.netlify.app/",
     color: "from-indigo-500 to-purple-600",
     year: "2025",
-    role: "Team Leader",
+    roleKey: "roleTeamLeader",
+    featured: true,
   },
   {
     slug: "yamamah",
@@ -70,7 +351,7 @@ export const projects: Project[] = [
     titleEn: "YAMAMAH Rescue Drone",
     emoji: "🚁",
     descriptionKey: "yamamahDesc",
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&h=600&fit=crop",
+    image: "/projects/yamamah.jpg",
     tech: ["GPT-4 Vision", "n8n", "Raspberry Pi", "mmWave", "Weather AI", "Autonomous Control"],
     achievementKeys: ["yamamahAch1", "yamamahAch2", "yamamahAch3", "yamamahAch4"],
     github: "https://github.com/Rakan2008/yamama-rescue-drone",
@@ -79,10 +360,12 @@ export const projects: Project[] = [
     logoAlt: "YAMAMAH",
     logoSize: "w-25 h-9",
     year: "2025",
-    role: "Technical Supervisor",
+    roleKey: "roleSupervisor",
+    featured: true,
   },
   {
     slug: "hekaya",
+    year: "2025",
     titleKey: "heritageTitle",
     titleEn: "Hekaya — Heritage Intelligence",
     emoji: "🕌",
@@ -98,6 +381,8 @@ export const projects: Project[] = [
   },
   {
     slug: "v-tac",
+    featured: true,
+    year: "2025",
     titleKey: "footballTitle",
     titleEn: "V-TAC — Tactical AI Coach",
     emoji: "⚽",
@@ -130,7 +415,7 @@ export const projects: Project[] = [
     emoji: "♻️",
     descriptionKey: "mostadaamDesc",
     image: "/projects/mostadaam.jpg",
-    tech: ["UI/UX Design", "Facial Recognition", "Barcode Scanning", "Nusuk Integration", "Figma", "Sustainability"],
+    tech: ["UI/UX Design", "Facial Recognition", "Barcode Scanning", "Figma", "Sustainability"],
     achievementKeys: ["mostadaamAch1", "mostadaamAch2", "mostadaamAch3", "mostadaamAch4"],
     demo: "https://www.figma.com/proto/AzwYCsQrkIerJjxhtHAAV4/مستدام?node-id=14-13&p=f&t=riyqkL2c9Cp1Jpt7-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
     color: "from-green-400 to-emerald-600",

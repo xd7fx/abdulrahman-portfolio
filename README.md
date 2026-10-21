@@ -1,13 +1,13 @@
 # Abdulrahman Alnashri — Portfolio
 
-A space-themed bilingual (EN / AR) portfolio for an AI & Robotics Engineer, built with Next.js 14, TypeScript, TailwindCSS, and Framer Motion.
+A space-themed bilingual (EN / AR) portfolio for an AI Engineer at Zid, built with Next.js 14, TypeScript, TailwindCSS, and Framer Motion.
 
-Live: <https://abdulrahman-portfolio.vercel.app>
+Live: <https://abdulrahman-alnashri.vercel.app>
 
 ## Features
 
 - **Bilingual (EN / AR)** with persisted preference, automatic RTL switching, and browser-language detection.
-- **Sectioned single-page** layout: Hero, About, Projects, Achievements, Certificates, Work With Me, Contact.
+- **Sectioned single-page** layout: Hero, About, Projects, Awards, Mentoring & Workshops, Certificates, Courses, Tech Stack, Work With Me, Contact.
 - **Active section highlighting** in the navigation via `IntersectionObserver`.
 - **Scroll-progress indicator** under the navbar.
 - **Animated planetary navigator** synced with scroll position.
@@ -24,7 +24,7 @@ Live: <https://abdulrahman-portfolio.vercel.app>
 - **Styling**: TailwindCSS + custom globals
 - **Animation**: Framer Motion
 - **Icons**: Lucide React
-- **Fonts**: Orbitron & Exo 2 (next/font)
+- **Fonts**: Orbitron & Space Grotesk (next/font)
 
 ## Getting Started
 
@@ -73,8 +73,9 @@ components/
   Hero.tsx                 Hero with rotating role
   About.tsx                Bio, skills, education, experience
   Projects.tsx             Featured projects
-  Achievements.tsx         Timeline of awards
-  Certificates.tsx         Cert grid + summary stats
+  Achievements.tsx         Competition results and recognition
+  Mentorship.tsx           Mentoring and workshops with original media
+  Certificates.tsx         Searchable credentials + year filter
   WorkWithMe.tsx           Service offerings
   Contact.tsx              Form + contact info
   ParticleBackground.tsx   Canvas particle field (reduced-motion aware)
@@ -86,8 +87,8 @@ components/
 contexts/
   LanguageContext.tsx      i18n + persistence + RTL
 public/
-  favicon.svg, manifest.webmanifest, og-image.png, cv.pdf,
-  planets/, projects/, logos/
+  favicon.svg, manifest.webmanifest, cv.pdf,
+  planets/, projects/, logos/, certificates/, mentorship/
 ```
 
 ## Theme Tokens
@@ -111,5 +112,21 @@ MIT.
 
 ## Author
 
-**Abdulrahman Alnashri** · AI & Robotics Engineer
-[GitHub](https://github.com/XD7FX) · [LinkedIn](https://www.linkedin.com/in/abdulrahman-alnashri-b017b62ab/) · <abdulrahman.alnashri9@gmail.com>
+**Abdulrahman Alnashri** · AI Engineer at Zid
+[GitHub](https://github.com/XD7FX) · [LinkedIn](https://www.linkedin.com/in/abdulrahman-alnashri-ai/) · <abdulrahman.alnashri9@gmail.com>
+
+## Content refresh — October 2026
+
+- 18 projects, with three selected projects shown initially and a full-list toggle.
+- 49 training/professional credentials with search, year filtering, verification URLs, and available original documents.
+- Eight mentoring/workshop experiences. Eastern AgentX: two teams remotely, more than six in person; Qassim: more than five teams.
+- Eight awards/recognitions, including YAMAMAH’s WRO World Finals bronze; team results clearly identify the technical-supervisor role.
+- Current AI Engineer role at Zid, earlier AI Specialist period, KAUST program, and an updated downloadable CV.
+- `data/site.ts` owns the canonical deployment and profile links.
+- `docs/cv.md` is the editable source for `public/cv.pdf`.
+- `app/opengraph-image.tsx` generates the social sharing image; no missing static OG image is required.
+- `?lang=ar` / `?lang=en` takes priority over stored preference, with browser-language fallback.
+
+Content evidence and editorial decisions: [docs/content-refresh-2026.md](docs/content-refresh-2026.md).
+
+The home page uses compact previews: three projects, three credentials, and four mentoring activities. Full lists and experience details expand on demand.

@@ -15,9 +15,10 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { achievements, type Achievement, type AchievementIcon } from "@/data/achievements";
+import { awards as achievements, type Achievement, type AchievementIcon } from "@/data/achievements";
 import { getProjectBySlug } from "@/data/projects";
 import LanguageToggle from "@/components/LanguageToggle";
+import ProjectVisual from "@/components/ProjectVisual";
 import ParticleBackground from "@/components/ParticleBackground";
 
 const iconRegistry: Record<AchievementIcon, LucideIcon> = {
@@ -28,10 +29,11 @@ const iconRegistry: Record<AchievementIcon, LucideIcon> = {
 };
 
 const rankLabel: Record<Achievement["rank"], string> = {
-  "1st": "🥇 1st Place",
-  "2nd": "🥈 2nd Place",
-  "3rd": "🥉 3rd Place",
-  recognition: "⭐ Recognition",
+  "1st": "rankFirst",
+  "2nd": "rankSecond",
+  "3rd": "rankThird",
+  bronze: "rankBronze",
+  recognition: "rankRecognition",
 };
 
 interface Props {
@@ -110,7 +112,7 @@ export default function AchievementDetail({ achievement }: Props) {
             <span className="inline-flex items-center gap-2">
               <Trophy size={14} className="text-space-cyan" aria-hidden />
               <span className="text-space-ice/60">{t("recognition")}:</span>
-              <span className="font-semibold">{rankLabel[achievement.rank]}</span>
+              <span className="font-semibold">{t(rankLabel[achievement.rank])}</span>
             </span>
           </div>
 
@@ -178,14 +180,7 @@ export default function AchievementDetail({ achievement }: Props) {
                 className="block group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-space-cyan rounded-xl"
               >
                 <div className="relative h-32 rounded-lg overflow-hidden mb-3">
-                  <Image
-                    src={relatedProject.image}
-                    alt={relatedProject.titleEn}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    loading="lazy"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  <ProjectVisual project={relatedProject} />
                   <div className={`absolute inset-0 bg-gradient-to-t ${relatedProject.color} opacity-30`} />
                   <div className="absolute top-2 right-2 text-2xl drop-shadow-2xl" aria-hidden>
                     {relatedProject.emoji}

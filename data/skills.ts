@@ -41,12 +41,12 @@ export const skillCategories: SkillCategory[] = [
   {
     categoryKey: "skillCatMlops",
     iconName: "Zap",
-    items: ["LangChain", "Whisper", "GPT Integration", "Streamlit", "n8n", "SQL"],
+    items: ["Agentic AI", "MCP", "Claude Code", "Codex", "LangGraph", "LangChain", "n8n", "Context Engineering"],
   },
   {
     categoryKey: "skillCatDev",
     iconName: "Code",
-    items: ["React", "Next.js", "TypeScript", "TailwindCSS", "Git", "Linux"],
+    items: ["React", "Next.js", "TypeScript", "Supabase", "Serverless", "OAuth 2.0", "Tailwind CSS", "Git", "Linux"],
   },
   {
     categoryKey: "skillCatData",

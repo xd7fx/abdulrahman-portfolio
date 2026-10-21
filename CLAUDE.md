@@ -21,7 +21,7 @@ There is no test runner configured — `lint` + `type-check` are the only verifi
 ## Architecture
 
 ### Single-page composition + detail routes
-[app/page.tsx](app/page.tsx) is a `"use client"` component that stacks every section (`Hero`, `About`, `Projects`, `Achievements`, `Certificates`, `WorkWithMe`, `Contact`) on top of two fixed background layers (`ParticleBackground`, `FloatingRobots`) and two navigation overlays (`Navigation`, `PlanetaryNavigation`). Adding new top-level sections means editing this file.
+[app/page.tsx](app/page.tsx) is a `"use client"` component that stacks every section (`Hero`, `About`, `Projects`, `Achievements`, `Mentorship`, `Certificates`, `WorkWithMe`, `Contact`) on top of two fixed background layers (`ParticleBackground`, `FloatingRobots`) and two navigation overlays (`Navigation`, `PlanetaryNavigation`). Adding new top-level sections means editing this file.
 
 Two static detail-route trees exist:
 - **Projects** at `/projects/[slug]` — see [app/projects/[slug]/page.tsx](app/projects/[slug]/page.tsx) + [app/projects/[slug]/ProjectDetail.tsx](app/projects/[slug]/ProjectDetail.tsx).
@@ -80,7 +80,7 @@ Conventions specific to courses:
 Framer Motion is used pervasively, and the [components/ParticleBackground.tsx](components/ParticleBackground.tsx) canvas runs continuously. **Both must respect `prefers-reduced-motion`** — heavy animations are disabled when the OS requests it, and the particle canvas pauses on tab hide. Preserve this behavior in any new motion-heavy component.
 
 ### SEO & metadata
-[app/layout.tsx](app/layout.tsx) owns `metadata`, `viewport`, OpenGraph/Twitter, JSON-LD `Person` schema (injected via `next/script`), Google Analytics (G-LFV0HR36W7), and security headers in [next.config.mjs](next.config.mjs). [app/robots.ts](app/robots.ts) and [app/sitemap.ts](app/sitemap.ts) are the route handlers that emit `/robots.txt` and `/sitemap.xml`. The canonical site URL `https://abdulrahman-portfolio.vercel.app` is hardcoded in `layout.tsx` — update it there if it ever moves.
+[app/layout.tsx](app/layout.tsx) owns `metadata`, `viewport`, OpenGraph/Twitter, JSON-LD `Person` schema (injected via `next/script`), Google Analytics (G-LFV0HR36W7), and security headers in [next.config.mjs](next.config.mjs). [app/robots.ts](app/robots.ts) and [app/sitemap.ts](app/sitemap.ts) are the route handlers that emit `/robots.txt` and `/sitemap.xml`. The canonical site URL `https://abdulrahman-alnashri.vercel.app` and public profile links live in `data/site.ts`; metadata, sitemap, and robots import it.
 
 ### Path alias
 `@/*` maps to the project root via [tsconfig.json](tsconfig.json). Use `@/components/...` and `@/contexts/...` rather than relative paths.
@@ -90,3 +90,13 @@ Framer Motion is used pervasively, and the [components/ParticleBackground.tsx](c
 - Section components follow the pattern `SectionPlanet` + `SectionHeader` + content (see any of `About`, `Projects`, `Contact`). Reuse these wrappers rather than re-implementing section chrome.
 - Almost every component is `"use client"` because of Framer Motion, hooks, and `useLanguage`. Server Components are rare here.
 - Active-section underline in `Navigation` and the `PlanetaryNavigation` overlay both rely on `IntersectionObserver` against section `id`s — keep section `id`s stable when renaming.
+
+
+### Updated content conventions
+
+- `data/mentorship.ts` owns mentoring and workshop entries; their certificates belong with these activities.
+- `awards` in `data/achievements.ts` excludes legacy mentoring records. Preserve old detail URLs through redirects in `next.config.mjs`.
+- Hero counts derive from the actual data arrays. Never enter estimated totals or unverified training-hour counts.
+- Projects without original images use `ProjectVisual` typographic covers. Do not pass empty image URLs to `next/image` or metadata.
+- Certificates distinguish professional certification, training completion, course completion, and event participation. Do not describe practice-exam courses as professional certifications.
+- See `docs/content-refresh-2026.md` for public sources and `docs/cv.md` for CV source.
